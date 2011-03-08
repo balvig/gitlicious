@@ -6,6 +6,7 @@ gem 'formtastic'
 gem 'rails_asset_packager'
 gem 'yaml_db'
 gem 'git'
+gem 'flog'
 
 
 group :test do

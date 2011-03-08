@@ -1,15 +1,21 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Name:</b>
-  <%= @project.name %>
-</p>
+<h2><%= @project.name %></h2>
 
-<p>
-  <b>Repo path:</b>
-  <%= @project.repo_path %>
-</p>
-
+<table>
+  <tr>
+    <th>Tag</th>
+    <th>Flog</th>
+    <th>Loc</th>
+  </tr>
+  <% @project.tags.each do |t|%>
+  <tr>
+    <td><%= t.name%></td>
+    <td><%= t.flog%></td>
+    <td><%= t.loc%></td>
+  </tr>
+  <% end %>
+</table>
 
 <%= link_to 'Edit', edit_project_path(@project) %> |
 <%= link_to 'Back', projects_path %>
