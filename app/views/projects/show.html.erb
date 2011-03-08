@@ -2,17 +2,36 @@
 
 <h2><%= @project.name %></h2>
 
+<script type="text/javascript">
+  $(function () {
+    var flog = [<%=@project.tags.order('build_number ASC').map {|t| "[#{t.build_number},#{t.flog}]"}.join(',')%>];
+    $.plot($("#graph"), 
+      [flog], {
+        series: {
+          lines: { show: true },
+          points: { show: true }
+        }
+      }
+    );
+  });
+  
+</script>
+
+<div id="graph" style='height:300px'>
+  
+</div>
+
 <table>
   <tr>
     <th>Tag</th>
     <th>Flog</th>
     <th>Loc</th>
   </tr>
-  <% @project.tags.each do |t|%>
+  <% @project.tags.order('build_number DESC').each do |tag|%>
   <tr>
-    <td><%= t.name%></td>
-    <td><%= t.flog%></td>
-    <td><%= t.loc%></td>
+    <td><%= link_to tag.name, [@project,tag]%></td>
+    <td><%= tag.flog%></td>
+    <td><%= tag.loc%></td>
   </tr>
   <% end %>
 </table>

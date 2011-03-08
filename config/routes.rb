@@ -1,5 +1,7 @@
 Gitlicious::Application.routes.draw do
-  resources :projects
+  resources :projects do
+    resources :tags
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

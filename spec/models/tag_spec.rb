@@ -21,6 +21,19 @@ describe Tag do
     end
   end
   
+  describe "build_number" do
+    context "CI tag" do
+      it "returns the build number" do
+        Factory(:tag, :name => 'buildsuccess/master/2').build_number.should == 2
+      end      
+    end
+    context "other tag" do
+      it "returns 0" do
+        Factory(:tag, :name => 'stable').build_number.should == 0
+      end
+    end
+  end
+  
   describe "commited_at" do
     it "returns the date of the commit" do
       pending
