@@ -51,17 +51,9 @@ width:900px;
 height:auto;
 padding:0px 0 50px 0;
 background:#fff;
+-moz-border-radius:10px;
 }
-.footer{width:900px;height:87px;background:url(../images/footer_bg.jpg) no-repeat center top;}
-.footer_login{width:600px;margin:auto;}
 
-.left_footer{float:left;padding:25px 0 0 10px;color:#a8549b;font-size:11px;}
-.left_footer a{color:#FFFFFF;text-decoration:none;}
-.right_footer{float:right;padding:25px 10px 0 0;}
-
-.left_footer_login{float:left;padding:15px 0 0 10px;color:#a8549b;font-size:11px;}
-.left_footer_login a{color:#FFFFFF;text-decoration:none;}
-.right_footer_login{float:right;padding:15px 10px 0 0;}
 /*---------------- menu----------------------*/
 .menu {font-size:11px;padding:0px 10px 0 10px; background:#39B0DD;}
 
