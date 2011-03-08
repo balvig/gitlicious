@@ -7,7 +7,7 @@ describe Tag do
       tag = project.tags.create!(:name => 'buildsuccess/master/2')
       tag.flog.should == 94.2
       tag = project.tags.create!(:name => 'buildsuccess/master/1')
-      tag.flog.to_s.should == 95.6
+      tag.flog.should == 1.0
     end
   end
   
