@@ -1,6 +1,8 @@
 Gitlicious::Application.routes.draw do
+  resources :tags
+
   resources :projects do
-    resources :tags
+    resources :tags, :only => [:show,:edit,:update]
   end
 
   # The priority is based upon order of creation:

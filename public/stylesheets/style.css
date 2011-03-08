@@ -44,56 +44,13 @@ margin:0 auto;
 width:900px;
 padding:0px 0 0px 0;
 }
-.header{
-width:900px;
-height:100px;
-}
-.header_login{
-width:600px;
-margin:auto;
-}
-.logo{
-float:left;
-padding:35px 0 0 0;
-}
-#clock_a{
-float:right;
-padding:15px 0 0 0;
-}
-.jclock{
-color:#FFFFFF;
-float:right;
-font-size:22px;
-font-weight:bold;
-padding:34px 25px 0 0;
-}
-.right_header{
-width:350px;
-float:right;
-text-align:right;
-color:#FFFFFF;
-padding:40px 0 0 0;
-}
-.right_header a{
-margin:0 5px 0 5px;
-text-decoration:underline;
-color:#FFFFFF;
-}
-.right_header a.messages{
-background:url(../images/comment.png) no-repeat right;
-padding-right:20px;
-}
-.right_header a.logout{
-background:url(../images/user_logout.png) no-repeat right;
-padding-right:20px;
-}
 
 .main_content{
-margin:0 auto;
+margin:20px auto;
 width:900px;
 height:auto;
 padding:0px 0 50px 0;
-background:url(../images/menu_bg.jpg) no-repeat center top #fff;
+background:#fff;
 }
 .footer{width:900px;height:87px;background:url(../images/footer_bg.jpg) no-repeat center top;}
 .footer_login{width:600px;margin:auto;}
@@ -106,7 +63,7 @@ background:url(../images/menu_bg.jpg) no-repeat center top #fff;
 .left_footer_login a{color:#FFFFFF;text-decoration:none;}
 .right_footer_login{float:right;padding:15px 10px 0 0;}
 /*---------------- menu----------------------*/
-.menu {font-size:11px;padding:0px 10px 0 10px; float:left; width:880px;}
+.menu {font-size:11px;padding:0px 10px 0 10px; background:#39B0DD;}
 
 /* remove all the bullets, borders and padding from the default list styling */
 .menu {padding:0;margin:0;list-style-type:none; height:34px;}
@@ -123,7 +80,7 @@ background:url(../images/menu_bg.jpg) no-repeat center top #fff;
 
 
 .center_content{
-  padding:60px 30px;
+  padding:10px 30px;
 }
 
 
@@ -140,13 +97,23 @@ th {
   font-size: 13px;
   color: #FFF;
   background: #60c8f2;
+  border-right: 1px solid #fff;
 }
 
 td {
 padding: 8px;
 background: #ecf8fd;
 border-top: 1px solid #fff;
+border-right: 1px solid #fff;
 color: #669;
+}
+
+.number {
+  text-align:right;
+}
+td img {
+  vertical-align:middle;
+  margin-right:5px;
 }
 
 .question {

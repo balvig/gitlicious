@@ -6,13 +6,13 @@ class ProjectsController < ApplicationController
 
   def show
     @project = Project.find(params[:id])
+    @tags = @project.tags.limit(100)
   end
 
   def new
     @project = Project.new
   end
 
-  # GET /projects/1/edit
   def edit
     @project = Project.find(params[:id])
   end

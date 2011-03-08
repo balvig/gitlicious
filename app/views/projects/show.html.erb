@@ -4,15 +4,41 @@
 
 <script type="text/javascript">
   $(function () {
-    var flog = [<%=@project.tags.order('build_number ASC').map {|t| "[#{t.build_number},#{t.flog}]"}.join(',')%>];
+    var flog = [<%=@tags.order('build_number ASC').map {|t| "[#{t.build_number},#{t.flog}]"}.join(',')%>];
     $.plot($("#graph"), 
       [flog], {
         series: {
           lines: { show: true },
           points: { show: true }
-        }
+        },
+        grid: { hoverable: true, clickable: true }
       }
     );
+    
+    var previousPoint;
+    
+    $("#graph").bind("plothover", function (event, pos, item) {
+      if (item) {
+        if (previousPoint != item.datapoint) {
+          previousPoint = item.datapoint;
+          //$("#tooltip").remove();
+          var x = item.datapoint[0];
+          var y = item.datapoint[1].toFixed(2);
+          showTooltip(item.pageX, item.pageY,item.series.label + " of " + x + " = " + y);
+        }
+      }
+      else {
+        //$("#tooltip").remove();
+        previousPoint = null;            
+      }
+    });
+    
+    
+    function showTooltip(x,y,text) {
+      console.log(text);
+    }
+    
+    
   });
   
 </script>
@@ -24,14 +50,16 @@
 <table>
   <tr>
     <th>Tag</th>
+    <th>Comment</th>
     <th>Flog</th>
-    <th>Loc</th>
+    <th class='number'>Change</th>
   </tr>
-  <% @project.tags.order('build_number DESC').each do |tag|%>
+  <% @tags.order('build_number DESC').each do |tag|%>
   <tr>
-    <td><%= link_to tag.name, [@project,tag]%></td>
+    <td><%= link_to tag.name, [:edit, @project,tag]%></td>
+    <td><%= tag.comment%></td>
     <td><%= tag.flog%></td>
-    <td><%= tag.loc%></td>
+    <td class='number'><%= change_indicator(tag)%></td>
   </tr>
   <% end %>
 </table>
