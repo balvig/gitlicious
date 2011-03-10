@@ -33,8 +33,6 @@ class ProjectsController < ApplicationController
     end
   end
 
-  # PUT /projects/1
-  # PUT /projects/1.xml
   def update
     @project = Project.find(params[:id])
 
@@ -49,8 +47,6 @@ class ProjectsController < ApplicationController
     end
   end
 
-  # DELETE /projects/1
-  # DELETE /projects/1.xml
   def destroy
     @project = Project.find(params[:id])
     @project.destroy
@@ -58,6 +54,15 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(projects_url) }
       format.xml  { head :ok }
+    end
+  end
+  
+  def import_tags
+    @project = Project.find(params[:id])
+    if @project.import_tags!
+      redirect_to @project, :notice => 'New tags imported'
+    else
+      redirect_to @project, :alert => 'Error importing new tags'
     end
   end
 end

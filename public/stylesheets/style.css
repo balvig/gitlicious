@@ -28,15 +28,7 @@ margin:-12px 0 15px 0px;
 padding-left:12px;
 background:url('../images/arrow.gif') no-repeat 0 50%;
 }
-a.forgot_pass{
-float:right;
-color:#256c89;
-text-decoration:none;
-background:url(../images/help.png) no-repeat left;
-padding:0 0 0 18px;
-display:block;
-margin:15px 20px 0 0;
-}
+
 #main_container{
 margin:0 auto;
 width:900px;
@@ -68,6 +60,8 @@ background:#fff;
 .menu li:hover {position:relative;}
 * html .menu a:hover {position:relative;}
 
+
+.button_to {float:right;}
 
 .center_content{
   padding:10px 30px;
@@ -169,11 +163,21 @@ a:hover.bt_red{ text-decoration:underline;}
 .warning_box{width:540px;clear:both;background:url(../images/warning.png) no-repeat left #fcfae9;
 border:1px #e9e6c7 solid;background-position:15px 10px;padding:20px 20px 15px 60px;margin:0 0 10px 0;}
 
-.valid_box{width:540px;clear:both;background:url(../images/valid.png) no-repeat left #edfce9;
-border:1px #cceac4 solid;background-position:15px 10px;padding:20px 20px 15px 60px;margin:0 0 10px 0;}
+#notice {
+  background:url(../images/valid.png) no-repeat left #edfce9;
+  border:1px #cceac4 solid;
+  background-position:15px 10px;
+  padding:20px 20px 15px 60px;
+  margin:0 0 10px 0;
+}
 
-.error_box{width:540px;clear:both;background:url(../images/error.png) no-repeat left #fce9e9;
-border:1px #eac7c7 solid;background-position:15px 10px;padding:20px 20px 15px 60px;margin:0 0 10px 0;}
+#alert{
+  background:url(../images/error.png) no-repeat left #fce9e9;
+  border:1px #eac7c7 solid;
+  background-position:15px 10px;
+  padding:20px 20px 15px 60px;
+  margin:0 0 10px 0;
+}
 
 /*--------------*/
 div.pagination {
