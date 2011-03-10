@@ -6,7 +6,9 @@ class ProjectsController < ApplicationController
 
   def show
     @project = Project.find(params[:id])
-    @tags = @project.tags.order('build_number DESC').paginate(:page => params[:page], :per_page => 100)
+    @tags = @project.tags.order('build_number DESC')
+    @tags = @tags.where(:comment => params[:comment]) if params[:comment]
+    @tags = @tags.paginate(:page => params[:page], :per_page => 100)
   end
 
   def new

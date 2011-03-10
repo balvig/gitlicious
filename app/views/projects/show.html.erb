@@ -1,4 +1,4 @@
-<%= button_to 'Update', import_tags_project_path, :method => :put%>
+<%= button_to 'Update', import_tags_project_path, :method => :put, :disable_with => 'Updating...'%>
 <h2><%= @project.name %></h2>
 <h3><%= @project.target_folders %></h3>
 
@@ -62,6 +62,11 @@
 </div>
 
 <%= will_paginate @tags %>
+
+<%= form_tag(@project, :method => :get) do %>
+  <%= text_field_tag :comment %>
+  <%= submit_tag "Search" %>
+<% end -%>
 
 <table>
   <tr>
