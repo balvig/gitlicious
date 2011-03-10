@@ -34,29 +34,40 @@ describe Tag do
     end
   end
   
-  describe ".score" do
+  describe ".change" do
     before(:each) do
       @project = Factory(:project)
       @previous_build = Factory(:tag, :build_number => 1, :project => @project, :flog => 500)
     end
-    context "build with lower score than previous" do
+    context "lower score than previous" do
       it "returns difference" do
-        Factory(:tag, :build_number => 2, :project => @project, :flog => 400).score.should == -100
+        Factory(:tag, :build_number => 2, :project => @project, :flog => 400).change.should == -100
       end
     end
-    context "build with higher score than previous" do
+    context "higher score than previous" do
       it "returns difference" do
-        Factory(:tag, :build_number => 2, :project => @project, :flog => 600).score.should == 100
+        Factory(:tag, :build_number => 2, :project => @project, :flog => 600).change.should == 100
       end
     end
-    context "build with same score as previous" do
+    context "same score as previous" do
       it "returns 0" do
-        Factory(:tag, :build_number => 2, :project => @project, :flog => 500).score.should == 0
+        Factory(:tag, :build_number => 2, :project => @project, :flog => 500).change.should == 0
       end
     end
-    context "build with no previous" do
+    context "no previous" do
       it "returns 0" do
-        Factory(:tag, :build_number => 1, :project => @project, :flog => 9000).score.should == 0
+        Factory(:tag, :build_number => 1, :project => @project, :flog => 9000).change.should == 0
+      end
+    end
+    context "previous tag with no score" do
+      it "returns 0" do
+        Factory(:tag, :build_number => 2, :project => @project, :flog => nil)
+        Factory(:tag, :build_number => 3, :project => @project, :flog => 9000).change.should == 0
+      end
+    end
+    context "gap to previous tag" do
+      it "returns difference" do
+        Factory(:tag, :build_number => 3, :project => @project, :flog => 800).change.should == 300
       end
     end
   end

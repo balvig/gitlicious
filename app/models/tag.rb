@@ -4,19 +4,28 @@ class Tag < ActiveRecord::Base
   before_save :set_build_number, :on => :create
   before_save :set_metrics, :on => :create
   
-  CI_TAG_PREFIX = 'buildsuccess/master/'
-  METRICS = {
-    :flog => ['flog -s --continue app/controllers app/helpers app/models lib',/([\d\.]+):/],
-    :loc  => ['rake stats',/Code LOC: (\d+)/]
-  }
+  def metrics
+    {
+      :flog => ["flog -s --continue #{project.target_folders}",/([\d\.]+):/],
+      :loc  => ['rake stats',/Code LOC: (\d+)/]
+    }
+  end
 
-  def score
-    previous_build = project.tags.find_by_build_number(build_number-1)
-    if previous_build
+  def change
+    previous_build = project.tags.order('build_number DESC').where('build_number < ?', build_number).first
+    if previous_build && flog.present? &&  previous_build.flog.present?
       flog - previous_build.flog
     else
       0
     end
+  end
+  
+  def reset_metrics!
+    metrics.keys.each do |method|
+      send("#{method}=",nil)
+    end
+    set_metrics
+    save!
   end
 
   private
@@ -27,7 +36,7 @@ class Tag < ActiveRecord::Base
     
   def set_metrics
     checkout
-    METRICS.each do |method,command|
+    metrics.each do |method,command|
       if send(method).blank?
         output = run(command.first)
         value = output[command.last,1]

@@ -1,11 +1,17 @@
 module TagsHelper
+  
+  def tag_url(tag)
+    "#{tag.project.ci_server_url}#{tag.build_number}"
+  end
+  
   def change_indicator(tag)
-    prefix = ''
-    if tag.score > 0
-      prefix = image_tag('up.png') + '+'
-    elsif tag.score < 0
-      prefix = image_tag('down.png')
+    str = tag.change.to_s
+    
+    if tag.change > 0
+      str = "+#{str}#{image_tag('up.png')}"
+    elsif tag.change < 0
+      str = "#{str}#{image_tag('down.png')}"
     end
-    "#{prefix}#{tag.score}".html_safe
+    str.html_safe
   end
 end

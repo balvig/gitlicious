@@ -1,10 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <h2><%= @project.name %></h2>
+<h3><%= @project.target_folders %></h3>
 
 <script type="text/javascript">
   $(function () {
-    var flog = [<%=@tags.order('build_number ASC').map {|t| "[#{t.build_number},#{t.flog}]"}.join(',')%>];
+    var flog = [<%=@tags.reverse.map {|t| "[#{t.build_number},#{t.flog}]"}.join(',')%>];
     $.plot($("#graph"), 
       [flog], {
         series: {
@@ -21,21 +22,35 @@
       if (item) {
         if (previousPoint != item.datapoint) {
           previousPoint = item.datapoint;
-          //$("#tooltip").remove();
+          $("#tooltip").remove();
           var x = item.datapoint[0];
           var y = item.datapoint[1].toFixed(2);
-          showTooltip(item.pageX, item.pageY,item.series.label + " of " + x + " = " + y);
+          showTooltip(item.pageX, item.pageY," build #" + x + ": " + y);
         }
       }
       else {
-        //$("#tooltip").remove();
+        $("#tooltip").remove();
         previousPoint = null;            
       }
     });
     
+    $("#graph").bind("plotclick", function (event, pos, item) {
+      if (item) {
+        window.location = '<%= @project.ci_server_url%>' + item.datapoint[0]
+      }
+    });
+
     
     function showTooltip(x,y,text) {
-      console.log(text);
+      $('<div id="tooltip">' + text + '</div>').css( {
+          position: 'absolute',
+          top: y + 5,
+          left: x + 5,
+          border: '1px solid #fdd',
+          padding: '2px',
+          'background-color': '#fee',
+          opacity: 0.80
+      }).appendTo("body");
     }
     
     
@@ -47,6 +62,8 @@
   
 </div>
 
+<%= will_paginate @tags %>
+
 <table>
   <tr>
     <th>Tag</th>
@@ -54,15 +71,16 @@
     <th>Flog</th>
     <th class='number'>Change</th>
   </tr>
-  <% @tags.order('build_number DESC').each do |tag|%>
+  <% @tags.each do |tag|%>
   <tr>
-    <td><%= link_to tag.name, [:edit, @project,tag]%></td>
-    <td><%= tag.comment%></td>
+    <td><%= link_to tag.name, tag_url(tag), :target => 'blank'%></td>
+    <td><%= link_to (tag.comment || '-'), [:edit, @project, tag]%></td>
     <td><%= tag.flog%></td>
     <td class='number'><%= change_indicator(tag)%></td>
   </tr>
   <% end %>
 </table>
 
-<%= link_to 'Edit', edit_project_path(@project) %> |
-<%= link_to 'Back', projects_path %>
+<%= will_paginate @tags %>
+
+<%= link_to 'Edit', edit_project_path(@project) %>
