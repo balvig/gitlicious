@@ -1,16 +1,26 @@
-<%= button_to 'Update', import_tags_project_path, :method => :put, :disable_with => 'Updating...'%>
 <h2><%= @project.name %></h2>
 <h3><%= @project.target_folders %></h3>
+
+<ul class='scores'>
+  <li><%= @project.current_score(:rbp)%> <span>problems</span></li>
+  <li><%= @project.current_score(:flog)%> <span>complexity</span></li>
+</ul>
+
+<%= button_to 'Update', import_tags_project_path, :method => :put, :disable_with => 'Updating...'%>
+
+
 
 <script type="text/javascript">
   $(function () {
     var flog = [<%=@tags.reverse.map {|t| "[#{t.build_number},#{t.flog}]"}.join(',')%>];
+    var rbp = [<%=@tags.reverse.map {|t| "[#{t.build_number},#{t.rbp}]"}.join(',')%>];
     $.plot($("#graph"), 
-      [flog], {
+      [{data:rbp,label:'Rails Bad Practices',yaxis:2},{data:flog,label:'Flog'}], {
         series: {
           lines: { show: true },
           points: { show: true }
         },
+        legend: { position: 'nw' },
         grid: { hoverable: true, clickable: true }
       }
     );
@@ -68,19 +78,21 @@
   <%= submit_tag "Search" %>
 <% end -%>
 
-<table>
+<table class='stats'>
   <tr>
     <th>Tag</th>
     <th>Comment</th>
-    <th>Flog</th>
-    <th class='number'>Change</th>
+    <th colspan="2">RBP</th>
+    <th colspan="2">Flog</th>
   </tr>
   <% @tags.each do |tag|%>
-  <tr>
+  <tr class='<%= tag.assessment%>'>
     <td><%= link_to tag.name, tag_url(tag), :target => 'blank'%></td>
     <td><%= link_to (tag.comment || '-'), [:edit, @project, tag]%></td>
+    <td><%= tag.rbp%></td>
+    <td class='number'><%= change_indicator(tag, :rbp)%></td>
     <td><%= tag.flog%></td>
-    <td class='number'><%= change_indicator(tag)%></td>
+    <td class='number'><%= change_indicator(tag, :flog)%></td>
   </tr>
   <% end %>
 </table>

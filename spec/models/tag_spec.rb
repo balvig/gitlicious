@@ -21,6 +21,14 @@ describe Tag do
     end
   end
   
+  describe ".rbp" do
+    it "returns the number of rails best practice problems for that tag" do
+      project = Factory(:project)
+      tag = project.tags.create!(:name => 'buildsuccess/master/2')
+      tag.rbp.should == 1
+    end
+  end
+  
   describe ".build_number" do
     context "CI tag" do
       it "returns the build number" do
@@ -37,37 +45,42 @@ describe Tag do
   describe ".change" do
     before(:each) do
       @project = Factory(:project)
-      @previous_build = Factory(:tag, :build_number => 1, :project => @project, :flog => 500)
+      @previous_build = Factory(:tag, :build_number => 1, :project => @project, :flog => 500, :rbp => 100)
     end
     context "lower score than previous" do
       it "returns difference" do
-        Factory(:tag, :build_number => 2, :project => @project, :flog => 400).change.should == -100
+        Factory(:tag, :build_number => 2, :project => @project, :flog => 400).change(:flog).should == -100
       end
     end
     context "higher score than previous" do
       it "returns difference" do
-        Factory(:tag, :build_number => 2, :project => @project, :flog => 600).change.should == 100
+        Factory(:tag, :build_number => 2, :project => @project, :flog => 600).change(:flog).should == 100
       end
     end
     context "same score as previous" do
       it "returns 0" do
-        Factory(:tag, :build_number => 2, :project => @project, :flog => 500).change.should == 0
+        Factory(:tag, :build_number => 2, :project => @project, :flog => 500).change(:flog).should == 0
       end
     end
     context "no previous" do
       it "returns 0" do
-        Factory(:tag, :build_number => 1, :project => @project, :flog => 9000).change.should == 0
+        Factory(:tag, :build_number => 1, :project => @project, :flog => 9000).change(:flog).should == 0
       end
     end
     context "previous tag with no score" do
       it "returns 0" do
         Factory(:tag, :build_number => 2, :project => @project, :flog => nil)
-        Factory(:tag, :build_number => 3, :project => @project, :flog => 9000).change.should == 0
+        Factory(:tag, :build_number => 3, :project => @project, :flog => 9000).change(:flog).should == 0
       end
     end
     context "gap to previous tag" do
       it "returns difference" do
-        Factory(:tag, :build_number => 3, :project => @project, :flog => 800).change.should == 300
+        Factory(:tag, :build_number => 3, :project => @project, :flog => 800).change(:flog).should == 300
+      end
+    end
+    context "rbp" do
+      it "works with other fields" do
+        Factory(:tag, :build_number => 2, :project => @project, :rbp => 110).change(:rbp).should == 10
       end
     end
   end

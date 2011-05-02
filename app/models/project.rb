@@ -6,7 +6,7 @@ class Project < ActiveRecord::Base
   end
   
   def ci_server_url
-    'http://192.168.31.237:8080/job/cookpad/'
+    "http://192.168.31.237:8080/job/#{name}/"
   end
   
   def import_tags!(filter = CI_TAG_PREFIX)
@@ -18,6 +18,10 @@ class Project < ActiveRecord::Base
   
   def git
     @git ||= Git.open(repo_path)
+  end
+  
+  def current_score(metric)
+    tags.order('build_number DESC').first.send(metric)
   end
   
 end

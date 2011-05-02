@@ -1,19 +1,17 @@
 <h1>Listing projects</h1>
 
-<table>
+<table class='stats'>
   <tr>
     <th>Name</th>
     <th>Repo path</th>
-    <th></th>
     <th></th>
     <th></th>
   </tr>
 
 <% @projects.each do |project| %>
   <tr>
-    <td><%= project.name %></td>
+    <td><%= link_to project.name, project %></td>
     <td><%= project.repo_path %></td>
-    <td><%= link_to 'Show', project %></td>
     <td><%= link_to 'Edit', edit_project_path(project) %></td>
     <td><%= link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>

@@ -14,19 +14,19 @@ a{
 color:#256c89;
 }
 h2{
-font-size:18px;
+font-size:1.5em;
 color:#256c89;
 font-weight:normal;
 padding:0;
-margin:0px 0 15px 0;
+margin:0px 0 5px 0;
+text-align:center;
 }
 h3{
 font-size:12px;
 color:#17536A;
 font-weight:normal;
-margin:-12px 0 15px 0px;
-padding-left:12px;
-background:url('../images/arrow.gif') no-repeat 0 50%;
+margin:0;
+text-align:center;
 }
 
 #main_container{
@@ -61,23 +61,23 @@ background:#fff;
 * html .menu a:hover {position:relative;}
 
 
-.button_to {float:right;}
+.button_to {text-align:right;}
 
 .center_content{
   padding:10px 30px;
 }
 
 
-table {
+.stats {
   margin:5px 0px 0px;
   text-align: left;
   border-collapse: collapse;
   width:100%;
 }
 
-table a {text-decoration:none;}
+.stats a {text-decoration:none;}
 
-th {
+.stats th {
   padding: 8px;
   font-weight: bold;
   font-size: 13px;
@@ -86,7 +86,7 @@ th {
   border-right: 1px solid #fff;
 }
 
-td {
+.stats td {
 padding: 8px;
 background: #ecf8fd;
 border-top: 1px solid #fff;
@@ -100,6 +100,28 @@ color: #669;
 td img {
   vertical-align:middle;
   margin-left:5px;
+}
+
+.good td, .good th {background:#B1FFB0;}
+.bad td, .bad th {background:#FFC8C8;}
+
+.scores {
+  margin:16px auto 14px;
+  padding-bottom:14px;
+  font-size:2em;
+  text-align:center;
+  border-bottom:1px dotted #B9D5DA;
+}
+
+.scores li {
+  list-style:none;
+  border:3px double #61C9F5;
+  display:inline-block;
+  padding:10px 20px;
+}
+
+.scores li span {
+  font-size:0.7em;
 }
 
 .question {

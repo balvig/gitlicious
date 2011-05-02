@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110308071501) do
+ActiveRecord::Schema.define(:version => 20110405090641) do
 
   create_table "projects", :force => true do |t|
     t.string   "name"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(:version => 20110308071501) do
     t.integer  "loc"
     t.integer  "build_number"
     t.string   "comment"
+    t.integer  "rbp"
   end
 
 end

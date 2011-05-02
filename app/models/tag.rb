@@ -3,29 +3,38 @@ class Tag < ActiveRecord::Base
   validates_uniqueness_of :name, :scope => :project_id
   before_save :set_build_number, :on => :create
   before_save :set_metrics, :on => :create
-  
+    
   def metrics
     {
       :flog => ["flog -s --continue #{project.target_folders}",/([\d\.]+):/],
-      :loc  => ['rake stats',/Code LOC: (\d+)/]
+      :rbp  => ['rails_best_practices .',/Found (\d+) errors/]#,
+      #:loc  => ['rake stats',/Code LOC: (\d+)/]
     }
   end
 
-  def change
+  def change(metric)
     previous_build = project.tags.order('build_number DESC').where('build_number < ?', build_number).first
-    if previous_build && flog.present? &&  previous_build.flog.present?
-      flog - previous_build.flog
+    if previous_build && send(metric).present? && previous_build.send(metric).present?
+      send(metric) - previous_build.send(metric)
     else
       0
     end
   end
   
   def reset_metrics!
-    metrics.keys.each do |method|
-      send("#{method}=",nil)
+    metrics.keys.each do |metric|
+      send("#{metric}=",nil)
     end
     set_metrics
     save!
+  end
+  
+  def assessment
+    if metrics.keys.all? {|metric|change(metric) < 0 }
+      'good'
+    elsif metrics.keys.all? {|metric|change(metric) > 0 }
+      'bad'
+    end
   end
 
   private
@@ -43,7 +52,8 @@ class Tag < ActiveRecord::Base
         send("#{method}=",value)
       end
     end
-    rescue Git::GitExecuteError
+    rescue Git::GitExecuteError => e
+      logger.error(e)
   end
   
   def run(command)
