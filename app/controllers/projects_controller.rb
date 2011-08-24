@@ -6,9 +6,9 @@ class ProjectsController < ApplicationController
 
   def show
     @project = Project.find(params[:id])
-    @tags = @project.tags.order('build_number DESC')
-    @tags = @tags.where(:comment => params[:comment]) if params[:comment]
-    @tags = @tags.paginate(:page => params[:page], :per_page => 100)
+    @commits = @project.commits.order('created_at DESC')
+    @commits = @commits.where(:comment => params[:comment]) if params[:comment]
+    @commits = @commits.paginate(:page => params[:page], :per_page => 100)
   end
 
   def new
@@ -59,12 +59,12 @@ class ProjectsController < ApplicationController
     end
   end
   
-  def import_tags
+  def import_commits
     @project = Project.find(params[:id])
-    if @project.import_tags!
-      redirect_to @project, :notice => 'New tags imported'
+    if @project.import_commits!
+      redirect_to @project, :notice => 'New commits imported'
     else
-      redirect_to @project, :alert => 'Error importing new tags'
+      redirect_to @project, :alert => 'Error importing new commits'
     end
   end
 end

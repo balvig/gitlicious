@@ -10,25 +10,26 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110405090641) do
+ActiveRecord::Schema.define(:version => 20110824235114) do
 
-  create_table "projects", :force => true do |t|
-    t.string   "name"
-    t.string   "repo_path"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "tags", :force => true do |t|
+  create_table "commits", :force => true do |t|
     t.string   "name"
     t.integer  "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal  "flog"
     t.integer  "loc"
-    t.integer  "build_number"
     t.string   "comment"
     t.integer  "rbp"
+    t.string   "sha"
+    t.datetime "commited_at"
+  end
+
+  create_table "projects", :force => true do |t|
+    t.string   "name"
+    t.string   "repo_path"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

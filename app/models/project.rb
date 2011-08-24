@@ -1,5 +1,5 @@
 class Project < ActiveRecord::Base
-  has_many :tags
+  has_many :commits
   
   def target_folders
     'app/controllers app/helpers app/models lib'
@@ -9,10 +9,10 @@ class Project < ActiveRecord::Base
     "http://192.168.31.237:8080/job/#{name}/"
   end
   
-  def import_tags!(filter = CI_TAG_PREFIX)
+  def import_commits!
     git.fetch if git.branches.remote.size > 0
-    git.tags.each do |tag|
-      tags.create(:name => tag.name) if tag.name.include?(filter)
+    git.log.each do |commit|
+      commits.create(:sha => commit.sha)
     end
   end
   
@@ -21,7 +21,7 @@ class Project < ActiveRecord::Base
   end
   
   def current_score(metric)
-    tags.order('build_number DESC').first.send(metric)
+    commits.order('build_number DESC').first.send(metric)
   end
   
 end

@@ -1,8 +1,8 @@
-class Tag < ActiveRecord::Base
+class Commit < ActiveRecord::Base
   belongs_to :project
-  validates_uniqueness_of :name, :scope => :project_id
-  before_save :set_build_number, :on => :create
+  validates_uniqueness_of :sha, :scope => :project_id
   before_save :set_metrics, :on => :create
+  before_save :set_metadata, :on => :create
     
   def metrics
     {
@@ -13,9 +13,9 @@ class Tag < ActiveRecord::Base
   end
 
   def change(metric)
-    previous_build = project.tags.order('build_number DESC').where('build_number < ?', build_number).first
-    if previous_build && send(metric).present? && previous_build.send(metric).present?
-      send(metric) - previous_build.send(metric)
+    previous_commit = project.commits.order('commited_at DESC').where('commited_at < ?', commited_at).first
+    if previous_commit && send(metric).present? && previous_commit.send(metric).present?
+      send(metric) - previous_commit.send(metric)
     else
       0
     end
@@ -38,10 +38,6 @@ class Tag < ActiveRecord::Base
   end
 
   private
-  
-  def set_build_number
-    self.build_number ||= name[/#{CI_TAG_PREFIX}(\d+)/,1].to_i
-  end
     
   def set_metrics
     checkout
@@ -61,8 +57,15 @@ class Tag < ActiveRecord::Base
   end
   
   def checkout
-    project.git.checkout(name)
-    project.git.lib.send(:command,'submodule update -i') #Submodules not natively supported in ruby-git
+    project.git.checkout(sha)
+  end
+  
+  def set_metadata
+    metadata = project.git.gcommit(sha)
+    self.commited_at = metadata.date
+    self.name = metadata.message
+    rescue Git::GitExecuteError => e
+      logger.error(e)
   end
 
 end

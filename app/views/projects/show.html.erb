@@ -1,19 +1,20 @@
 <h2><%= @project.name %></h2>
 <h3><%= @project.target_folders %></h3>
 
-<ul class='scores'>
-  <li><%= @project.current_score(:rbp)%> <span>problems</span></li>
-  <li><%= @project.current_score(:flog)%> <span>complexity</span></li>
-</ul>
+<% if @project.commits.size > 0 %>
+  <ul class='scores'>
+    <li><%= @project.current_score(:rbp)%> <span>problems</span></li>
+    <li><%= @project.current_score(:flog)%> <span>complexity</span></li>
+  </ul>
+<% end %>
 
-<%= button_to 'Update', import_tags_project_path, :method => :put, :disable_with => 'Updating...'%>
-
+<%= button_to 'Update', import_commits_project_path, :method => :put, :disable_with => 'Updating...'%>
 
 
 <script type="text/javascript">
   $(function () {
-    var flog = [<%=@tags.reverse.map {|t| "[#{t.build_number},#{t.flog}]"}.join(',')%>];
-    var rbp = [<%=@tags.reverse.map {|t| "[#{t.build_number},#{t.rbp}]"}.join(',')%>];
+    var flog = [<%=@commits.reverse.map {|t| "[#{t.build_number},#{t.flog}]"}.join(',')%>];
+    var rbp = [<%=@commits.reverse.map {|t| "[#{t.build_number},#{t.rbp}]"}.join(',')%>];
     $.plot($("#graph"), 
       [{data:rbp,label:'Rails Bad Practices',yaxis:2},{data:flog,label:'Flog'}], {
         series: {
@@ -71,12 +72,12 @@
   
 </div>
 
-<%= will_paginate @tags %>
+<%= will_paginate @commits %>
 
-<%= form_tag(@project, :method => :get) do %>
-  <%= text_field_tag :comment %>
-  <%= submit_tag "Search" %>
-<% end -%>
+<%= form_commit(@project, :method => :get) do %>
+  <%= text_field_commit :comment %>
+  <%= submit_commit "Search" %>
+<% end %>
 
 <table class='stats'>
   <tr>
@@ -85,18 +86,18 @@
     <th colspan="2">RBP</th>
     <th colspan="2">Flog</th>
   </tr>
-  <% @tags.each do |tag|%>
-  <tr class='<%= tag.assessment%>'>
-    <td><%= link_to tag.name, tag_url(tag), :target => 'blank'%></td>
-    <td><%= link_to (tag.comment || '-'), [:edit, @project, tag]%></td>
-    <td><%= tag.rbp%></td>
-    <td class='number'><%= change_indicator(tag, :rbp)%></td>
-    <td><%= tag.flog%></td>
-    <td class='number'><%= change_indicator(tag, :flog)%></td>
+  <% @commits.each do |commit|%>
+  <tr class='<%= commit.assessment%>'>
+    <td><%= link_to commit.name, commit_url(commit), :target => 'blank'%></td>
+    <td><%= link_to (commit.comment || '-'), [:edit, @project, commit]%></td>
+    <td><%= commit.rbp%></td>
+    <td class='number'><%= change_indicator(commit, :rbp)%></td>
+    <td><%= commit.flog%></td>
+    <td class='number'><%= change_indicator(commit, :flog)%></td>
   </tr>
   <% end %>
 </table>
 
-<%= will_paginate @tags %>
+<%= will_paginate @commits %>
 
 <%= link_to 'Edit', edit_project_path(@project) %>
