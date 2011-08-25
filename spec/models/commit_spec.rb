@@ -32,7 +32,7 @@ describe Commit do
   describe ".change" do
     before(:each) do
       @project = Factory(:project)
-      @previous_build = Factory(:commit, :commited_at => '2010/02/15', :project => @project, :flog => 500, :rbp => 100)
+      @previous_build = Factory(:commit, :sha => 'abcd', :project => @project, :flog => 500, :rbp => 100)
     end
     context "no previous" do
       it "returns 0" do
@@ -41,33 +41,28 @@ describe Commit do
     end
     context "lower score than previous" do
       it "returns difference" do
-        Factory(:commit, :commited_at => '2010/02/16', :project => @project, :flog => 400).change(:flog).should == -100
+        Factory(:commit, :parent_sha => 'abcd', :project => @project, :flog => 400).change(:flog).should == -100
       end
     end
     context "higher score than previous" do
       it "returns difference" do
-        Factory(:commit, :commited_at => '2010/02/16', :project => @project, :flog => 600).change(:flog).should == 100
+        Factory(:commit, :parent_sha => 'abcd', :project => @project, :flog => 600).change(:flog).should == 100
       end
     end
     context "same score as previous" do
       it "returns 0" do
-        Factory(:commit, :commited_at => '2010/02/16', :project => @project, :flog => 500).change(:flog).should == 0
+        Factory(:commit, :parent_sha => 'abcd', :project => @project, :flog => 500).change(:flog).should == 0
       end
     end
     context "previous commit with no score" do
       it "returns 0" do
-        Factory(:commit, :commited_at => '2010/02/16', :project => @project, :flog => nil)
-        Factory(:commit, :commited_at => '2010/02/17', :project => @project, :flog => 9000).change(:flog).should == 0
-      end
-    end
-    context "gap to previous commit" do
-      it "returns difference" do
-        Factory(:commit, :commited_at => '2010/02/17', :project => @project, :flog => 800).change(:flog).should == 300
+        Factory(:commit, :sha => 'efgh', :project => @project, :flog => nil)
+        Factory(:commit, :parent_sha => 'efgh', :project => @project, :flog => 9000).change(:flog).should == 0
       end
     end
     context "rbp" do
       it "works with other fields" do
-        Factory(:commit, :commited_at => '2010/02/16', :project => @project, :rbp => 110).change(:rbp).should == 10
+        Factory(:commit, :parent_sha => 'abcd', :project => @project, :rbp => 110).change(:rbp).should == 10
       end
     end
   end

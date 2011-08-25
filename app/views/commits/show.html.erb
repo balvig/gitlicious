@@ -1,5 +1,8 @@
-<p id="notice"><%= notice %></p>
+<h2><%= @commit.name %></h2>
+<h3><%= @commit.sha %></h3>
+<div class='diff'>
+  <%= simple_format (@commit.metrics_log - @commit.parent.metrics_log).to_s%>
+</div>
 
 
-<%= link_to 'Edit', edit_tag_path(@tag) %> |
-<%= link_to 'Back', tags_path %>
+<%= link_to 'Back', @project %>

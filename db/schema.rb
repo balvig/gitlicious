@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110824235114) do
+ActiveRecord::Schema.define(:version => 20110825011207) do
 
   create_table "commits", :force => true do |t|
     t.string   "name"
@@ -23,6 +23,8 @@ ActiveRecord::Schema.define(:version => 20110824235114) do
     t.integer  "rbp"
     t.string   "sha"
     t.datetime "commited_at"
+    t.text     "metrics_log"
+    t.string   "parent_sha"
   end
 
   create_table "projects", :force => true do |t|

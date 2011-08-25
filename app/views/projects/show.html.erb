@@ -13,8 +13,8 @@
 
 <script type="text/javascript">
   $(function () {
-    var flog = [<%=@commits.reverse.map {|t| "[#{t.build_number},#{t.flog}]"}.join(',')%>];
-    var rbp = [<%=@commits.reverse.map {|t| "[#{t.build_number},#{t.rbp}]"}.join(',')%>];
+    var flog = [<%=@commits.reverse.each_with_index.map {|c,i| "[#{i},#{c.flog}]"}.join(',')%>];
+    var rbp = [<%=@commits.reverse.each_with_index.map {|c,i| "[#{i},#{c.rbp}]"}.join(',')%>];
     $.plot($("#graph"), 
       [{data:rbp,label:'Rails Bad Practices',yaxis:2},{data:flog,label:'Flog'}], {
         series: {
@@ -46,7 +46,7 @@
     
     $("#graph").bind("plotclick", function (event, pos, item) {
       if (item) {
-        window.location = '<%= @project.ci_server_url%>' + item.datapoint[0]
+        window.location = item.datapoint[0];
       }
     });
 
@@ -68,28 +68,26 @@
   
 </script>
 
-<div id="graph" style='height:300px'>
-  
-</div>
+<div id="graph" style='height:300px'></div>
 
 <%= will_paginate @commits %>
 
-<%= form_commit(@project, :method => :get) do %>
-  <%= text_field_commit :comment %>
-  <%= submit_commit "Search" %>
+<%= form_tag(@project, :method => :get) do %>
+  <%= text_field_tag :comment %>
+  <%= submit_tag "Search" %>
 <% end %>
 
 <table class='stats'>
   <tr>
-    <th>Tag</th>
-    <th>Comment</th>
+    <th>Commit</th>
+    <th width="400">Comment</th>
     <th colspan="2">RBP</th>
     <th colspan="2">Flog</th>
   </tr>
   <% @commits.each do |commit|%>
   <tr class='<%= commit.assessment%>'>
-    <td><%= link_to commit.name, commit_url(commit), :target => 'blank'%></td>
-    <td><%= link_to (commit.comment || '-'), [:edit, @project, commit]%></td>
+    <td><%= link_to commit.commited_at.to_date, [@project,commit]%></td>
+    <td><%= link_to commit.name, [@project,commit]%></td>
     <td><%= commit.rbp%></td>
     <td class='number'><%= change_indicator(commit, :rbp)%></td>
     <td><%= commit.flog%></td>

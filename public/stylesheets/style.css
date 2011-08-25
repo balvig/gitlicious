@@ -201,6 +201,25 @@ border:1px #e9e6c7 solid;background-position:15px 10px;padding:20px 20px 15px 60
   margin:0 0 10px 0;
 }
 
+
+div.diff {
+  line-height:0;
+  color:#FFF;
+  font-size:1.1em;
+}
+ins {
+  line-height:1.8em;
+  display:block;
+  color:#00CC00;
+  text-decoration:none;
+}
+
+del {
+  line-height:1.8em;
+  display:block;
+  color:#FF0000;
+}
+
 /*--------------*/
 div.pagination {
 margin:30px 0;

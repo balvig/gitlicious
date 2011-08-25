@@ -1,11 +1,7 @@
-module TagsHelper
+module CommitsHelper
   
-  def tag_url(tag)
-    "#{tag.project.ci_server_url}#{tag.build_number}"
-  end
-  
-  def change_indicator(tag,metric)
-    change = tag.change(metric)
+  def change_indicator(commit,metric)
+    change = commit.change(metric)
     str = change.to_s
     
     if change > 0

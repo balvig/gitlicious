@@ -5,13 +5,10 @@ class Project < ActiveRecord::Base
     'app/controllers app/helpers app/models lib'
   end
   
-  def ci_server_url
-    "http://192.168.31.237:8080/job/#{name}/"
-  end
-  
   def import_commits!
     git.fetch if git.branches.remote.size > 0
-    git.log.each do |commit|
+    git.checkout('master')
+    git.log(200).each do |commit|
       commits.create(:sha => commit.sha)
     end
   end
@@ -21,7 +18,7 @@ class Project < ActiveRecord::Base
   end
   
   def current_score(metric)
-    commits.order('build_number DESC').first.send(metric)
+    commits.order('commited_at DESC').first.send(metric)
   end
   
 end

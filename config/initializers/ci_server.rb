@@ -1,1 +1,0 @@
-CI_TAG_PREFIX = 'buildsuccess/master/'

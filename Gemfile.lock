@@ -64,6 +64,7 @@ GEM
     culerity (0.2.15)
     database_cleaner (0.6.4)
     diff-lcs (1.1.2)
+    differ (0.1.2)
     envjs (0.3.8)
       johnson (>= 2.0.0.pre3)
     erubis (2.6.6)
@@ -190,6 +191,7 @@ DEPENDENCIES
   cucumber
   cucumber-rails (~> 0.3.2)
   database_cleaner
+  differ
   factory_girl
   factory_girl_rails
   flog
