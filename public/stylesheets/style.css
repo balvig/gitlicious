@@ -1,6 +1,5 @@
 body
 {
-background:url(../images/bg.jpg) no-repeat center top #310b28;
 font-family:Arial, Helvetica, sans-serif;
 padding:0;
 font-size:13px;
@@ -31,13 +30,11 @@ text-align:center;
 
 #main_container{
 margin:0 auto;
-width:900px;
 padding:0px 0 0px 0;
 }
 
 .main_content{
-margin:20px auto;
-width:900px;
+margin:0px auto;
 height:auto;
 padding:0px 0 50px 0;
 background:#fff;
@@ -92,6 +89,10 @@ background: #ecf8fd;
 border-top: 1px solid #fff;
 border-right: 1px solid #fff;
 color: #669;
+}
+
+.stats tr:hover td {
+  background: #ddf8ed;
 }
 
 .number {
@@ -203,19 +204,19 @@ border:1px #e9e6c7 solid;background-position:15px 10px;padding:20px 20px 15px 60
 
 
 div.diff {
-  line-height:0;
-  color:#FFF;
+  margin-top:15px;
+  background:#EEE;
+  border:1px solid #DDD;
+  padding:10px 20px;
+  line-height:1.4em;
   font-size:1.1em;
 }
 ins {
-  line-height:1.8em;
-  display:block;
   color:#00CC00;
   text-decoration:none;
 }
 
 del {
-  line-height:1.8em;
   display:block;
   color:#FF0000;
 }

@@ -6,9 +6,9 @@ class Project < ActiveRecord::Base
   end
   
   def import_commits!
-    git.fetch if git.branches.remote.size > 0
     git.checkout('master')
-    git.log(200).each do |commit|
+    git.fetch if git.branches.remote.size > 0
+    git.log(500).each do |commit|
       commits.create(:sha => commit.sha)
     end
   end

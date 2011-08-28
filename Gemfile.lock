@@ -175,7 +175,6 @@ GEM
     webmock (1.6.2)
       addressable (>= 2.2.2)
       crack (>= 0.1.7)
-    will_paginate (3.0.pre2)
     xml-simple (1.0.14)
     xpath (0.1.3)
       nokogiri (~> 1.3)
@@ -211,5 +210,4 @@ DEPENDENCIES
   vcr
   watchr
   webmock
-  will_paginate (= 3.0.pre2)
   yaml_db

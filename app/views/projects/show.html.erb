@@ -4,7 +4,7 @@
 <% if @project.commits.size > 0 %>
   <ul class='scores'>
     <li><%= @project.current_score(:rbp)%> <span>problems</span></li>
-    <li><%= @project.current_score(:flog)%> <span>complexity</span></li>
+    <li><%= @project.current_score(:flog)%> <span>complexity/method</span></li>
   </ul>
 <% end %>
 
@@ -13,14 +13,15 @@
 
 <script type="text/javascript">
   $(function () {
-    var flog = [<%=@commits.reverse.each_with_index.map {|c,i| "[#{i},#{c.flog}]"}.join(',')%>];
-    var rbp = [<%=@commits.reverse.each_with_index.map {|c,i| "[#{i},#{c.rbp}]"}.join(',')%>];
+    var flog = [<%=@commits.reverse.each_with_index.map {|c,i| "[#{c.timestamp},#{c.flog}]"}.join(',')%>];
+    var rbp = [<%=@commits.reverse.each_with_index.map {|c,i| "[#{c.timestamp},#{c.rbp}]"}.join(',')%>];
     $.plot($("#graph"), 
       [{data:rbp,label:'Rails Bad Practices',yaxis:2},{data:flog,label:'Flog'}], {
         series: {
           lines: { show: true },
-          points: { show: true }
+          points: { show: false }
         },
+        xaxis: {mode:"time",	timeformat: "%y/%m/%d"},
         legend: { position: 'nw' },
         grid: { hoverable: true, clickable: true }
       }
@@ -70,8 +71,6 @@
 
 <div id="graph" style='height:300px'></div>
 
-<%= will_paginate @commits %>
-
 <%= form_tag(@project, :method => :get) do %>
   <%= text_field_tag :comment %>
   <%= submit_tag "Search" %>
@@ -80,7 +79,7 @@
 <table class='stats'>
   <tr>
     <th>Commit</th>
-    <th width="400">Comment</th>
+    <th>Comment</th>
     <th colspan="2">RBP</th>
     <th colspan="2">Flog</th>
   </tr>
@@ -95,7 +94,5 @@
   </tr>
   <% end %>
 </table>
-
-<%= will_paginate @commits %>
 
 <%= link_to 'Edit', edit_project_path(@project) %>

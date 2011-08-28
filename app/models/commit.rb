@@ -4,9 +4,13 @@ class Commit < ActiveRecord::Base
   before_save :set_metrics, :on => :create
   before_save :set_metadata, :on => :create
 
+  def timestamp
+    commited_at.to_i * 1000
+  end
+
   def metrics
     {
-      :flog => ["flog -s --continue #{project.target_folders}",/([\d\.]+):/],
+      :flog => ["flog -s --continue #{project.target_folders}",/([\d\.]+): flog\/method average/],
       :rbp  => ['rails_best_practices .  --without-color',/Found (\d+) errors/]#,
       #:loc  => ['rake stats',/Code LOC: (\d+)/]
     }
