@@ -7,7 +7,6 @@ class ProjectsController < ApplicationController
   def show
     @project = Project.find(params[:id])
     @commits = @project.commits.order('commited_at DESC').limit(400)
-    @commits = @commits.where(:comment => params[:comment]) if params[:comment]
   end
 
   def new

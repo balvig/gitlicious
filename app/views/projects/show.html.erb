@@ -1,5 +1,4 @@
 <h2><%= @project.name %></h2>
-<h3><%= @project.target_folders %></h3>
 
 <% if @project.commits.size > 0 %>
   <ul class='scores'>
@@ -70,11 +69,6 @@
 </script>
 
 <div id="graph" style='height:300px'></div>
-
-<%= form_tag(@project, :method => :get) do %>
-  <%= text_field_tag :comment %>
-  <%= submit_tag "Search" %>
-<% end %>
 
 <table class='stats'>
   <tr>

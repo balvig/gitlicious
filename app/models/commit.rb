@@ -44,8 +44,22 @@ class Commit < ActiveRecord::Base
       'bad'
     end
   end
-
+  
+  def problems
+    metrics_log.scan(/(\..+:.+\s-\s.+$)/).map do |results|
+      problem = Problem.new(results.first)
+      problem.author = blame(problem.filename, problem.line_number)
+      problem
+    end
+  end
+  
   private
+  
+  def blame(filename, line_number)
+    checkout
+    output = project.git.lib.send(:command,"blame #{filename} -L#{line_number},#{line_number} -p")
+    output[/author\s(.+)$/,1]
+  end
   
   def checkout
     project.git.checkout(sha)
@@ -68,8 +82,6 @@ class Commit < ActiveRecord::Base
     rescue Git::GitExecuteError => e
       logger.error(e)
   end
-  
-  #\e[31m./app/views/layouts/_tagline.erb:3 - replace instance variable with local variable\e[0m\n\e[31m./
   
   def set_metadata
     metadata = project.git.gcommit(sha)

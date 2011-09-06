@@ -1,14 +1,10 @@
 class Project < ActiveRecord::Base
   has_many :commits
   
-  def target_folders
-    'app/controllers app/helpers app/models lib'
-  end
-  
   def import_commits!
     git.checkout('master')
-    git.fetch if git.branches.remote.size > 0
-    git.log(500).each do |commit|
+    git.pull('origin','master') if git.branches.remote.size > 0
+    git.log(10).each do |commit|
       commits.create(:sha => commit.sha)
     end
   end

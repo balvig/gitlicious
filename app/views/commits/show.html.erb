@@ -1,8 +1,28 @@
 <h2><%= @commit.name %></h2>
 <h3><%= link_to @commit.sha, "https://github.com/cookpad/singapore/commit/#{@commit.sha}", :target => '_blank' %></h3>
-<div class='diff'>
-  <%= simple_format (@commit.metrics_log - @commit.parent.metrics_log).to_s%>
-</div>
+
+
+<table class='stats'>
+  <tr>
+    <th>Author</th>
+    <th>Problem</th>
+    <th>File</th>
+    <th>Line</th>
+  </tr>
+  <% @commit.problems.each do |problem|%>
+    <tr>
+      <td><%= problem.author%></td>
+      <td><%= problem.description%></td>
+      <td><%= problem.filename%></td>
+      <td><%= problem.line_number%></td>
+    </tr>
+  <% end %>
+</table>
+
+
+<!--div class='diff'>
+  <%# simple_format (@commit.metrics_log - @commit.parent.metrics_log).to_s%>
+</div-->
 
 
 <%= link_to 'Back', @project %>

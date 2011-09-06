@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110825011207) do
+ActiveRecord::Schema.define(:version => 20110828222618) do
 
   create_table "commits", :force => true do |t|
     t.string   "name"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(:version => 20110825011207) do
     t.string   "repo_path"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "target_folders", :default => "app/controllers app/helpers app/models lib"
   end
 
 end

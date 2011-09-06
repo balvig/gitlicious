@@ -28,7 +28,7 @@ describe Commit do
       commit.loc.should == 5
     end
   end
-
+  
   describe ".change" do
     before(:each) do
       @project = Factory(:project)
@@ -72,6 +72,18 @@ describe Commit do
       project = Factory(:project)
       commit = project.commits.create!(:sha => '05f41f5eb9970332a1d53f184091be946e5bed1b')
       commit.commited_at.should == Time.parse('Tue Mar 8 14:17:23 2011 +0900')
+    end
+  end
+  
+  describe ".problems" do
+    it "returns an array of existing problems" do
+      project = Factory(:project)
+      commit = project.commits.create!(:sha => 'c756ac8ce6ed1e37b354521467251aa7894e4f7b')
+      commit.problems.size.should == 3
+      commit.problems.last.line_number.should == 2
+      commit.problems.last.filename.should == './app/models/post.rb'
+      commit.problems.last.description.should == 'remove trailing whitespace'
+      commit.problems.last.author.should == 'Jens Balvig'
     end
   end
 end
