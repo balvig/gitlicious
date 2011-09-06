@@ -1,0 +1,10 @@
+<table class='stats'>
+  <tr>
+    <th>Author</th>
+    <th>Problem</th>
+    <th>File</th>
+    <th>Line</th>
+  </tr>
+  <%= render @author.current_problems_in(@project)%>
+</table>
+<%= link_to 'Back', @project %>

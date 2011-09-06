@@ -1,9 +1,13 @@
 class Commit < ActiveRecord::Base
   belongs_to :project
+  belongs_to :author
+  has_many :problems
   validates_uniqueness_of :sha, :scope => :project_id
-  before_save :set_metrics, :on => :create
-  before_save :set_metadata, :on => :create
-
+  before_save :set_metrics, :set_metadata, :on => :create
+  after_save :create_problems
+  
+  scope :recent, order('commited_at DESC')
+  
   def timestamp
     commited_at.to_i * 1000
   end
@@ -45,24 +49,12 @@ class Commit < ActiveRecord::Base
     end
   end
   
-  def problems
-    metrics_log.scan(/(\..+:.+\s-\s.+$)/).map do |results|
-      problem = Problem.new(results.first)
-      problem.author = blame(problem.filename, problem.line_number)
-      problem
-    end
-  end
+
   
   private
-  
-  def blame(filename, line_number)
-    checkout
-    output = project.git.lib.send(:command,"blame #{filename} -L#{line_number},#{line_number} -p")
-    output[/author\s(.+)$/,1]
-  end
-  
+    
   def checkout
-    project.git.checkout(sha)
+    project.git.checkout(sha, :force => true)
   end
   
   def run(command)
@@ -88,8 +80,22 @@ class Commit < ActiveRecord::Base
     self.commited_at = metadata.date
     self.name = metadata.message
     self.parent_sha = metadata.parent.try(:sha)
+    self.author = Author.find_or_create_from_metadata(metadata.author)
     rescue Git::GitExecuteError => e
       logger.error(e)
   end
 
+  def create_problems
+    metrics_log.scan(/(\..+:.+\s-\s.+$)/).map do |results|
+      problem = Problem.build_from_log(results.first)
+      problem.author = Author.find_or_create_by_name_and_email(blame(problem.filename, problem.line_number))  
+      problems << problem
+    end
+  end
+  
+  def blame(filename, line_number)
+    checkout
+    output = project.git.lib.send(:command,"blame #{filename} -L#{line_number},#{line_number} -p")
+    {:name => output[/author\s(.+)$/,1], :email => output[/author-mail\s<(.+)>$/,1]}
+  end
 end

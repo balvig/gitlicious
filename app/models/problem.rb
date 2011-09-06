@@ -1,21 +1,14 @@
-class Problem
+class Problem < ActiveRecord::Base
   
-  attr_accessor :author
+  belongs_to :author
+  belongs_to :commit
   
-  def initialize(output)
-    @output = output
-  end
-  
-  def line_number
-    @output[/:(\d+)/,1].to_i
-  end
-  
-  def filename
-    @output[/^(.+):/,1]
-  end
-  
-  def description
-    @output[/\s-\s(.+)$/,1]
+  def self.build_from_log(output)
+    problem = Problem.new
+    problem.line_number = output[/:(\d+)/,1].to_i
+    problem.filename = output[/^(.+):/,1]
+    problem.description = output[/\s-\s(.+)$/,1]
+    problem
   end
   
 end

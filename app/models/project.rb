@@ -1,10 +1,11 @@
 class Project < ActiveRecord::Base
   has_many :commits
+  has_many :authors, :through => :commits, :uniq => true
   
   def import_commits!
-    git.checkout('master')
-    git.pull('origin','master') if git.branches.remote.size > 0
-    git.log(10).each do |commit|
+    git.checkout('master', :force => true)
+    git.fetch if git.remotes.size > 0
+    git.log(50).each do |commit|
       commits.create(:sha => commit.sha)
     end
   end

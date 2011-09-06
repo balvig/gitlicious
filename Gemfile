@@ -12,8 +12,6 @@ gem 'differ'
 
 
 group :test do
-  gem 'rspec'
-  gem 'rspec-rails'
   gem 'capybara'
   gem 'capybara-envjs'
   gem 'cucumber'
@@ -32,6 +30,8 @@ end
 
 group :development, :test do
   gem 'sqlite3-ruby', :require => 'sqlite3'
+  gem 'rspec'
+  gem 'rspec-rails'
   gem 'pry'
 end
 

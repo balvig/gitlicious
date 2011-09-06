@@ -1,4 +1,4 @@
-<h2><%= @project.name %></h2>
+<h2><%= @project.name %><%= link_to 'Edit', edit_project_path(@project) %></h2>
 
 <% if @project.commits.size > 0 %>
   <ul class='scores'>
@@ -89,4 +89,10 @@
   <% end %>
 </table>
 
-<%= link_to 'Edit', edit_project_path(@project) %>
+<h3>Authors</h3>
+<ul>
+  <% @project.authors.each do |author|%>
+    <li><%= link_to author.name, [@project,author]%> (<%= author.current_problems_in(@project).count%>)</li>
+  <% end %>
+</ul>
+</ul>
