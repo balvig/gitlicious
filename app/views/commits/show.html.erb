@@ -9,14 +9,7 @@
     <th>File</th>
     <th>Line</th>
   </tr>
-  <% @commit.problems.each do |problem|%>
-    <tr>
-      <td><%= problem.author%></td>
-      <td><%= problem.description%></td>
-      <td><%= problem.filename%></td>
-      <td><%= problem.line_number%></td>
-    </tr>
-  <% end %>
+  <%= render @commit.problems%>
 </table>
 
 
