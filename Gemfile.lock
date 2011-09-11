@@ -53,6 +53,7 @@ GEM
     coderay (0.9.8)
     colored (1.2)
     configuration (1.2.0)
+    countloc (0.4.0)
     crack (0.1.8)
     cucumber (0.10.0)
       builder (>= 2.1.2)
@@ -196,6 +197,7 @@ PLATFORMS
 DEPENDENCIES
   capybara
   capybara-envjs
+  countloc
   cucumber
   cucumber-rails (~> 0.3.2)
   database_cleaner

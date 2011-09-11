@@ -15,8 +15,8 @@ class Commit < ActiveRecord::Base
   def metrics
     {
       :flog => ["flog -s --continue #{project.target_folders}",/([\d\.]+): flog\/method average/],
-      :rbp  => ['rails_best_practices .  --without-color',/Found (\d+) errors/]#,
-     # :loc  => ["countloc #{project.target_folders}",/Code LOC: (\d+)/]
+      :rbp  => ['rails_best_practices .  --without-color',/Found (\d+) errors/],
+      :loc  => ["countloc -r #{project.target_folders}",/(\d+)(?=.*\bTOTAL\b)/]
     }
   end
 
