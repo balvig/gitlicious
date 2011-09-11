@@ -12,11 +12,17 @@ class Commit < ActiveRecord::Base
     commited_at.to_i * 1000
   end
 
-  def metrics
+  def metrics  #TODO: their own model and interface to modify/add new
     {
-      :flog => ["flog -s --continue #{project.target_folders}",/([\d\.]+): flog\/method average/],
-      :rbp  => ['rails_best_practices .  --without-color',/Found (\d+) errors/],
-      :loc  => ["countloc -r #{project.target_folders}",/(\d+)(?=.*\bTOTAL\b)/]
+      :flog => {:command => "flog -s --continue #{project.target_folders}",
+                :regexp => /([\d\.]+): flog\/method average/,
+                :improvement_when => -1 },
+      :rbp  => {:command => 'rails_best_practices .  --without-color',
+                :regexp => /Found (\d+) errors/,
+                :improvement_when => -1 },
+      :loc  => {:command => "countloc -r #{project.target_folders}",
+                :regexp => /(\d+)(?=.*\bTOTAL\b)/,
+                :improvement_when => 0 }
     }
   end
 
@@ -25,6 +31,20 @@ class Commit < ActiveRecord::Base
       send(metric) - parent.send(metric)
     else
       0
+    end
+  end
+
+  def meaning_of_change(metric, difference)
+    if metrics[metric][:improvement_when] == 0
+      return :no_applies
+    end
+    normalized_change = difference * metrics[metric][:improvement_when]
+    if normalized_change > 0
+      return :good
+    elsif normalized_change < 0
+      return :bad
+    else
+      return :neutral
     end
   end
 
@@ -42,9 +62,15 @@ class Commit < ActiveRecord::Base
   end
 
   def assessment
-    if metrics.keys.all? {|metric|change(metric) < 0 }
+    if metrics.keys.all? { |metric|
+        meaning_of_change(metric, change(metric)) == :good ||
+        meaning_of_change(metric, change(metric)) == :no_applies
+      }
       'good'
-    elsif metrics.keys.all? {|metric|change(metric) > 0 }
+    elsif metrics.keys.all? { |metric|
+        meaning_of_change(metric, change(metric)) == :bad ||
+        meaning_of_change(metric, change(metric)) == :no_applies
+      }
       'bad'
     end
   end
@@ -65,9 +91,9 @@ class Commit < ActiveRecord::Base
     checkout
     metrics.each do |method,command|
       if send(method).blank?
-        output = run(command.first)
+        output = run(command[:command])
         self.metrics_log = "***#{method}***\n\n#{output}\n\n#{metrics_log}"
-        value = output[command.last,1]
+        value = output[command[:regexp],1]
         send("#{method}=",value)
       end
     end
