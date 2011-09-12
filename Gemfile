@@ -7,7 +7,8 @@ gem 'rails_asset_packager'
 gem 'yaml_db'
 gem 'git'
 gem 'flog'
-gem 'rails_best_practices', '~>0.7.0'
+gem 'rails_best_practices', '~>0.10.1'
+gem 'countloc'
 gem 'differ'
 
 

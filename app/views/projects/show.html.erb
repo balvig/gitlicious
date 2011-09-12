@@ -1,4 +1,4 @@
-<h2><%= @project.name %><%= link_to 'Edit', edit_project_path(@project) %></h2>
+<h2><%= link_to @project.name, edit_project_path(@project) %></h2>
 
 <% if @project.commits.size > 0 %>
   <ul class='scores'>
@@ -14,7 +14,7 @@
   $(function () {
     var flog = [<%=@commits.reverse.each_with_index.map {|c,i| "[#{c.timestamp},#{c.flog}]"}.join(',')%>];
     var rbp = [<%=@commits.reverse.each_with_index.map {|c,i| "[#{c.timestamp},#{c.rbp}]"}.join(',')%>];
-    $.plot($("#graph"), 
+    $.plot($("#graph"),
       [{data:rbp,label:'Rails Bad Practices',yaxis:2},{data:flog,label:'Flog'}], {
         series: {
           lines: { show: true },
@@ -25,9 +25,9 @@
         grid: { hoverable: true, clickable: true }
       }
     );
-    
+
     var previousPoint;
-    
+
     $("#graph").bind("plothover", function (event, pos, item) {
       if (item) {
         if (previousPoint != item.datapoint) {
@@ -40,17 +40,17 @@
       }
       else {
         $("#tooltip").remove();
-        previousPoint = null;            
+        previousPoint = null;
       }
     });
-    
+
     $("#graph").bind("plotclick", function (event, pos, item) {
       if (item) {
         window.location = item.datapoint[0];
       }
     });
 
-    
+
     function showTooltip(x,y,text) {
       $('<div id="tooltip">' + text + '</div>').css( {
           position: 'absolute',
@@ -62,10 +62,10 @@
           opacity: 0.80
       }).appendTo("body");
     }
-    
-    
+
+
   });
-  
+
 </script>
 
 <div id="graph" style='height:300px'></div>
@@ -74,6 +74,7 @@
   <tr>
     <th>Commit</th>
     <th>Comment</th>
+    <th colspan="2">LOC</th>
     <th colspan="2">RBP</th>
     <th colspan="2">Flog</th>
   </tr>
@@ -81,6 +82,8 @@
   <tr class='<%= commit.assessment%>'>
     <td><%= link_to commit.commited_at.to_date, [@project,commit]%></td>
     <td><%= link_to commit.name, [@project,commit]%></td>
+    <td><%= commit.loc%></td>
+    <td class='number'><%= change_indicator(commit, :loc)%></td>
     <td><%= commit.rbp%></td>
     <td class='number'><%= change_indicator(commit, :rbp)%></td>
     <td><%= commit.flog%></td>
