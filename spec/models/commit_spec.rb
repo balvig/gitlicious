@@ -1,11 +1,15 @@
 require 'spec_helper'
 
 describe Commit do
+  before(:each) do
+    require Rails.root.join('db','seeds')
+  end
+  
   describe ".flog" do
-     it "returns the flog score for that commit" do
+     it "returns the average flog/method score for that commit" do
        project = Factory(:project)
        commit = project.commits.create!(:sha => '05f41f5eb9970332a1d53f184091be946e5bed1b')
-       commit.flog.should == 94.2
+       commit.flog.should == 11.8
        commit = project.commits.create!(:sha => '1ecc5075a0e58e5b080c9130522c44fc25906cff')
        commit.flog.should == 1.0
      end
@@ -76,14 +80,28 @@ describe Commit do
    end
    
    describe ".create_problems" do
-     it "assigns an array of problems" do
-       project = Factory(:project)
-       commit = project.commits.create!(:sha => 'c756ac8ce6ed1e37b354521467251aa7894e4f7b')
-       commit.problems.size.should == 3
-       commit.problems.last.line_number.should == 2
-       commit.problems.last.filename.should == './app/models/post.rb'
-       commit.problems.last.description.should == 'remove trailing whitespace'
-       commit.problems.last.author.name.should == 'Jens Balvig'
+     let(:project) { Factory(:project) }
+     context "from rails best practices" do
+       it "creates an array of problems" do
+         commit = project.commits.create!(:sha => 'c756ac8ce6ed1e37b354521467251aa7894e4f7b')
+         commit.problems.size.should == 3
+         commit.problems.last.line_number.should == 2
+         commit.problems.last.filename.should == './app/models/post.rb'
+         commit.problems.last.description.should == 'remove trailing whitespace'
+         commit.problems.last.author.name.should == 'Jens Balvig'
+         commit.problems.last.metric_type.should == 'rbp'
+       end       
+     end
+     context "from cleanup tags" do
+       it "creates an array of problems" do
+         commit = project.commits.create!(:sha => 'f34405cb690d6cec6b3a0743437d9301d3ff7f3d')
+         commit.problems.size.should == 3
+         commit.problems.last.line_number.should == 3
+         commit.problems.last.filename.should == 'app/models/post.rb'
+         commit.problems.last.description.should == 'This could be rewritten using Rails 3 syntax'
+         commit.problems.last.author.name.should == 'Jens Balvig'
+         commit.problems.last.metric_type.should == 'cleanup'
+       end
      end
    end
    

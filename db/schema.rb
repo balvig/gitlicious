@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110906082425) do
+ActiveRecord::Schema.define(:version => 20110915014152) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -30,9 +30,20 @@ ActiveRecord::Schema.define(:version => 20110906082425) do
     t.integer  "rbp"
     t.string   "sha"
     t.datetime "commited_at"
-    t.text     "metrics_log"
+    t.text     "metrics_log", :default => ""
     t.string   "parent_sha"
     t.integer  "author_id"
+  end
+
+  create_table "metrics", :force => true do |t|
+    t.string   "name"
+    t.string   "syntax"
+    t.string   "score_pattern"
+    t.string   "line_number_pattern"
+    t.string   "filename_pattern"
+    t.string   "description_pattern"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "problems", :force => true do |t|
@@ -43,6 +54,7 @@ ActiveRecord::Schema.define(:version => 20110906082425) do
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "metric_type"
   end
 
   create_table "projects", :force => true do |t|

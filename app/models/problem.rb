@@ -6,9 +6,8 @@ class Problem < ActiveRecord::Base
   def self.build_from_log(output)
     problem = Problem.new
     problem.line_number = output[/:(\d+)/,1].to_i
-    problem.filename = output[/^(.+):/,1]
-    problem.description = output[/\s-\s(.+)$/,1]
+    problem.filename = output[/^(.+):\d/,1]
+    problem.description = output[/(\s-\s|#CLEANUP:\s)(.+)$/,2]
     problem
   end
-  
 end

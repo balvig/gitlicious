@@ -6,6 +6,8 @@ class Commit < ActiveRecord::Base
   before_save :set_metrics, :set_metadata, :on => :create
   after_save :create_problems
   
+  attr_accessor :cleanup #For now
+  
   scope :recent, order('commited_at DESC')
   
   def timestamp
@@ -13,13 +15,9 @@ class Commit < ActiveRecord::Base
   end
 
   def metrics
-    {
-      :flog => ["flog -s --continue #{project.target_folders}",/([\d\.]+): flog\/method average/],
-      :rbp  => ['rails_best_practices .  --without-color',/Found (\d+) errors/]#,
-      #:loc  => ['rake stats',/Code LOC: (\d+)/]
-    }
+    Metric.all.map(&:name)
   end
-
+  
   def change(metric)
     if parent && send(metric).present? && parent.send(metric).present?
       send(metric) - parent.send(metric)
@@ -48,9 +46,7 @@ class Commit < ActiveRecord::Base
       'bad'
     end
   end
-  
 
-  
   private
     
   def checkout
@@ -63,12 +59,14 @@ class Commit < ActiveRecord::Base
   
   def set_metrics
     checkout
-    metrics.each do |method,command|
-      if send(method).blank?
-        output = run(command.first)
-        self.metrics_log = "***#{method}***\n\n#{output}\n\n#{metrics_log}"
-        value = output[command.last,1]
-        send("#{method}=",value) 
+    Metric.all.each do |metric|
+      if send(metric.name).blank?
+        puts metric.command
+        output = run(metric.command)
+        self.metrics_log = "***#{metric.name}***\n\n#{output}\n\n#{metrics_log}"
+        #binding.pry
+        #value = output[/#{metric.score_pattern}/,1]
+        #send("#{metric.name}=",value)          
       end
     end
     rescue Git::GitExecuteError => e
@@ -86,9 +84,9 @@ class Commit < ActiveRecord::Base
   end
 
   def create_problems
-    metrics_log.scan(/(\..+:.+\s-\s.+$)/).map do |results|
+    metrics_log.scan(/(.+:\d+.+$)/).map do |results|
       problem = Problem.build_from_log(results.first)
-      problem.author = Author.find_or_create_by_name_and_email(blame(problem.filename, problem.line_number))  
+      problem.author = Author.find_or_create_by_name_and_email(blame(problem.filename, problem.line_number))
       problems << problem
     end
   end
