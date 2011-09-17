@@ -6,3 +6,4 @@ config/database.yml
 .DS_Store
 rerun.txt
 .dropbox
+repos

@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.3'
+gem 'rails', '~>3.0.10'
 gem 'haml'
 gem 'formtastic'
 gem 'rails_asset_packager'
@@ -13,7 +13,6 @@ gem 'differ'
 
 group :test do
   gem 'capybara'
-  gem 'capybara-envjs'
   gem 'cucumber'
   gem 'cucumber-rails', '~>0.3.2'
   gem 'database_cleaner'
