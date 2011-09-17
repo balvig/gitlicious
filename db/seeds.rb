@@ -7,15 +7,15 @@
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
 Metric.create!( :name                 => 'rails_best_practices',
-                :syntax               => 'rails_best_practices .  --without-color',
-                :score_pattern        => 'Found (\d+) errors',
+                :command              => 'rails_best_practices --without-color',
+                :score_pattern        => 'Found (\d+) error',
                 :line_number_pattern  => ':(\d+)',
                 :filename_pattern     => '^(.+):\d',
                 :description_pattern  => '\s-\s(.+)$'
               )
 
 Metric.create!( :name                 => 'cleanup',
-                :syntax               => 'grep -r -n "#CLEANUP:" $FOLDERS',
+                :command              => 'grep -r -n "#CLEANUP:"',
                 :score_pattern        => nil,
                 :line_number_pattern  => ':(\d+)',
                 :filename_pattern     => '^(.+):\d',
@@ -23,7 +23,7 @@ Metric.create!( :name                 => 'cleanup',
               )
 
 Metric.create!( :name                 => 'flog',
-                :syntax               => 'flog -s --continue $FOLDERS',
+                :command              => 'flog -s --continue',
                 :score_pattern        => '([\d\.]+): flog\/method average',
                 :line_number_pattern  => nil,
                 :filename_pattern     => nil,

@@ -1,13 +1,16 @@
 class Problem < ActiveRecord::Base
   
   belongs_to :author
-  belongs_to :commit
+  belongs_to :diagnosis
+  before_save :blame
   
-  def self.build_from_log(output)
-    problem = Problem.new
-    problem.line_number = output[/:(\d+)/,1].to_i
-    problem.filename = output[/^(.+):\d/,1]
-    problem.description = output[/(\s-\s|#CLEANUP:\s)(.+)$/,2]
-    problem
+  private
+  
+  def blame
+    diagnosis.commit.checkout
+    output = diagnosis.commit.project.git.lib.send(:command,"blame #{filename} -L#{line_number},#{line_number} -p")
+    name = output[/author\s(.+)$/,1]
+    email = output[/author-mail\s<(.+)>$/,1]
+    self.author = Author.find_or_create_by_name_and_email(name,email)
   end
 end

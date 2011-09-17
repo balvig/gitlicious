@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110917100226) do
+ActiveRecord::Schema.define(:version => 20110917140211) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(:version => 20110917100226) do
 
   create_table "metrics", :force => true do |t|
     t.string   "name"
-    t.string   "syntax"
+    t.string   "command"
     t.string   "score_pattern"
     t.string   "line_number_pattern"
     t.string   "filename_pattern"
@@ -58,13 +58,13 @@ ActiveRecord::Schema.define(:version => 20110917100226) do
 
   create_table "problems", :force => true do |t|
     t.integer  "author_id"
-    t.integer  "commit_id"
     t.integer  "line_number"
     t.string   "filename"
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "metric_type"
+    t.integer  "diagnosis_id"
   end
 
   create_table "projects", :force => true do |t|

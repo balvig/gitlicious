@@ -1,15 +1,24 @@
 class Diagnosis < ActiveRecord::Base
   belongs_to :commit
   belongs_to :metric
-  before_save :set_log, :set_score
+  has_many :problems
+  
+  before_save :run_metric_and_save_results
+  
+  def change
+    if commit.parent
+      score - commit.parent.diagnoses.where(:metric => metric).score
+    else
+      0
+    end
+  end
   
   private
   
-  def set_log
-    self.log = metric.run(commit, commit.project.target_folders)
-  end
-  
-  def set_score
-    self.score = metric.score_from_log(log)
+  def run_metric_and_save_results
+    results = metric.run(commit)
+    self.log = results[:log]
+    self.score = results[:score]
+    self.problems = results[:problems]
   end
 end

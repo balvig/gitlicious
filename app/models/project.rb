@@ -23,7 +23,7 @@ class Project < ActiveRecord::Base
   end
   
   def run(command)
-    `cd #{repo_path} && #{command}`
+    `cd #{repo_path} && #{command} #{target_folders}`
   end
   
   private
