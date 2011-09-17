@@ -7,14 +7,14 @@ describe Project do
     
     it "imports new commits" do
       project.import_commits!
-      project.commits.size.should == 2
-      project.commits.map(&:sha).should == ['05f41f5eb9970332a1d53f184091be946e5bed1b','1ecc5075a0e58e5b080c9130522c44fc25906cff']
+      project.commits.size.should == 5
+      project.commits.map(&:sha).should == ["a07ddbe7c343218d528b38d2a3a2d819d9c362f6", "f34405cb690d6cec6b3a0743437d9301d3ff7f3d", "c756ac8ce6ed1e37b354521467251aa7894e4f7b", "05f41f5eb9970332a1d53f184091be946e5bed1b", "1ecc5075a0e58e5b080c9130522c44fc25906cff"]
     end
     it "doesn't duplicate existing commits" do
-      project.commits.create!(:name => '05f41f5eb9970332a1d53f184091be946e5bed1b')
+      project.commits.create!(:sha => '05f41f5eb9970332a1d53f184091be946e5bed1b')
       project.import_commits!
       project.reload
-      project.commits.size.should == 2
+      project.commits.size.should == 5
     end
   end
   
