@@ -22,6 +22,10 @@ class Project < ActiveRecord::Base
     commits.order('commited_at DESC').first.send(metric)
   end
   
+  def run(command)
+    `cd #{repo_path} && #{command}`
+  end
+  
   private
   
   def repo_path

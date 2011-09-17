@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110917092533) do
+ActiveRecord::Schema.define(:version => 20110917100226) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -34,6 +34,15 @@ ActiveRecord::Schema.define(:version => 20110917092533) do
     t.text     "metrics_log", :default => ""
     t.string   "parent_sha"
     t.integer  "author_id"
+  end
+
+  create_table "diagnoses", :force => true do |t|
+    t.integer  "commit_id"
+    t.integer  "metric_id"
+    t.text     "log"
+    t.decimal  "score"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "metrics", :force => true do |t|

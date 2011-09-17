@@ -6,7 +6,7 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
-Metric.create!( :name                 => 'rbp',
+Metric.create!( :name                 => 'rails_best_practices',
                 :syntax               => 'rails_best_practices .  --without-color',
                 :score_pattern        => 'Found (\d+) errors',
                 :line_number_pattern  => ':(\d+)',

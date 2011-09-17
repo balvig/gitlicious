@@ -2,8 +2,9 @@ class Commit < ActiveRecord::Base
   belongs_to :project
   belongs_to :author
   has_many :problems
+  has_many :diagnoses
   validates_uniqueness_of :sha, :scope => :project_id
-  before_save :set_metrics, :set_metadata, :on => :create
+  before_save :set_metadata, :on => :create
   after_save :create_problems
   
   attr_accessor :cleanup #For now
@@ -46,31 +47,16 @@ class Commit < ActiveRecord::Base
       'bad'
     end
   end
+  
+  def run(command)
+    checkout
+    project.run(command)
+  end
 
   private
     
   def checkout
     project.git.checkout(sha, :force => true)
-  end
-  
-  def run(command)
-    `cd #{project.repo_path} && #{command}`
-  end
-  
-  def set_metrics
-    checkout
-    Metric.all.each do |metric|
-      if send(metric.name).blank?
-        puts metric.command
-        output = run(metric.command)
-        self.metrics_log = "***#{metric.name}***\n\n#{output}\n\n#{metrics_log}"
-        #binding.pry
-        #value = output[/#{metric.score_pattern}/,1]
-        #send("#{metric.name}=",value)          
-      end
-    end
-    rescue Git::GitExecuteError => e
-      logger.error(e)
   end
   
   def set_metadata
