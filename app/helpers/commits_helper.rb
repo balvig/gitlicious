@@ -1,7 +1,7 @@
 module CommitsHelper
   
-  def change_indicator(commit,metric)
-    change = commit.change(metric)
+  def change_indicator(diagnosis)
+    change = diagnosis.change
     str = change.to_s
     
     if change > 0

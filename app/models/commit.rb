@@ -1,10 +1,10 @@
 class Commit < ActiveRecord::Base
   belongs_to :project
   belongs_to :author
-  has_many :diagnoses
+  has_many :diagnoses, :dependent => :destroy
   has_many :problems, :through => :diagnoses
   validates_uniqueness_of :sha, :scope => :project_id
-  before_save :set_metadata#, :create_diagnoses
+  before_save :set_metadata, :create_diagnoses
   
   scope :recent, order('commited_at DESC')
   
@@ -17,11 +17,11 @@ class Commit < ActiveRecord::Base
   end
   
   def assessment
-    if metrics.keys.all? {|metric|change(metric) < 0 }
-      'good'
-    elsif metrics.keys.all? {|metric|change(metric) > 0 }
-      'bad'
-    end
+    # if metrics.keys.all? {|metric|change(metric) < 0 }
+    #   'good'
+    # elsif metrics.keys.all? {|metric|change(metric) > 0 }
+    #   'bad'
+    # end
   end
   
   def checkout
@@ -38,6 +38,12 @@ class Commit < ActiveRecord::Base
     self.author = Author.find_or_create_from_metadata(metadata.author)
     rescue Git::GitExecuteError => e
       logger.error(e)
+  end
+  
+  def create_diagnoses
+    Metric.all.each do |m|
+      diagnoses.build(:metric => m)
+    end
   end
   
 end

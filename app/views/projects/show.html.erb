@@ -74,17 +74,18 @@
   <tr>
     <th>Commit</th>
     <th>Comment</th>
-    <th colspan="2">RBP</th>
-    <th colspan="2">Flog</th>
+    <% Metric.all.each do |metric|%>
+      <th colspan="2"><%= metric.name%></th>
+    <% end %>
   </tr>
   <% @commits.each do |commit|%>
   <tr class='<%= commit.assessment%>'>
     <td><%= link_to commit.commited_at.to_date, [@project,commit]%></td>
     <td><%= link_to commit.name, [@project,commit]%></td>
-    <td><%= commit.rbp%></td>
-    <td class='number'><%= change_indicator(commit, :rbp)%></td>
-    <td><%= commit.flog%></td>
-    <td class='number'><%= change_indicator(commit, :flog)%></td>
+    <% commit.diagnoses.each do |diagnosis|%>
+      <td><%= diagnosis.score%></td>
+      <td class='number'><%= change_indicator(diagnosis)%></td>
+    <% end %>
   </tr>
   <% end %>
 </table>

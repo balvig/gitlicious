@@ -1,6 +1,7 @@
 class Metric < ActiveRecord::Base
   
   def run(commit)
+    commit.checkout
     output = commit.project.run(command)
     {:log => output, :score => parse_score(output), :problems => parse_problems(output)}
   end

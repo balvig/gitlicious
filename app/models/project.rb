@@ -1,5 +1,5 @@
 class Project < ActiveRecord::Base
-  has_many :commits
+  has_many :commits, :dependent => :destroy
   has_many :authors, :through => :commits, :uniq => true
   
   after_create :clone_repository
@@ -23,7 +23,7 @@ class Project < ActiveRecord::Base
   end
   
   def run(command)
-    `cd #{repo_path} && #{command} #{target_folders}`
+    `cd #{repo_path} && #{command}`
   end
   
   private
