@@ -4,7 +4,7 @@ class Report < ActiveRecord::Base
   has_many :problems, :through => :results
 
   validates_uniqueness_of :sha, :scope => :project_id
-  
+
   before_validation :run_metrics, :set_sha
   
   default_scope order('created_at DESC')

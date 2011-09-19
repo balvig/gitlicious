@@ -27,7 +27,7 @@
       <% @project.metrics.each do |metric|%>
       <li><%= metric.name%> <em><%= @reports.first.results.find_by_metric_id(metric).score if @reports.size > 0%></em></li>
       <% end %>
-    </ul>   
+    </ul>
     <h3>Authors</h3>
     <ul class='media-grid'>
       <% @project.authors.each do |author| %>

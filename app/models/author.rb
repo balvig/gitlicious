@@ -1,7 +1,7 @@
 class Author < ActiveRecord::Base
 
   has_many :problems
-  
+
   def projects
     Project.all
   end
@@ -11,6 +11,6 @@ class Author < ActiveRecord::Base
   end
   
   def current_problems_in(project)
-    project.reports.first.problems.where(:author_id => self)
+    project.reports.size > 0 ? project.reports.first.problems.where(:author_id => self) : []
   end
 end
