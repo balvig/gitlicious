@@ -5,15 +5,15 @@ describe Diagnosis do
   let(:project) { Factory(:project) }
   
   describe ".run_metric_and_save_results" do
-    let(:commit) { project.commits.create!(:sha => 'f34405cb690d6cec6b3a0743437d9301d3ff7f3d') }
+    let(:commit) { project.commits.create!(:sha => '28f582f7fb93b76da0af7699dddd573b8c294356') }
     
     context "flog" do
       let(:metric) { Metric.find_by_name('flog') }
       
       it "stores the average flog/method score for the associated commit" do
         diagnosis = Diagnosis.create!(:commit => commit, :metric => metric)
-        diagnosis.log.should == "    96.9: flog total\n    10.8: flog/method average\n"
-        diagnosis.score.should == 10.8
+        diagnosis.log.should == "   102.9: flog total\n     8.6: flog/method average\n"
+        diagnosis.score.should == 8.6
         diagnosis.problems.size.should == 0
       end
     end
@@ -23,10 +23,10 @@ describe Diagnosis do
       
       it "stores the number of cleanup tags for the associated commit" do
         diagnosis = Diagnosis.create!(:commit => commit, :metric => metric)
-        diagnosis.log.should == "app/models/post.rb:3:  #CLEANUP: This could be rewritten using Rails 3 syntax\n"
-        diagnosis.score.should == 0
+        diagnosis.log.should == "app/models/post.rb:5:  def find_valid_comments #CLEANUP: This could be rewritten using Rails 3 syntax\n"
+        # diagnosis.score.should == 1
         diagnosis.problems.size.should == 1
-        diagnosis.problems.first.line_number.should == 3
+        diagnosis.problems.first.line_number.should == 5
         diagnosis.problems.first.filename.should == 'app/models/post.rb'
         diagnosis.problems.first.description.should == 'This could be rewritten using Rails 3 syntax'
         diagnosis.problems.first.author.name.should == 'Jens Balvig'
@@ -38,25 +38,32 @@ describe Diagnosis do
       
       it "stores the number of rails best practice problems for the associated commit" do
         diagnosis = Diagnosis.create!(:commit => commit, :metric => metric)
-        diagnosis.log.should == "./app/models/post.rb:5 - keep finders on their own model\n./app/controllers/posts_controller.rb:15,36,58,74 - use before_filter for show,edit,update,destroy\n\nPlease go to http://rails-bestpractices.com to see more useful Rails Best Practices.\n\nFound 2 errors.\n"
-        diagnosis.score.should == 2
-        diagnosis.problems.size.should == 2
-        diagnosis.problems.first.line_number.should == 5
-        diagnosis.problems.first.filename.should == './app/models/post.rb'
-        diagnosis.problems.first.description.should == 'keep finders on their own model'
+        diagnosis.log.should == "./app/controllers/posts_controller.rb:50 - simplify render in controllers\n./app/controllers/posts_controller.rb:66 - simplify render in controllers\n./app/controllers/posts_controller.rb:15,36,58,74 - use before_filter for show,edit,update,destroy\n./app/helpers/application_helper.rb:1 - remove empty helpers\n./app/helpers/posts_helper.rb:1 - remove empty helpers\n./db/schema.rb:15 - always add db index (comments => [post_id])\n./app/models/post.rb:6 - keep finders on their own model\n./app/models/comment.rb:3 - remove trailing whitespace\n./app/models/post.rb:2 - remove trailing whitespace\n\nPlease go to http://rails-bestpractices.com to see more useful Rails Best Practices.\n\nFound 9 errors.\n"
+        diagnosis.score.should == 9
+        diagnosis.problems.size.should == 9
+        diagnosis.problems.first.line_number.should == 50
+        diagnosis.problems.first.filename.should == 'app/controllers/posts_controller.rb'
+        diagnosis.problems.first.description.should == 'simplify render in controllers'
         diagnosis.problems.first.author.name.should == 'Jens Balvig'
       end
     end
-  
-    context "loc" do
-      it "stores the number of lines of codes for that commit" do
-        pending
+    
+    context "rcov" do
+      let(:metric) { Metric.find_by_name('rcov') }
+      
+      it "stores the number of uncovered code lines for the associated commit" do
+        diagnosis = Diagnosis.create!(:commit => commit, :metric => metric)
+        diagnosis.score.should == 9
+        diagnosis.problems.size.should == 9
+        diagnosis.problems.first.line_number.should == 5
+        diagnosis.problems.first.filename.should == 'app/models/comment.rb'
+        diagnosis.problems.first.description.should == 'if spam?'
+        diagnosis.problems.first.author.name.should == 'Jens Balvig'
       end
     end
   end
   
   describe ".change" do
-    
     let(:flog) { Metric.find_by_name('flog') }
     
     context "previous commit exists" do
@@ -77,7 +84,5 @@ describe Diagnosis do
         commit.diagnoses.create!(:metric => flog).change.should == 0
       end
     end
-    
   end
-  
 end

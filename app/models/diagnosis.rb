@@ -6,7 +6,7 @@ class Diagnosis < ActiveRecord::Base
   before_save :run_metric_and_cache_results
   
   def weighted_score
-    score * metric.weight
+    @weighted_score ||= score * metric.weight
   end
   
   def change

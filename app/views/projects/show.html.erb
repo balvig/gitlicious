@@ -1,12 +1,21 @@
 <div class="page-header">
   <h1><%= @project.name %></h1>
+  <%= button_to 'Update', import_commits_project_path, :method => :put, :disable_with => 'Updating...', :class => 'btn primary'%>
 </div>
 
-<%# button_to 'Update', import_commits_project_path, :method => :put, :disable_with => 'Updating...'%>
 <div class="row">
   <div class="span4 stats">
     <h2>Total Score</h2>
-    <p><%= @commits.first.total_score %> <span class="label success">Great!</span></p>
+    <p>
+      <%= @project.current_score %> 
+      <% if @project.current_score < 2000 %>
+        <span class="label success">Great!</span>
+      <% elsif @project.current_score < 5000 %>
+        <span class="label warning">Warning</span>
+      <% else %>
+        <span class="label important">Critical</span>
+      <% end %>
+    </p>
     <hr>
     <h3>Metrics <small><%= link_to "(Edit)", [@project,:metrics] %></small></h3>
     <ul>
@@ -27,7 +36,8 @@
 </div>
 
 
-<!--hr>
+
+<hr>
 
 <table class='zebra-striped'>
   <tr>
@@ -47,4 +57,4 @@
     <td><%= commit.total_score %></td>
   </tr>
   <% end %>
-</table-->
+</table>

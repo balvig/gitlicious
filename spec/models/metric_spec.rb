@@ -17,7 +17,7 @@ describe Metric do
         results[:score].should == 1
         results[:problems].size.should == 1
         problem = results[:problems].first
-        problem.filename.should == './app/models/post.rb'
+        problem.filename.should == 'app/models/post.rb'
         problem.line_number.should == 5
         problem.description.should == 'keep finders on their own model'
       end
@@ -27,7 +27,7 @@ describe Metric do
       let(:metric) { Metric.find_by_name!('cleanup') }
       
       it "runs the command line tool and parses the output" do
-        project.should_receive(:run).with('grep -r -n "#CLEANUP:" app/controllers app/helpers app/models lib').and_return("app/models/post.rb:33:  #CLEANUP: This could be rewritten using Rails 3 syntax")
+        project.should_receive(:run).with("grep -r -n '#CLEANUP:' app/controllers app/helpers app/models lib").and_return("app/models/post.rb:33:  #CLEANUP: This could be rewritten using Rails 3 syntax")
         commit.should_receive(:checkout)
         results = metric.run(commit)
         results[:log].should == "app/models/post.rb:33:  #CLEANUP: This could be rewritten using Rails 3 syntax"

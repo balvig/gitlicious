@@ -2,7 +2,6 @@ class CommitsController < ApplicationController
   
   before_filter :find_project
 
-
   def show
     @commit = @project.commits.find(params[:id])
 

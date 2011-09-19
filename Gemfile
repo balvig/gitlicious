@@ -8,8 +8,7 @@ gem 'yaml_db'
 gem 'git'
 gem 'flog'
 gem 'rails_best_practices'
-gem 'differ'
-
+gem 'open4'
 
 group :test do
   gem 'capybara'
@@ -32,6 +31,7 @@ group :development, :test do
   gem 'rspec'
   gem 'rspec-rails'
   gem 'pry'
+  gem 'rcov'
 end
 
 group :production do

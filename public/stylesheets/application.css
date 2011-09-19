@@ -27,3 +27,11 @@ footer p{
   color:#666;
   font-size:0.8em;
 }
+
+.page-header {position:relative;}
+
+.page-header .button_to {
+  position:absolute;
+  right:0px;
+  top:5px;
+}

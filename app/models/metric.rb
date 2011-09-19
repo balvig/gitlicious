@@ -1,5 +1,7 @@
 class Metric < ActiveRecord::Base
   
+  belongs_to :project
+  has_many :diagnoses, :dependent => :destroy
   default_scope order('weight DESC')
   
   def run(commit)
@@ -15,7 +17,7 @@ class Metric < ActiveRecord::Base
   end
   
   def parse_problems(output)
-    output.scan(/.+:\d+.+$/).map do |line|
+    output.scan(/^\S.+:\d+.+$/).map do |line|
       problem = Problem.new
       problem.line_number = line[/#{line_number_pattern}/,1].to_i
       problem.filename = line[/#{filename_pattern}/,1]

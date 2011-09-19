@@ -2,4 +2,12 @@
   <td><%= problem.description%></td>
   <td><%= problem.filename%></td>
   <td><%= problem.line_number%></td>
+  <td>
+    <% if problem.covered? %>
+      <span class='label success'>OK</span>
+    <% else %>
+      <span class='label important'>No spec</span>
+    <% end %>
+  </td>
 </tr>
+

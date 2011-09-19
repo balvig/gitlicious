@@ -4,7 +4,13 @@ class Problem < ActiveRecord::Base
   belongs_to :diagnosis
   before_save :blame
   
+  validates_presence_of :filename, :line_number
+  
   scope :prioritized, joins(:diagnosis => :metric).order('metrics.weight DESC')
+  
+  def covered?
+    !diagnosis.commit.diagnoses.joins(:metric).where(:metrics => {:name => 'rcov'}).first.problems.exists?(:filename => filename, :line_number => line_number)
+  end
   
   private
   
