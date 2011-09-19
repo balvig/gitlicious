@@ -1,6 +1,5 @@
-Factory.define :commit do |f|
+Factory.define :report do |f|
   f.sha {Factory.next(:sha)}
-  f.association :project
 end
 
 

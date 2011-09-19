@@ -1,33 +1,36 @@
 class Project < ActiveRecord::Base
-  has_many :commits, :dependent => :destroy
-  has_many :authors, :through => :commits, :uniq => true
+
   has_many :metrics
+  has_many :reports, :dependent => :destroy
   
   before_create :set_name
   after_create :clone_repository, :create_default_metrics
   after_destroy :remove_repository
   
   accepts_nested_attributes_for :metrics
-
-  def problem_count
-    commits.last.try(:problems).try(:count) || 0
+  
+  def authors
+    Author.all
   end
-
-  def import_commits!
+  
+  def update_git_repository
     git.checkout('master', :force => true)
     if git.remotes.size > 0
       git.fetch
       git.pull
     end
-    git.log(1).each {|commit|commits.create(:sha => commit.sha)}
   end
-  
+    
   def git
     @git ||= Git.open(repo_path)
   end
   
+  def problem_count
+    reports.size > 0 ? reports.last.problems.count : 0
+  end
+  
   def current_score
-    commits.first.try(:total_score) || 0
+    reports.first.try(:total_score) || 0
   end
   
   def run(command)

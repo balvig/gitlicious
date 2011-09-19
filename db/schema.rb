@@ -10,36 +10,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110919064503) do
+ActiveRecord::Schema.define(:version => 20110919105921) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "commits", :force => true do |t|
-    t.string   "name"
-    t.integer  "project_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.decimal  "flog"
-    t.integer  "loc"
-    t.string   "comment"
-    t.integer  "rbp"
-    t.string   "sha"
-    t.datetime "commited_at"
-    t.text     "metrics_log", :default => ""
-    t.string   "parent_sha"
-    t.integer  "author_id"
-  end
-
-  create_table "diagnoses", :force => true do |t|
-    t.integer  "commit_id"
-    t.integer  "metric_id"
-    t.text     "log"
-    t.decimal  "score"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -65,7 +40,7 @@ ActiveRecord::Schema.define(:version => 20110919064503) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "metric_type"
-    t.integer  "diagnosis_id"
+    t.integer  "result_id"
   end
 
   create_table "projects", :force => true do |t|
@@ -74,6 +49,31 @@ ActiveRecord::Schema.define(:version => 20110919064503) do
     t.datetime "updated_at"
     t.text     "target_folders", :default => "app/controllers app/helpers app/models lib"
     t.string   "repo_url"
+  end
+
+  create_table "reports", :force => true do |t|
+    t.string   "name"
+    t.integer  "project_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.decimal  "flog"
+    t.integer  "loc"
+    t.string   "comment"
+    t.integer  "rbp"
+    t.string   "sha"
+    t.datetime "commited_at"
+    t.text     "metrics_log", :default => ""
+    t.string   "parent_sha"
+    t.integer  "author_id"
+  end
+
+  create_table "results", :force => true do |t|
+    t.integer  "report_id"
+    t.integer  "metric_id"
+    t.text     "log"
+    t.decimal  "score",      :default => 0.0
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

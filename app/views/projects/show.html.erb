@@ -5,7 +5,7 @@
 
 <div class="page-header">
   <h1><%= @project.name %></h1>
-  <%= button_to 'Update', import_commits_project_path, :method => :put, :disable_with => 'Updating...', :class => 'btn primary'%>
+  <%= button_to 'Generate Report', [@project, :reports], :method => :post, :disable_with => 'Generating...', :class => 'btn primary'%>
 </div>
 
 <div class="row">
@@ -25,7 +25,7 @@
     <h3>Metrics <small><%= link_to "(Edit)", [@project,:metrics] %></small></h3>
     <ul>
       <% @project.metrics.each do |metric|%>
-      <li><%= metric.name%> - <em><%= metric.weight%></em></li>
+      <li><%= metric.name%> <em><%= @reports.first.results.find_by_metric_id(metric).score if @reports.size > 0%></em></li>
       <% end %>
     </ul>   
     <h3>Authors</h3>
@@ -36,16 +36,17 @@
     </ul>
   </div>
   <div class="span16">
-    <div id="graph" style='height:350px' data-metrics='[<%= @commits.each.map {|c| "[#{c.timestamp},#{c.total_score}]"}.join(',')%>]'></div>    
+    <div id="graph" style='height:350px' data-metrics='[<%= @reports.each.map {|r| "[#{r.timestamp},#{r.total_score}]"}.join(',')%>]'></div>    
   </div>
 </div>
 
 <% if @author %>
+  <br>
   <div class="page-header">
   <h3>My Tasks</h3>
   </div>
-  <% @author.current_problems_in(@project).group_by(&:diagnosis).each do |diagnosis, problems| %>
-    <h4><%= diagnosis.metric.name%></h4>
+  <% @author.current_problems_in(@project).group_by(&:result).each do |result, problems| %>
+    <h4><%= result.metric.name%></h4>
     <table class='zebra-striped'>
       <thead>
         <tr>

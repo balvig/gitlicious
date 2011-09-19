@@ -1,8 +1,7 @@
 Gitlicious::Application.routes.draw do
 
   resources :projects do
-    put :import_commits, :on => :member
-    resources :commits, :only => :show
+    resources :reports, :only => :create
     resources :metrics
   end
   

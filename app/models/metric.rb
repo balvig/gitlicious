@@ -1,13 +1,17 @@
 class Metric < ActiveRecord::Base
   
   belongs_to :project
-  has_many :diagnoses, :dependent => :destroy
+  has_many :results
+
   default_scope order('weight DESC')
   
-  def run(commit)
-    commit.checkout
-    output = commit.project.run(command)
-    {:log => output, :score => parse_score(output), :problems => parse_problems(output)}
+  def run
+    output = project.run(command)
+    result = results.build
+    result.log = output
+    result.problems = parse_problems(output)
+    result.score = parse_score(output) || result.problems.size
+    result
   end
   
   private
