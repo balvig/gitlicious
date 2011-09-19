@@ -1,5 +1,5 @@
 class Author < ActiveRecord::Base
-  
+
   has_many :problems
   
   def projects

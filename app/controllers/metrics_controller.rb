@@ -1,5 +1,5 @@
 class MetricsController < ApplicationController
-  
+
   before_filter :find_project
   
   def index

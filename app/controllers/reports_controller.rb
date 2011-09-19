@@ -4,12 +4,15 @@ class ReportsController < ApplicationController
 
   def create
     @report = @project.reports.build
-    @report.save
-    redirect_to(@project, :notice => "Report created for #{@report.created_at}")
+    if @report.save
+      redirect_to(:back, :notice => "Report created for #{@report.created_at}")
+    else
+      redirect_to(:back, :alert => "Could not create report")
+    end
   end
-  
+
   private
-  
+
   def find_project
     @project = Project.find(params[:project_id])
   end

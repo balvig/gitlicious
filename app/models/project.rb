@@ -15,10 +15,7 @@ class Project < ActiveRecord::Base
   
   def update_git_repository
     git.checkout('master', :force => true)
-    if git.remotes.size > 0
-      git.fetch
-      git.pull
-    end
+    run('git pull') if git.remotes.size > 0 #Not sure why gem git.pull says "up to date"
   end
     
   def git

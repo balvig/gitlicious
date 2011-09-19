@@ -1,5 +1,5 @@
 class Problem < ActiveRecord::Base
-  
+
   belongs_to :author
   belongs_to :result
   before_save :blame
