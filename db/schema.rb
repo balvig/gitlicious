@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110919105921) do
+ActiveRecord::Schema.define(:version => 20110919123826) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -47,7 +47,6 @@ ActiveRecord::Schema.define(:version => 20110919105921) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "target_folders", :default => "app/controllers app/helpers app/models lib"
     t.string   "repo_url"
   end
 
@@ -56,15 +55,7 @@ ActiveRecord::Schema.define(:version => 20110919105921) do
     t.integer  "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "flog"
-    t.integer  "loc"
-    t.string   "comment"
-    t.integer  "rbp"
     t.string   "sha"
-    t.datetime "commited_at"
-    t.text     "metrics_log", :default => ""
-    t.string   "parent_sha"
-    t.integer  "author_id"
   end
 
   create_table "results", :force => true do |t|

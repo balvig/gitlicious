@@ -52,10 +52,9 @@ class ProjectsController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
-  
+
   private
-  
+
   def find_author
     @author = Author.find(params[:author_id]) if params[:author_id]
   end

@@ -2,7 +2,7 @@ class Project < ActiveRecord::Base
 
   has_many :metrics
   has_many :reports, :dependent => :destroy
-  
+
   before_create :set_name
   after_create :clone_repository, :create_default_metrics
   after_destroy :remove_repository
