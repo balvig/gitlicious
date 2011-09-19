@@ -5,6 +5,10 @@ class Project < ActiveRecord::Base
   after_create :clone_repository
   after_destroy :remove_repository
   
+  def metrics
+    Metric.all
+  end
+  
   def import_commits!
     git.checkout('master', :force => true)
     if git.remotes.size > 0

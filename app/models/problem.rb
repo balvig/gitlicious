@@ -4,6 +4,8 @@ class Problem < ActiveRecord::Base
   belongs_to :diagnosis
   before_save :blame
   
+  scope :prioritized, joins(:diagnosis => :metric).order('metrics.weight DESC')
+  
   private
   
   def blame

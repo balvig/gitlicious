@@ -5,6 +5,6 @@ class Author < ActiveRecord::Base
   end
   
   def current_problems_in(project)
-    project.commits.recent.first.problems.where(:author_id => self)
+    project.commits.first.problems.where(:author_id => self)
   end
 end

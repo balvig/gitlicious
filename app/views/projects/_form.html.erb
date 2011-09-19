@@ -1,4 +1,16 @@
-<%= semantic_form_for(@project) do |f| %>
-  <%= f.inputs%>
-  <%= f.buttons%>
+<%= simple_form_for(@project) do |f| %>
+  <fieldset>
+    <div class="clearfix">
+      <%= f.label :repo_url %>
+      <%= f.input :repo_url, :label => false, :placeholder => 'Ex: git://github.com/balvig/gitlicious.git', :input_html => {:class => 'span6'} %>
+    </div>
+    <div class="clearfix">
+      <%= f.label :name %>
+      <%= f.input :name, :label => false, :input_html => {:class => 'span6'}  %>    
+    </div>
+    <div class="actions">
+      <%= f.submit :class => 'btn primary', :disable_with => 'Cloning...' %>
+      <%= link_to 'Back', projects_path, :class => 'btn' %>    
+    </div>
+  </fieldset>
 <% end %>

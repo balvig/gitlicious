@@ -1,5 +1,7 @@
 class Metric < ActiveRecord::Base
   
+  default_scope order('weight DESC')
+  
   def run(commit)
     commit.checkout
     output = commit.project.run(command)

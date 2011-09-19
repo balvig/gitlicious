@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem 'rails', '~>3.0.10'
 gem 'haml'
-gem 'formtastic'
+gem 'simple_form'
 gem 'rails_asset_packager'
 gem 'yaml_db'
 gem 'git'

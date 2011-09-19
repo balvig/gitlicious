@@ -6,7 +6,7 @@ class Commit < ActiveRecord::Base
   validates_uniqueness_of :sha, :scope => :project_id
   before_save :set_metadata, :create_diagnoses
   
-  scope :recent, order('commited_at DESC')
+  default_scope order('commited_at DESC')
   
   def timestamp
     commited_at.to_i * 1000
@@ -45,7 +45,7 @@ class Commit < ActiveRecord::Base
   end
   
   def create_diagnoses
-    Metric.all.each do |m|
+    project.metrics.each do |m|
       diagnoses.build(:metric => m)
     end
   end

@@ -1,74 +1,28 @@
-<h2><%= @project.name %><%= link_to 'Edit', edit_project_path(@project) %></h2>
+<div class="page-header">
+  <h1><%= @project.name %></h1>
+</div>
 
-<% if @project.commits.size > 0 %>
-  <ul class='scores'>
-    <li><%= @project.current_score(:rbp)%> <span>problems</span></li>
-    <li><%= @project.current_score(:flog)%> <span>complexity/method</span></li>
-  </ul>
-<% end %>
+<%# button_to 'Update', import_commits_project_path, :method => :put, :disable_with => 'Updating...'%>
+<div class="row">
+  <div class="span4 stats">
+    <h2>Total Score</h2>
+    <p><%= @commits.first.total_score %></p>
+    <h3>Metrics</h3>
+    <ul>
+      <% @project.metrics.each do |metric|%>
+      <li><%= metric.name%> - <em><%= metric.weight%></em></li>
+      <% end %>
+    </ul>   
+  </div>
+  <div class="span16">
+    <div id="graph" style='height:350px' data-metrics='[<%= @commits.each.map {|c| "[#{c.timestamp},#{c.total_score}]"}.join(',')%>]'></div>    
+  </div>
+</div>
 
-<%= button_to 'Update', import_commits_project_path, :method => :put, :disable_with => 'Updating...'%>
 
+<hr>
 
-<script type="text/javascript">
-  $(function () {
-    var data = [<%=@commits.reverse.each.map {|c| "[#{c.timestamp},#{c.total_score}]"}.join(',')%>];
-    $.plot($("#graph"), 
-      data, {
-        series: {
-          lines: { show: true },
-          points: { show: false }
-        },
-        xaxis: {mode:"time",	timeformat: "%y/%m/%d"},
-        grid: { hoverable: true, clickable: true }
-      }
-    );
-    
-    var previousPoint;
-    
-    $("#graph").bind("plothover", function (event, pos, item) {
-      if (item) {
-        if (previousPoint != item.datapoint) {
-          previousPoint = item.datapoint;
-          $("#tooltip").remove();
-          var x = item.datapoint[0];
-          var y = item.datapoint[1].toFixed(2);
-          showTooltip(item.pageX, item.pageY," build #" + x + ": " + y);
-        }
-      }
-      else {
-        $("#tooltip").remove();
-        previousPoint = null;            
-      }
-    });
-    
-    $("#graph").bind("plotclick", function (event, pos, item) {
-      if (item) {
-        window.location = item.datapoint[0];
-      }
-    });
-
-    
-    function showTooltip(x,y,text) {
-      $('<div id="tooltip">' + text + '</div>').css( {
-          position: 'absolute',
-          top: y + 5,
-          left: x + 5,
-          border: '1px solid #fdd',
-          padding: '2px',
-          'background-color': '#fee',
-          opacity: 0.80
-      }).appendTo("body");
-    }
-    
-    
-  });
-  
-</script>
-
-<div id="graph" style='height:300px'></div>
-
-<table class='stats'>
+<table class='zebra-striped'>
   <tr>
     <th>Commit</th>
     <th>Comment</th>
@@ -89,6 +43,8 @@
   </tr>
   <% end %>
 </table>
+
+<hr>
 
 <h3>Authors</h3>
 <ul>
