@@ -9,7 +9,7 @@ class Metric < ActiveRecord::Base
   private
   
   def parse_score(output)
-    output[/#{score_pattern}/,1].to_f
+    output[/#{score_pattern}/,1].to_f if score_pattern?
   end
   
   def parse_problems(output)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110917140211) do
+ActiveRecord::Schema.define(:version => 20110918071221) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(:version => 20110917140211) do
     t.string   "description_pattern"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "weight",              :default => 1.0
   end
 
   create_table "problems", :force => true do |t|

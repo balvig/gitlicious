@@ -16,6 +16,10 @@ class Commit < ActiveRecord::Base
     @parent ||= project.commits.where(:sha => parent_sha).first
   end
   
+  def total_score
+    diagnoses.all.sum(&:weighted_score)
+  end
+  
   def assessment
     # if metrics.keys.all? {|metric|change(metric) < 0 }
     #   'good'
