@@ -1,6 +1,4 @@
 class AuthorsController < ApplicationController
-  
-  before_filter :find_project
 
   def index
     @authors = Author.all
@@ -8,13 +6,7 @@ class AuthorsController < ApplicationController
 
 
   def show
-    @author = @project.authors.find(params[:id])
-  end
-  
-  private
-  
-  def find_project
-    @project = Project.find(params[:project_id])
+    @author = Author.find(params[:id])
   end
 
 end

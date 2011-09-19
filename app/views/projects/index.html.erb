@@ -5,13 +5,5 @@
 
 
 <div class="row">
-  <% @projects.each do |project| %>
-    <%= link_to project do %>
-      <div class="span project">
-          <p class='count'><%= project.problem_count %></p>
-          <h2><%= project.current_score%></h2>
-          <h5><%= project.name%></h5>
-      </div>
-    <% end %>
-  <% end %>
+  <%= render @projects%>
 </div>

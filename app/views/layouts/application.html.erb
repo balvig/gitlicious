@@ -19,11 +19,12 @@
       <div class="container-fluid">
         <%= link_to "Gitlicious", root_path, :class => 'brand' %>
         <ul class="nav">
-          <li class='active'><%= link_to "Projects", projects_path %></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><%= link_to "Authors", authors_path %></li>
+          <li class='active'><%= link_to "Dashboards", projects_path %></li>
         </ul>
-        <p class="pull-right">Logged in as <a href="#">username</a></p>
+        <% if @author %>
+          <p class="pull-right">Logged in as <%= link_to @author.name, @author %></p>
+        <% end %>
       </div>
     </div>
   </div>

@@ -1,23 +1,12 @@
 <ul class="breadcrumb">
-  <li><%= link_to 'Projects', projects_path %> <span class="divider">/</span></li>
-  <li><%= link_to @project.name, @project %> <span class="divider">/</span></li>
+  <li><%= link_to 'Authors', authors_path %> <span class="divider">/</span></li>
   <li class="active"><%= @author.name %></li>
 </ul>
 
 <div class="page-header">
-  <h1><%= image_tag(avatar_url(@author,50)) %><%= @author.name %></h1>
+  <h1><%= image_tag(avatar_url(@author,50)) %><%= genitive(@author.name) %> Projects</h1>
 </div>
 
-<% @author.current_problems_in(@project).group_by(&:diagnosis).each do |diagnosis, problems| %>
-  <h3><%= diagnosis.metric.name%></h3>
-  <table class='zebra-striped'>
-    <thead>
-      <tr>
-        <th>Problem</th>
-        <th width="30%">File</th>
-        <th width="30">Line</th>
-      </tr>    
-    </thead>
-    <%= render problems%>
-  </table>
-<% end %>
+<div class="row">
+  <%= render @author.projects %>  
+</div>

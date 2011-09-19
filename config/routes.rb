@@ -3,10 +3,13 @@ Gitlicious::Application.routes.draw do
   resources :projects do
     put :import_commits, :on => :member
     resources :commits, :only => :show
-    resources :authors, :only => :show
     resources :metrics
   end
   
-  root :to => "projects#index"
+  resources :authors, :only => [:index,:show] do
+    resources :projects
+  end
+  
+  root :to => "authors#index"
 
 end

@@ -1,5 +1,7 @@
 class ProjectsController < ApplicationController
 
+  before_filter :find_author
+
   def index
     @projects = Project.all
   end
@@ -58,5 +60,11 @@ class ProjectsController < ApplicationController
     else
       redirect_to @project, :alert => 'Error importing new commits'
     end
+  end
+  
+  private
+  
+  def find_author
+    @author = Author.find(params[:author_id]) if params[:author_id]
   end
 end

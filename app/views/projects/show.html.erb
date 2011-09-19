@@ -31,7 +31,7 @@
     <h3>Authors</h3>
     <ul class='media-grid'>
       <% @project.authors.each do |author| %>
-        <li><%= link_to image_tag(avatar_url(author)), [@project, author] %></li>
+        <li><%= image_tag(avatar_url(author)) %></li>
       <% end %>
     </ul>
   </div>
@@ -40,24 +40,21 @@
   </div>
 </div>
 
-<!--hr>
-
-<table class='zebra-striped'>
-  <tr>
-    <th>Commit</th>
-    <% @project.metrics.each do |metric|%>
-      <th colspan="2"><%= metric.name%></th>
-    <% end %>
-    <th>Total Score</th>
-  </tr>
-  <% @commits.each do |commit|%>
-  <tr class='<%= commit.assessment%>'>
-    <td><%= link_to commit.name, [@project,commit]%></td>
-    <% commit.diagnoses.each do |diagnosis|%>
-      <td><%= diagnosis.score%></td>
-      <td class='number'><%= change_indicator(diagnosis)%></td>
-    <% end %>
-    <td><%= commit.total_score %></td>
-  </tr>
+<% if @author %>
+  <div class="page-header">
+  <h3>My Tasks</h3>
+  </div>
+  <% @author.current_problems_in(@project).group_by(&:diagnosis).each do |diagnosis, problems| %>
+    <h4><%= diagnosis.metric.name%></h4>
+    <table class='zebra-striped'>
+      <thead>
+        <tr>
+          <th>Problem</th>
+          <th width="30%">File</th>
+          <th width="30">Line</th>
+        </tr>    
+      </thead>
+      <%= render problems%>
+    </table>
   <% end %>
-</table-->
+<% end %>

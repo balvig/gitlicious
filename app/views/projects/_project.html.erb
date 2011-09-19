@@ -1,0 +1,7 @@
+<%= link_to [@author, project] do %>
+  <div class="span project">
+      <p class='count'><%= project.problem_count %></p>
+      <h2><%= project.current_score%></h2>
+      <h5><%= project.name%></h5>
+  </div>
+<% end %>
