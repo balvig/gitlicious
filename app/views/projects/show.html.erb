@@ -43,7 +43,7 @@
 <% if @author %>
   <br>
   <div class="page-header">
-  <h3>My Tasks</h3>
+    <h3>My Tasks <small>(<%= @author.current_problems_in(@project).count%>)</small></h3>
   </div>
   <% @author.current_problems_in(@project).group_by(&:result).each do |result, problems| %>
     <h4><%= result.metric.name%></h4>
