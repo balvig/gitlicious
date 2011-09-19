@@ -33,7 +33,7 @@ class Project < ActiveRecord::Base
   private
   
   def repo_path
-    Rails.root.join('repos', name).to_s
+    Rails.root.join(Rails.application.config.repo_path, name).to_s
   end
   
   def clone_repository

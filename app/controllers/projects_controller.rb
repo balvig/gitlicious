@@ -17,8 +17,6 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
   end
 
-  # POST /projects
-  # POST /projects.xml
   def create
     @project = Project.new(params[:project])
 

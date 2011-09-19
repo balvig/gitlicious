@@ -6,13 +6,20 @@
 <div class="row">
   <div class="span4 stats">
     <h2>Total Score</h2>
-    <p><%= @commits.first.total_score %></p>
-    <h3>Metrics</h3>
+    <p><%= @commits.first.total_score %> <span class="label success">Great!</span></p>
+    <hr>
+    <h3>Metrics <small><%= link_to "(Edit)", [@project,:metrics] %></small></h3>
     <ul>
       <% @project.metrics.each do |metric|%>
       <li><%= metric.name%> - <em><%= metric.weight%></em></li>
       <% end %>
     </ul>   
+    <h3>Authors</h3>
+    <ul class='media-grid'>
+      <% @project.authors.each do |author| %>
+        <li><%= image_tag avatar_url(author) %></li>
+      <% end %>
+    </ul>
   </div>
   <div class="span16">
     <div id="graph" style='height:350px' data-metrics='[<%= @commits.each.map {|c| "[#{c.timestamp},#{c.total_score}]"}.join(',')%>]'></div>    
@@ -20,12 +27,11 @@
 </div>
 
 
-<hr>
+<!--hr>
 
 <table class='zebra-striped'>
   <tr>
     <th>Commit</th>
-    <th>Comment</th>
     <% Metric.all.each do |metric|%>
       <th colspan="2"><%= metric.name%></th>
     <% end %>
@@ -33,7 +39,6 @@
   </tr>
   <% @commits.each do |commit|%>
   <tr class='<%= commit.assessment%>'>
-    <td><%= link_to commit.commited_at.to_date, [@project,commit]%></td>
     <td><%= link_to commit.name, [@project,commit]%></td>
     <% commit.diagnoses.each do |diagnosis|%>
       <td><%= diagnosis.score%></td>
@@ -42,14 +47,4 @@
     <td><%= commit.total_score %></td>
   </tr>
   <% end %>
-</table>
-
-<hr>
-
-<h3>Authors</h3>
-<ul>
-  <% @project.authors.each do |author|%>
-    <li><%= link_to author.name, [@project,author]%> (<%= author.current_problems_in(@project).count%>)</li>
-  <% end %>
-</ul>
-</ul>
+</table-->

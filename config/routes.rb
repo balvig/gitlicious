@@ -4,6 +4,7 @@ Gitlicious::Application.routes.draw do
     put :import_commits, :on => :member
     resources :commits, :only => :show
     resources :authors, :only => :show
+    resources :metrics
   end
   
   root :to => "projects#index"

@@ -32,7 +32,7 @@
          color: '#049CDB'
        },
        xaxis: {mode:"time", timeformat: "%y/%m/%d", tickFormatter: options.tickFormatter},
-       yaxis: {tickDecimals:0,min:0}
+       yaxis: {tickDecimals:0}
      };
      var graph = $.plot(this, [metrics], flotOptions);
 
