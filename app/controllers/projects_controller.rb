@@ -21,7 +21,7 @@ class ProjectsController < ApplicationController
     @project = Project.new(params[:project])
 
     if @project.save
-      redirect_to(@project, :notice => 'Changes saved.')
+      redirect_to([@project, :metrics], :notice => '<strong>Project imported.</strong> Now configure the metrics for your project.'.html_safe)
     else
       render :action => "new"
     end
@@ -32,7 +32,7 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.update_attributes(params[:project])
-        format.html { redirect_to(@project, :notice => 'Project was successfully updated.') }
+        format.html { redirect_to(@project, :notice => 'Changes saved.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

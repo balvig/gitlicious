@@ -4,10 +4,14 @@ class Project < ActiveRecord::Base
   has_many :metrics
   
   before_create :set_name
-  after_create :clone_repository
+  after_create :clone_repository, :create_default_metrics
   after_destroy :remove_repository
   
   accepts_nested_attributes_for :metrics
+
+  def problem_count
+    commits.last.try(:problems).try(:count) || 0
+  end
 
   def import_commits!
     git.checkout('master', :force => true)
@@ -36,10 +40,12 @@ class Project < ActiveRecord::Base
       stdin.puts command
       stdin.close
       result = stdout.read.strip
-      # puts "stdout     : #{  }"
-      # puts "stderr     : #{ stderr.read.strip }"
     end
     result
+  end
+  
+  def supports_rcov?
+    metrics.exists?(:name => 'rcov')
   end
   
   private
@@ -58,6 +64,38 @@ class Project < ActiveRecord::Base
   
   def remove_repository
     FileUtils.rm_rf(repo_path)
+  end
+  
+  def create_default_metrics
+    metrics.create!( :name                 => 'rails_best_practices',
+                    :weight               => 0.5,
+                    :command              => 'rails_best_practices --without-color .',
+                    :score_pattern        => 'Found (\d+) error',
+                    :line_number_pattern  => '^.+:(\d+)',
+                    :filename_pattern     => '^\.\/(.+):\d',
+                    :description_pattern  => '\s-\s(.+)$'
+                  )
+
+    metrics.create!( :name                 => 'cleanup',
+                    :weight               => 5,
+                    :command              => "grep -r -n '#CLEANUP:' app/controllers app/helpers app/models lib",
+                    :line_number_pattern  => '^.+:(\d+)',
+                    :filename_pattern     => '^(.+):\d',
+                    :description_pattern  => '#CLEANUP:\s(.+)$'
+                  )
+
+    metrics.create!( :name                 => 'flog',
+                    :command              => 'flog -s --continue app/controllers app/helpers app/models lib',
+                    :score_pattern        => '([\d\.]+): flog\/method average'
+                  )
+
+    # metrics.create!( :name                 => 'rcov',
+    #                 :weight               => 2,
+    #                 :command              => "bundle exec rcov -Ispec:lib --gcc --rails --exclude osx\/objc,gems\/,spec\/,features\/,seeds\/ --include views -Ispec ./spec/**/*.rb  --only-uncovered --no-html",
+    #                 :line_number_pattern  => '^.+:(\d+)',
+    #                 :filename_pattern     => '^(.+):\d',
+    #                 :description_pattern  => ':\d+:(.+)$'
+    #               )
   end
   
 end

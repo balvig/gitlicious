@@ -1,3 +1,8 @@
+<ul class="breadcrumb">
+  <li><%= link_to 'Projects', projects_path %> <span class="divider">/</span></li>
+  <li class="active"><%= @project.name%></li>
+</ul>
+
 <div class="page-header">
   <h1><%= @project.name %></h1>
   <%= button_to 'Update', import_commits_project_path, :method => :put, :disable_with => 'Updating...', :class => 'btn primary'%>
@@ -5,12 +10,12 @@
 
 <div class="row">
   <div class="span4 stats">
-    <h2>Total Score</h2>
+    <h2>Current Score</h2>
     <p>
       <%= @project.current_score %> 
-      <% if @project.current_score < 2000 %>
+      <% if @project.current_score < 200 %>
         <span class="label success">Great!</span>
-      <% elsif @project.current_score < 5000 %>
+      <% elsif @project.current_score < 500 %>
         <span class="label warning">Warning</span>
       <% else %>
         <span class="label important">Critical</span>
@@ -26,7 +31,7 @@
     <h3>Authors</h3>
     <ul class='media-grid'>
       <% @project.authors.each do |author| %>
-        <li><%= image_tag avatar_url(author) %></li>
+        <li><%= link_to image_tag(avatar_url(author)), [@project, author] %></li>
       <% end %>
     </ul>
   </div>
@@ -35,14 +40,12 @@
   </div>
 </div>
 
-
-
-<hr>
+<!--hr>
 
 <table class='zebra-striped'>
   <tr>
     <th>Commit</th>
-    <% Metric.all.each do |metric|%>
+    <% @project.metrics.each do |metric|%>
       <th colspan="2"><%= metric.name%></th>
     <% end %>
     <th>Total Score</th>
@@ -57,4 +60,4 @@
     <td><%= commit.total_score %></td>
   </tr>
   <% end %>
-</table>
+</table-->

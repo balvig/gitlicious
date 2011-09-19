@@ -1,7 +1,10 @@
-<% [:name, :weight, :command, :score_pattern, :line_number_pattern, :filename_pattern, :description_pattern].each do |attribute|%>
-  <div class="clearfix">
-    <%= form.label attribute %>
-    <%= form.input attribute, :label => false, :input_html => {:class => 'span16'} %>
-  </div>
-<% end %>
+<fieldset>
+  <legend><%= form.object.name %></legend>
+  <% [:weight, :command, :score_pattern, :line_number_pattern, :filename_pattern, :description_pattern].each do |attribute|%>
+    <div class="clearfix">
+      <%= form.label attribute %>
+      <%= form.input attribute, :label => false, :input_html => {:class => 'span8'} %>
+    </div>
+  <% end %>
+</fieldset>
 <hr>
