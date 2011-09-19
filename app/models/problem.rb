@@ -5,7 +5,7 @@ class Problem < ActiveRecord::Base
   before_save :blame
 
   validates_presence_of :filename, :line_number
-  
+
   scope :prioritized, joins(:result => :metric).order('metrics.weight DESC')
   
   def project

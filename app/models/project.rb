@@ -2,16 +2,14 @@ class Project < ActiveRecord::Base
 
   has_many :metrics
   has_many :reports, :dependent => :destroy
+  has_and_belongs_to_many :authors
 
   before_create :set_name
+  after_save :create_authors
   after_create :clone_repository, :create_default_metrics
   after_destroy :remove_repository
   
   accepts_nested_attributes_for :metrics
-  
-  def authors
-    Author.all
-  end
   
   def update_git_repository
     git.checkout('master', :force => true)
@@ -52,6 +50,15 @@ class Project < ActiveRecord::Base
   
   def set_name
     self.name = repo_url[/^.+\/(.+)\.git$/,1]
+  end
+  
+  def create_authors
+    run("git log --all --format='author %aN author-mail <%cE>' | sort -u").each_line do |output|
+      name = output[/author\s(.+)\sauthor-mail/,1] #CLEANUP: This parsing is similar to the one found in commit.blame
+      email = output[/author-mail\s<(.+)>$/,1]
+      author = Author.find_or_create_by_name(name,email)
+      authors << author unless authors.exists?(author)
+    end
   end
   
   def repo_path

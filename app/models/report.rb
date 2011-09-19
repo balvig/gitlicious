@@ -6,7 +6,7 @@ class Report < ActiveRecord::Base
   validates_uniqueness_of :sha, :scope => :project_id
 
   before_validation :run_metrics, :set_sha
-  
+
   default_scope order('created_at DESC')
   
   def timestamp

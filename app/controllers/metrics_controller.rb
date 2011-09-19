@@ -44,9 +44,9 @@ class MetricsController < ApplicationController
 
     redirect_to(metrics_url)
   end
-  
+
   private
-  
+
   def find_project
     @project = Project.find(params[:project_id])
   end

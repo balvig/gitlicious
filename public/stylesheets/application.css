@@ -30,7 +30,7 @@ body {padding-top: 60px;}
 footer p {
   text-align:right;
   color:#666;
-  font-size:0.8em;
+  font-size:0.85em;
 }
 
 .page-header {position:relative;}
@@ -53,6 +53,14 @@ div.project {
   text-align:center;
   position:relative;
   width:120px;
+}
+
+div.project:hover {
+  background-color: #EEE;
+}
+
+.projects a:hover {
+  text-decoration:none;
 }
 
 .project h2 {
