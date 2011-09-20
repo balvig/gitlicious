@@ -3,10 +3,23 @@ require 'spec_helper'
 describe Project do
   
   describe ".set_name" do
-    it "automatically creates a name from the url" do
-      Factory(:project, :repo_url => 'git://github.com/balvig/gitlicious_dummy.git').name.should == 'gitlicious_dummy'
+    let(:project) { Factory.build(:project) }
+    before(:each) { project.stub(:clone_repository) }
+    context "given a url ending in .git" do
+      it "strips of .git" do
+        project.repo_url = 'git://github.com/balvig/gitlicious_dummy.git'
+        project.save
+        project.name.should == 'gitlicious_dummy'
+      end      
     end
-  end
+    context "given a url with no extension" do
+      it "grabs the last part of the path" do
+        project.repo_url = 'ssh://192.168.31.21/home/git/repos/cookpad_all'
+        project.save
+        project.name.should == 'cookpad_all'        
+      end
+    end
+  end  
   
   describe ".repo_url" do
     context "given a url" do
