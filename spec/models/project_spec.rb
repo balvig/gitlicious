@@ -37,16 +37,4 @@ describe Project do
       File.exists?(Rails.root.join('spec','fixtures','repos','gitlicious_dummy')).should_not be_true
     end
   end
-  
-  describe ".create_authors" do
-    it "grabs authors from the git log and assigns them to the project" do
-      project = Factory(:project)
-      project.authors.size.should == 2
-      project.authors.first.name.should == 'Jens Balvig'
-      project.save
-      project.reload
-      project.authors.size.should == 2
-    end
-  end
-
 end

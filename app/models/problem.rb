@@ -23,5 +23,6 @@ class Problem < ActiveRecord::Base
     name = output[/author\s(.+)$/,1]
     email = output[/author-mail\s<(.+)>$/,1]
     self.author = Author.find_or_create_by_name_and_email(name,email)
+    project.authors << author unless project.authors.exists?(author)
   end
 end
