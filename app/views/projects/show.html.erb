@@ -45,17 +45,27 @@
   <div class="page-header">
     <h3>My Tasks <small>(<%= @author.current_problems_in(@project).count%>)</small></h3>
   </div>
-  <% @author.current_problems_in(@project).group_by(&:result).each do |result, problems| %>
-    <h4><%= result.metric.name%></h4>
-    <table class='zebra-striped'>
-      <thead>
-        <tr>
-          <th>Problem</th>
-          <th width="30%">File</th>
-          <th width="30">Line</th>
-        </tr>
-      </thead>
-      <%= render problems%>
-    </table>
+  
+  <ul class='pills' data-pills="pills">
+  <% @results.each do |result, problems| %>
+    <li><%= link_to "#{result.metric.name} (#{problems.size})", "##{dom_id(result)}" %></li>
   <% end %>
+  </ul>
+  
+  <div class="pill-content">
+    <% @results.each do |result, problems| %>
+      <div id='<%= dom_id(result)%>'>
+      <table class='zebra-striped'>
+        <thead>
+          <tr>
+            <th>Problem</th>
+            <th width="30%">File</th>
+            <th width="30">Line</th>
+          </tr>
+        </thead>
+        <%= render problems%>
+      </table>
+      </div>
+    <% end %>
+  </div>
 <% end %>

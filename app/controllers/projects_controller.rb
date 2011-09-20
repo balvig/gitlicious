@@ -9,6 +9,7 @@ class ProjectsController < ApplicationController
   def show
     @project = Project.find(params[:id])
     @reports = @project.reports.limit(100)
+    @results = @author.current_problems_in(@project).group_by(&:result) if @author
   end
 
   def new
