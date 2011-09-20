@@ -5,13 +5,11 @@ describe Report do
   let(:project) { Factory(:project) }
   
   describe ".run_metrics" do
-    
     it "runs metrics for all metrics assigned to the project" do
       report = Factory(:report, :project => project)
-      report.results.size.should == 3
-      report.problems.size.should == 10
+      report.results.size.should == 4
+      report.problems.size.should == 25
     end
-    
   end
   
   describe ".validates_uniqueness_of" do

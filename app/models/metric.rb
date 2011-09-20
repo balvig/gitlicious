@@ -9,19 +9,20 @@ class Metric < ActiveRecord::Base
     output = project.run(command)
     result = results.build
     result.log = output
-    result.problems = parse_problems(output)
-    result.score = parse_score(output) || result.problems.size
+    result.problems = parse_problems(output) if problem_pattern?
+    result.score = score_pattern? ? parse_score(output) : result.problems.size
     result
   end
   
   private
   
   def parse_score(output)
-    output[/#{score_pattern}/,1].to_f if score_pattern?
+    output[/#{score_pattern}/,1].to_f
   end
   
   def parse_problems(output)
-    output.scan(/^\S.+:\d+.+$/).map do |line|
+    output.scan(/#{problem_pattern}/).map do |line|
+      line = line.first if line.is_a?(Array) #CLEANUP: Huh? I get an array back from multiline ouput
       problem = Problem.new
       problem.line_number = line[/#{line_number_pattern}/,1].to_i
       problem.filename = line[/#{filename_pattern}/,1]

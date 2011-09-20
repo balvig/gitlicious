@@ -5,7 +5,7 @@ describe Metric do
   let(:project) { mock('project') }
   
   describe ".run" do
-    context "rails_best_practices" do
+    describe "rails_best_practices" do
       let(:metric) { Factory(:rbp_metric) }
       before(:each) { metric.stub(:project).and_return(project) }
         
@@ -22,12 +22,11 @@ describe Metric do
       end
     end
     
-    context "cleanup" do
+    describe "cleanup" do
       let(:metric) { Factory(:cleanup_metric) }
       before(:each) { metric.stub(:project).and_return(project) }
       
       it "runs the command line tool and parses the output" do
-        metric.stub(:project).and_return(project)
         project.should_receive(:run).with("grep -r -n '#CLEANUP:' app/controllers app/helpers app/models lib").and_return("app/models/post.rb:33:  #CLEANUP: This could be rewritten using Rails 3 syntax")
         result = metric.run
         result.log.should == "app/models/post.rb:33:  #CLEANUP: This could be rewritten using Rails 3 syntax"
@@ -37,6 +36,22 @@ describe Metric do
         problem.filename.should == 'app/models/post.rb'
         problem.line_number.should == 33
         problem.description.should == 'This could be rewritten using Rails 3 syntax'
+      end
+    end
+    
+    describe "reek" do
+      let(:metric) { Factory(:reek_metric) }
+      before(:each) { metric.stub(:project).and_return(project) }
+      
+      it "runs the command line tool and parses the output" do
+        project.should_receive(:run).with("reek -y app/controllers app/helpers app/models lib").and_return("--- \n- !ruby/object:Reek::SmellWarning \n  location: \n    context: ApplicationController\n    lines: \n    - 1\n    source: app/controllers/application_controller.rb\n  smell: \n    class: IrresponsibleModule\n    subclass: IrresponsibleModule\n    message: has no descriptive comment\n    module_name: ApplicationController\n  status: \n    is_active: true\n- !ruby/object:Reek::SmellWarning \n  location: \n    context: PostsController\n    lines: \n    - 1\n    source: app/controllers/posts_controller.rb\n  smell: \n    class: IrresponsibleModule\n    subclass: IrresponsibleModule\n    message: has no descriptive comment\n    module_name: PostsController\n  status: \n    is_active: true\n- !ruby/object:Reek::SmellWarning \n  location: \n    context: PostsController#create\n    lines: \n    - 47\n    - 50\n    source: app/controllers/posts_controller.rb\n  smell: \n    class: Duplication\n    subclass: DuplicateMethodCall\n    message: calls format.html twice\n    call: format.html\n    occurrences: 2\n  status: \n    is_active: true\n- !ruby/object:Reek::SmellWarning \n  location: \n    context: PostsController#create\n    lines: \n    - 48\n    - 51\n    source: app/controllers/posts_controller.rb\n  smell: \n    class: Duplication\n    subclass: DuplicateMethodCall\n    message: calls format.xml twice\n    call: format.xml\n    occurrences: 2\n  status: \n    is_active: true\n- !ruby/object:Reek::SmellWarning \n  location: \n    context: PostsController#create\n    lines: \n    - 47\n    source: app/controllers/posts_controller.rb\n  smell: \n    class: NestedIterators\n    subclass: NestedIterators\n    message: contains iterators nested 2 deep\n    depth: 2\n  status: \n    is_active: true\n- !ruby/object:Reek::SmellWarning \n  location: \n    context: PostsController#destroy\n    lines: \n    - 79\n    source: app/controllers/posts_controller.rb\n  smell: \n    class: NestedIterators\n    subclass: NestedIterators\n    message: contains iterators nested 2 deep\n    depth: 2\n  status: \n    is_active: true\n- !ruby/object:Reek::SmellWarning \n  location: \n    context: PostsController#index\n    lines: \n    - 9\n    source: app/controllers/posts_controller.rb\n  smell: \n    class: NestedIterators\n    subclass: NestedIterators\n    message: contains iterators nested 2 deep\n    depth: 2\n  status: \n    is_active: true\n- !ruby/object:Reek::SmellWarning \n  location: \n    context: PostsController#new\n    lines: \n    - 31\n    source: app/controllers/posts_controller.rb\n  smell: \n    class: NestedIterators\n    subclass: NestedIterators\n    message: contains iterators nested 2 deep\n    depth: 2\n  status: \n    is_active: true\n- !ruby/object:Reek::SmellWarning \n  location: \n    context: PostsController#show\n    lines: \n    - 20\n    source: app/controllers/posts_controller.rb\n  smell: \n    class: NestedIterators\n    subclass: NestedIterators\n    message: contains iterators nested 2 deep\n    depth: 2\n  status: \n    is_active: true\n- !ruby/object:Reek::SmellWarning \n  location: \n    context: PostsController#update\n    lines: \n    - 63\n    - 66\n    source: app/controllers/posts_controller.rb\n  smell: \n    class: Duplication\n    subclass: DuplicateMethodCall\n    message: calls format.html twice\n    call: format.html\n    occurrences: 2\n  status: \n    is_active: true\n- !ruby/object:Reek::SmellWarning \n  location: \n    context: PostsController#update\n    lines: \n    - 64\n    - 67\n    source: app/controllers/posts_controller.rb\n  smell: \n    class: Duplication\n    subclass: DuplicateMethodCall\n    message: calls format.xml twice\n    call: format.xml\n    occurrences: 2\n  status: \n    is_active: true\n- !ruby/object:Reek::SmellWarning \n  location: \n    context: PostsController#update\n    lines: \n    - 59\n    - 62\n    source: app/controllers/posts_controller.rb\n  smell: \n    class: Duplication\n    subclass: DuplicateMethodCall\n    message: calls params twice\n    call: params\n    occurrences: 2\n  status: \n    is_active: true\n- !ruby/object:Reek::SmellWarning \n  location: \n    context: PostsController#update\n    lines: \n    - 63\n    source: app/controllers/posts_controller.rb\n  smell: \n    class: NestedIterators\n    subclass: NestedIterators\n    message: contains iterators nested 2 deep\n    depth: 2\n  status: \n    is_active: true\n- !ruby/object:Reek::SmellWarning \n  location: \n    context: Comment\n    lines: \n    - 1\n    source: app/models/comment.rb\n  smell: \n    class: IrresponsibleModule\n    subclass: IrresponsibleModule\n    message: has no descriptive comment\n    module_name: Comment\n  status: \n    is_active: true\n- !ruby/object:Reek::SmellWarning \n  location: \n    context: Post\n    lines: \n    - 1\n    source: app/models/post.rb\n  smell: \n    class: IrresponsibleModule\n    subclass: IrresponsibleModule\n    message: has no descriptive comment\n    module_name: Post\n  status: \n    is_active: true")
+        result = metric.run
+        result.score.should == 15
+        result.problems.size.should == 15
+        problem = result.problems.first
+        problem.filename.should == 'app/controllers/application_controller.rb'
+        problem.line_number.should == 1
+        problem.description.should == 'has no descriptive comment'
       end
     end
   end

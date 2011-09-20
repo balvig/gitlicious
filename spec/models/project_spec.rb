@@ -37,4 +37,11 @@ describe Project do
       File.exists?(Rails.root.join('spec','fixtures','repos','gitlicious_dummy')).should_not be_true
     end
   end
+  
+  describe ".create_default_metrics" do
+    it "creates a set of default metrics" do
+      project = Factory(:project)
+      project.metrics.map(&:name).should == ["cleanup", "reek", "flog", "rails_best_practices"]
+    end
+  end
 end
