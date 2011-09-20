@@ -8,7 +8,7 @@ class Report < ActiveRecord::Base
   before_validation :run_metrics, :set_sha
 
   default_scope order('created_at DESC')
-  
+
   def timestamp
     created_at.to_i * 1000
   end

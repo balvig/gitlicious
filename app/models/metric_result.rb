@@ -1,5 +1,5 @@
 class MetricResult
-  
+
   attr_accessor :log, :score, :problems
   
   def initialize(output)

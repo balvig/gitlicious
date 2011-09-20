@@ -25,7 +25,11 @@ body {padding-top: 60px;}
 
 .stats .label {vertical-align:middle;}
 
-.stats .media-grid {margin-left:0px;}
+.stats .media-grid {margin-left:-2px;}
+.stats .media-grid a {
+  margin:0px 0px 2px 2px;
+  padding:1px;
+}
 
 footer p {
   text-align:right;

@@ -7,7 +7,7 @@ class Project < ActiveRecord::Base
   before_create :set_name
   after_create :clone_repository, :create_default_metrics
   after_destroy :remove_repository
-  
+
   accepts_nested_attributes_for :metrics
   
   def update_git_repository

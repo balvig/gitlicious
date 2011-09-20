@@ -7,7 +7,7 @@ class Problem < ActiveRecord::Base
   validates_presence_of :filename, :line_number
 
   scope :prioritized, joins(:result => :metric).order('metrics.weight DESC')
-  
+
   def project
     result.report.project #CLEANUP: What's the best way to get to the project?
   end

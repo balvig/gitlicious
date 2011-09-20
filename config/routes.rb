@@ -8,7 +8,7 @@ Gitlicious::Application.routes.draw do
   resources :authors, :only => [:index,:show] do
     resources :projects
   end
-  
+
   root :to => "authors#index"
 
 end
