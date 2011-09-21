@@ -54,5 +54,24 @@ describe Metric do
         problem.description.should == 'has no descriptive comment'
       end
     end
+    
+    describe "flog" do
+      let(:metric) { Factory(:flog_metric) }
+      before(:each) { metric.stub(:project).and_return(project) }
+      
+      it "runs the command line tool and parses the output" do
+        project.should_receive(:run).with("flog --continue app/controllers app/helpers app/models lib").and_return("8.7: flog total\n2.2: flog/method average\n\n3.5: Comment#message                  app/models/comment.rb:4\n3.0: Post#find_valid_comments         app/models/post.rb:5\n18.0: Problem#covered?                 app/models/problem.rb:15")
+        result = metric.run
+        result.score.should == 2.2
+        result.problems.size.should == 3
+        result.problems.map(&:filename).should == ['app/models/comment.rb','app/models/post.rb','app/models/problem.rb']
+        result.problems.map(&:line_number).should == [4,5,15]
+        problem = result.problems.first
+        problem.filename.should == 'app/models/comment.rb'
+        problem.line_number.should == 4
+        problem.description.should == '3.5: Comment#message'
+      end
+    end
   end
 end
+

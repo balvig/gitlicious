@@ -4,8 +4,8 @@ rbp:
   command:              'rails_best_practices --without-color .'
   score_pattern:        'Found (\d+) error'
   problem_pattern:      '^\S.+:\d+.+$'
-  line_number_pattern:  '^.+:(\d+)'
   filename_pattern:     '^\.\/(.+):\d'
+  line_number_pattern:  '^.+:(\d+)'
   description_pattern:  '\s-\s(.+)$'
   
 cleanup:
@@ -13,8 +13,8 @@ cleanup:
   weight:               5
   command:              "grep -r -n '#CLEANUP:' app/controllers app/helpers app/models lib"
   problem_pattern:      '^\S.+:\d+.+$'
-  line_number_pattern:  '^.+:(\d+)'
   filename_pattern:     '^(.+):\d'
+  line_number_pattern:  '^.+:(\d+)'
   description_pattern:  '#CLEANUP:\s(.+)$'
 
 reek:
@@ -22,12 +22,16 @@ reek:
   weight:               1
   command:              "reek -y app/controllers app/helpers app/models lib"
   problem_pattern:      '!([^!]+)'
-  line_number_pattern:  '- (\d+)'
   filename_pattern:     'source:\s(.+)$'
+  line_number_pattern:  '- (\d+)'
   description_pattern:  'message:\s(.+)$'
 
 flog:
   name:                 'flog'
   weight:               1
-  command:              'flog -s --continue app/controllers app/helpers app/models lib'
+  command:              'flog --continue app/controllers app/helpers app/models lib'
   score_pattern:        '([\d\.]+): flog\/method average'
+  problem_pattern:      '([\d\.]+:.+:\d+)$'
+  filename_pattern:     '\s+(\S+):\d+$'
+  line_number_pattern:  '^.+:(\d+)$'
+  description_pattern:  '^(\d+\.\d+:\s\S+)\s'

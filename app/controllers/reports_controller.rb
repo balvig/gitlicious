@@ -4,7 +4,7 @@ class ReportsController < ApplicationController
 
   def create
     @report = @project.reports.build
-    if @report.save
+    if @report.save!
       redirect_to(:back, :notice => "Report created for #{@report.created_at}")
     else
       redirect_to(:back, :alert => "Could not create report")
