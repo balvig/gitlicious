@@ -19,8 +19,8 @@ cleanup:
 
 reek:
   name:                 'reek'
-  weight:               1
-  command:              "reek -y app/controllers app/helpers app/models lib"
+  weight:               0.8
+  command:              "reek -y -c config/defaults.reek app/controllers app/helpers app/models lib"
   problem_pattern:      '!([^!]+)'
   filename_pattern:     'source:\s(.+)$'
   line_number_pattern:  '- (\d+)'
