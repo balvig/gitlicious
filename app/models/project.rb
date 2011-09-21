@@ -1,6 +1,6 @@
 class Project < ActiveRecord::Base
 
-  has_many :metrics
+  has_many :metrics, :dependent => :destroy
   has_many :reports, :dependent => :destroy
   has_and_belongs_to_many :authors
 

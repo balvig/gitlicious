@@ -13,9 +13,9 @@
     <h2>Current Score</h2>
     <p>
       <%= @project.current_score %>
-      <% if @project.current_score < 200 %>
+      <% if @project.current_score < 500 %>
         <span class="label success">Great!</span>
-      <% elsif @project.current_score < 500 %>
+      <% elsif @project.current_score < 1000 %>
         <span class="label warning">Warning</span>
       <% else %>
         <span class="label important">Critical</span>
