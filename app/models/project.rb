@@ -48,7 +48,7 @@ class Project < ActiveRecord::Base
   private
   
   def set_name
-    self.name = repo_url[/^.+\/(\w+)(?:\.git)?$/,1]
+    self.name = repo_url[/^.+[\/:](\w+)(?:\.git)?$/,1]
   end
   
   def repo_path
