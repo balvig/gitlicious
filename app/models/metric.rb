@@ -26,7 +26,7 @@ class Metric < ActiveRecord::Base
       problem = Problem.new
       problem.line_number = line[/#{line_number_pattern}/,1].to_i
       problem.filename = line[/#{filename_pattern}/,1]
-      problem.description = line[/#{description_pattern}/,1]
+      problem.description = line[/#{description_pattern}/m,1]
       problem
     end
   end

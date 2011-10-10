@@ -1,5 +1,5 @@
 <tr>
-  <td><%= problem.description%></td>
+  <td><%= simple_format problem.description%></td>
   <td><%= problem.filename%></td>
   <td><%= problem.line_number%></td>
   <% if @project.supports_rcov? %>

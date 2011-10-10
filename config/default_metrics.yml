@@ -24,7 +24,7 @@ reek:
   problem_pattern:      '!([^!]+)'
   filename_pattern:     'source:\s(.+)$'
   line_number_pattern:  '- (\d+)'
-  description_pattern:  'message:\s(.+)$'
+  description_pattern:  'subclass:\s(.+)call'
 
 flog:
   name:                 'flog'
