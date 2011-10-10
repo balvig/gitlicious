@@ -19,6 +19,13 @@ describe Project do
         project.name.should == 'cookpad_all'        
       end
     end
+    context "given a url with : as separator" do
+      it "finds the project name" do
+        project.repo_url = 'git@example.com:project.git'
+        project.save
+        project.name.should == 'project'
+      end
+    end
   end  
   
   describe ".repo_url" do
