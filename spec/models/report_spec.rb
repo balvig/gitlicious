@@ -7,8 +7,8 @@ describe Report do
   describe ".run_metrics" do
     it "runs metrics for all metrics assigned to the project" do
       report = Factory(:report, :project => project)
-      report.results.size.should == 4
-      report.problems.size.should == 28
+      report.results.size.should == 3
+      report.problems.size.should == 13
     end
   end
   

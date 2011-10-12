@@ -17,14 +17,14 @@ cleanup:
   line_number_pattern:  '^.+:(\d+)'
   description_pattern:  '#CLEANUP:\s(.+)$'
 
-reek:
-  name:                 'reek'
-  weight:               0.8
-  command:              "reek -y -c config/defaults.reek app/controllers app/helpers app/models lib"
-  problem_pattern:      '!([^!]+)'
-  filename_pattern:     'source:\s(.+)$'
-  line_number_pattern:  '- (\d+)'
-  description_pattern:  'subclass:\s(.+)call'
+# reek:
+#   name:                 'reek'
+#   weight:               0.8
+#   command:              "reek -y -c config/defaults.reek app/controllers app/helpers app/models lib"
+#   problem_pattern:      '!([^!]+)'
+#   filename_pattern:     'source:\s(.+)$'
+#   line_number_pattern:  '- (\d+)'
+#   description_pattern:  'subclass:\s(.+)call'
 
 flog:
   name:                 'flog'

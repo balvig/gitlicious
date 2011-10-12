@@ -48,7 +48,7 @@ describe Project do
   describe ".create_default_metrics" do
     it "creates a set of default metrics" do
       project = Factory(:project)
-      project.metrics.map(&:name).should == ["cleanup", "reek", "flog", "rails_best_practices"]
+      project.metrics.map(&:name).should == ["cleanup", "flog", "rails_best_practices"]
     end
   end
 end
