@@ -34,18 +34,12 @@ module RailsBestPractices
           end
         end
 
-        # request.post? becomes 2 different calls to this methods, one with the
-        # node request  and one with the node post?
         def start_call(node)
 
-          @using_request = false unless ["request", "post?"].include? node.message.to_s
-
-          if ["request"].include? node.message.to_s
-            @using_request = true
-          end
-
-          if [ "post?"].include? node.message.to_s
-            add_error 'No routing inside controllers'
+          if node[1] && node[2]
+            if node[1].message == :request && node[2] == :post?
+              add_error 'No routing inside controllers'
+            end
           end
 
         end
