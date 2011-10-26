@@ -31,7 +31,7 @@
     <h3>Authors</h3>
     <ul class='media-grid'>
       <% @project.authors.each do |author| %>
-        <li><%= link_to image_tag(avatar_url(author)), [author,@project] %></li>
+        <li><%= link_to image_tag(avatar_url(author)), [author,@project], :title => author.name %></li>
       <% end %>
     </ul>
   </div>
@@ -45,13 +45,13 @@
   <div class="page-header">
     <h3><%= genitive(@author.name) + ' ' if @author %>Problems <small>(<%= @problems.count%>)</small></h3>
   </div>
-  
+
   <ul class='pills' data-pills="pills">
   <% @results.each do |result, problems| %>
     <li><%= link_to "#{result.metric.name} (#{problems.size})", "##{dom_id(result)}" %></li>
   <% end %>
   </ul>
-  
+
   <div class="pill-content">
     <% @results.each do |result, problems| %>
       <div id='<%= dom_id(result)%>'>

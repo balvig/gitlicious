@@ -7,11 +7,11 @@ rbp:
   filename_pattern:     '^\.\/(.+):\d'
   line_number_pattern:  '^.+:(\d+)'
   description_pattern:  '\s-\s(.+)$'
-  
+
 cleanup:
   name:                 'cleanup'
   weight:               5
-  command:              "grep -r -n '#CLEANUP:' app/controllers app/helpers app/models lib"
+  command:              "grep -r -n '#CLEANUP:' app/controllers app/helpers app/models lib | awk '{n = substr($0, match($0, /[0-9]+/), RLENGTH) + 1; sub(/[0-9]+/, n); print }'"
   problem_pattern:      '^\S.+:\d+.+$'
   filename_pattern:     '^(.+):\d'
   line_number_pattern:  '^.+:(\d+)'
@@ -26,12 +26,12 @@ cleanup:
 #   line_number_pattern:  '- (\d+)'
 #   description_pattern:  'subclass:\s(.+)call'
 
-flog:
-  name:                 'flog'
-  weight:               1
-  command:              'flog --continue app/controllers app/helpers app/models lib'
-  score_pattern:        '([\d\.]+): flog\/method average'
-  problem_pattern:      '([\d\.]+:.+:\d+)$'
-  filename_pattern:     '\s+(\S+):\d+$'
-  line_number_pattern:  '^.+:(\d+)$'
-  description_pattern:  '^(\d+\.\d+:\s\S+)\s'
+# flog:
+#   name:                 'flog'
+#   weight:               1
+#   command:              'flog --continue app/controllers app/helpers app/models lib'
+#   score_pattern:        '([\d\.]+): flog\/method average'
+#   problem_pattern:      '([\d\.]+:.+:\d+)$'
+#   filename_pattern:     '\s+(\S+):\d+$'
+#   line_number_pattern:  '^.+:(\d+)$'
+#   description_pattern:  '^(\d+\.\d+:\s\S+)\s'
