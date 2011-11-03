@@ -44,7 +44,7 @@
           <%= image_tag(avatar_url(current_author, 50), :alt => current_author.name, :size => '50x50') %>
           <div>
             <h4><%= current_author.name %></h4>
-            <p>&lt;<%= current_author.email %>&gt;</p>
+            <p><%= current_author.email %></p>
           </div>
           <%= link_to 'Sign Out',logout_path, :class => 'logout' %>
         </div>
