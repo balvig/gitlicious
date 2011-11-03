@@ -9,7 +9,7 @@ class Metric < ActiveRecord::Base
     output = project.run(command)
     result = results.build
     result.log = output
-    result.problems = parse_problems(output) if problem_pattern?
+    result.problems = parse_problems(output)
     result
   end
 

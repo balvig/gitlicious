@@ -14,7 +14,7 @@ class Report < ActiveRecord::Base
   end
 
   def total_score
-    results.all.sum(&:score)
+    results.sum(&:score)
   end
 
   private
