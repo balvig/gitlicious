@@ -11,7 +11,6 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :metrics
 
   def update_git_repository
-    git.checkout('master', :force => true)
     run('git pull') if git.remotes.size > 0 #Not sure why gem git.pull says "up to date"
   end
 
