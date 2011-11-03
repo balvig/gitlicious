@@ -3,7 +3,7 @@ module ProjectsHelper
     str = "#{score} "
     if score < 500
       str += '<span class="label success">Great!</span>'
-    elsif score < 1000 
+    elsif score < 1000
       str += '<span class="label warning">Warning</span>'
     else
       str += '<span class="label important">Critical</span>'
