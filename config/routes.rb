@@ -5,9 +5,8 @@ Gitlicious::Application.routes.draw do
     resources :metrics
   end
 
-  resources :authors, :only => [:index,:show] do
-    resources :projects
-  end
+  match '/login' => 'sessions#create', :as => :login
+  match '/logout' => 'sessions#destroy', :as => :logout
 
   root :to => "authors#index"
 

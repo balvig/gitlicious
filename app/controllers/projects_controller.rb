@@ -1,14 +1,12 @@
 class ProjectsController < ApplicationController
 
-  before_filter :find_author
-
   def index
     @projects = Project.all
   end
 
   def show
     @project = Project.find(params[:id])
-    @problems = @project.current_problems.by(@author)
+    @problems = @project.current_problems.by(current_author)
   end
 
   def new
@@ -43,11 +41,5 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     @project.destroy
     redirect_to(projects_url)
-  end
-
-  private
-
-  def find_author
-    @author = Author.find(params[:author_id]) if params[:author_id]
   end
 end

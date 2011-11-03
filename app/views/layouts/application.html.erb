@@ -19,7 +19,7 @@
       <div class="container-fluid">
         <%= link_to "Gitlicious", root_path, :class => 'brand' %>
         <ul class="nav">
-          <li><%= link_to "Projects", [@author,:projects] %></li>
+          <li><%= link_to "Projects", projects_path %></li>
         </ul>
       </div>
     </div>
@@ -27,15 +27,7 @@
 
   <div class="container-fluid">
     <div class="content">
-     <% if @author %>
-        <div id='current_author' class='author'>
-          <%= image_tag(avatar_url(@author, 50), :alt => @author.name, :size => '50x50') %>
-          <div>
-            <h4><%= @author.name %></h4>
-            <p>&lt;<%= @author.email %>&gt;</p>
-          </div>
-        </div>
-      <% end %>
+
       <% flash.each do |key, value|%>
         <div class="alert-message <%= key %>" data-alert='alert'>
           <a class="close" href="#">×</a>
@@ -47,6 +39,16 @@
       <footer>
         <p>&copy; COOKPAD Inc. 2011</p>
       </footer>
+      <% if logged_in? %>
+        <div id='current_author' class='author'>
+          <%= image_tag(avatar_url(current_author, 50), :alt => current_author.name, :size => '50x50') %>
+          <div>
+            <h4><%= current_author.name %></h4>
+            <p>&lt;<%= current_author.email %>&gt;</p>
+          </div>
+          <%= link_to 'Sign Out',logout_path, :class => 'logout' %>
+        </div>
+      <% end %>`
     </div>
   </div>
 </body>

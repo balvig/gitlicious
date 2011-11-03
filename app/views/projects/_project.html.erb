@@ -1,9 +1,9 @@
-<%= link_to [@author, project] do %>
+<%= link_to project do %>
   <div class="span project">
-    <% if project.current_problems.by(@author).count > 0 %>
-      <p class='count'><%= project.current_problems.by(@author).count %></p>
+    <% if project.current_problems.by(current_author).count > 0 %>
+      <p class='count'><%= project.current_problems.by(current_author).count %></p>
     <% end %>
-    <h2><%= project.current_problems.by(@author).score %></h2>
+    <h2><%= project.current_problems.by(current_author).score %></h2>
     <h5><%= project.name%></h5>
   </div>
 <% end %>

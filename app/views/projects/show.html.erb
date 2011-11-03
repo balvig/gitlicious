@@ -24,12 +24,12 @@
     <h3>Authors</h3>
     <ul class='media-grid'>
       <% @project.authors.each do |author| %>
-        <li><%= link_to image_tag(avatar_url(author)), [author,@project], :title => author.name %></li>
+        <li><%= link_to image_tag(avatar_url(author)), @project, :title => author.name %></li>
       <% end %>
     </ul>
   </div>
   <div class="span16">
-    <div id="graph" style='height:350px' data-metrics='[<%= @project.reports.each.map {|r| "[#{r.timestamp},#{r.problems.by(@author).score}]"}.join(',')%>]'></div>
+    <div id="graph" style='height:350px' data-metrics='[<%= @project.reports.each.map {|r| "[#{r.timestamp},#{r.problems.by(current_author).score}]"}.join(',')%>]'></div>
   </div>
 </div>
 
