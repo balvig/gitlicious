@@ -1,10 +1,20 @@
 <div class="page-header">
+  <h1>Projects</h1>
+</div>
+
+<div class="row projects">
+  <%= render Project.all %>
+</div>
+
+<br><br>
+
+<div class="page-header">
   <h1>Sign In</h1>
 </div>
 
 
 <ul class="authors">
-  <% @authors.each do |author| %>
+  <% Author.all.each do |author| %>
     <li class='author'>
       <%= link_to login_path(:author_id => author) do %>
         <%= image_tag(avatar_url(author, 45), :alt => author.name, :size => '45x45') %>

@@ -8,6 +8,6 @@ Gitlicious::Application.routes.draw do
   match '/login' => 'sessions#create', :as => :login
   match '/logout' => 'sessions#destroy', :as => :logout
 
-  root :to => "authors#index"
+  root :to => 'sessions#new'
 
 end
