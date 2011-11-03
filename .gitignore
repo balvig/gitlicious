@@ -7,3 +7,4 @@ config/database.yml
 rerun.txt
 .dropbox
 repos
+config/deploy.rb
