@@ -27,19 +27,19 @@
 
   <div class="container-fluid">
     <div class="content">
-      <% flash.each do |key, value|%>
-        <div class="alert-message <%= key %>" data-alert='alert'>
-          <a class="close" href="#">×</a>
-          <p><%= value %></p>
-        </div>
-      <% end %>
-      <% if @author %>
+     <% if @author %>
         <div id='current_author' class='author'>
           <%= image_tag(avatar_url(@author, 50), :alt => @author.name, :size => '50x50') %>
           <div>
             <h4><%= @author.name %></h4>
             <p>&lt;<%= @author.email %>&gt;</p>
           </div>
+        </div>
+      <% end %>
+      <% flash.each do |key, value|%>
+        <div class="alert-message <%= key %>" data-alert='alert'>
+          <a class="close" href="#">×</a>
+          <p><%= value %></p>
         </div>
       <% end %>
       <%= yield %>
