@@ -10,6 +10,7 @@ class Project < ActiveRecord::Base
   after_destroy :remove_repository
 
   accepts_nested_attributes_for :metrics
+  attr_accessible :repo_url, :metrics_attributes
 
   def update_git_repository
     run('git pull') if git.remotes.size > 0 #Not sure why gem git.pull says "up to date"
@@ -35,10 +36,6 @@ class Project < ActiveRecord::Base
       result = stdout.read.strip
     end
     result
-  end
-
-  def supports_rcov?
-    metrics.exists?(:name => 'rcov')
   end
 
   private

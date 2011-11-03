@@ -51,4 +51,19 @@ describe Project do
       project.metrics.map(&:name).should == ["cleanup","rails_best_practices"]
     end
   end
+
+  describe ".current_problems" do
+    let(:project)  { Factory(:project) }
+    let(:report_1) { Factory(:report, :project => project) }
+    let(:report_2) { Factory(:report, :project => project) }
+
+    before do
+      Factory(:problem, :report => report_1)
+      Factory(:problem, :report => report_2)
+      Factory(:problem, :report => report_2)
+    end
+    it "returns problems associated it with the latest report" do
+      project.current_problems.size.should == 2
+    end
+  end
 end

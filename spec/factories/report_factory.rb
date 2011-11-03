@@ -1,8 +1,13 @@
-Factory.define :report do |f|
-  f.sha {Factory.next(:sha)}
-end
+FactoryGirl.define do
+  factory :report do
+    sha
+    after_build do |report|
+      report.stub(:run_metrics)
+      report.stub(:set_sha)
+    end
+  end
 
-
-Factory.sequence :sha do |n|
-  n
+  sequence :sha do |n|
+    n
+  end
 end

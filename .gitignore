@@ -8,3 +8,4 @@ rerun.txt
 .dropbox
 repos
 config/deploy.rb
+coverage

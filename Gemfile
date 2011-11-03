@@ -25,7 +25,7 @@ group :development, :test do
   gem 'rspec'
   gem 'rspec-rails'
   gem 'pry'
-  gem 'rcov'
+  gem 'simplecov', :require => false
 end
 
 group :production do

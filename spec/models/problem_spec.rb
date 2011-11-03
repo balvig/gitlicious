@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Problem do
-  
   describe ".blame" do
     let(:project) { Factory(:project) }
     it "creates or finds an actor, assigns it to the problem and adds as a member of the project" do
@@ -12,5 +11,4 @@ describe Problem do
       project.authors.should == [problem.author]
     end
   end
-  
 end
