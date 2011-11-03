@@ -12,20 +12,20 @@ class Report < ActiveRecord::Base
   def timestamp
     created_at.to_i * 1000
   end
-  
+
   def total_score
-    results.all.sum(&:weighted_score)
+    results.all.sum(&:score)
   end
-  
+
   private
-  
+
   def run_metrics
     project.update_git_repository
     project.metrics.each do |metric|
       results << metric.run
     end
   end
-  
+
   def set_sha
     self.sha = project.git.log(1).first.sha
   end

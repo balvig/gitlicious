@@ -10,15 +10,10 @@ class Metric < ActiveRecord::Base
     result = results.build
     result.log = output
     result.problems = parse_problems(output) if problem_pattern?
-    result.score = score_pattern? ? parse_score(output) : result.problems.size
     result
   end
 
   private
-
-  def parse_score(output)
-    output[/#{score_pattern}/,1].to_f
-  end
 
   def parse_problems(output)
     output.scan(/#{problem_pattern}/).map do |line|

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110920122701) do
+ActiveRecord::Schema.define(:version => 20111103075550) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -28,7 +28,6 @@ ActiveRecord::Schema.define(:version => 20110920122701) do
   create_table "metrics", :force => true do |t|
     t.string   "name"
     t.string   "command"
-    t.string   "score_pattern"
     t.string   "line_number_pattern"
     t.string   "filename_pattern"
     t.string   "description_pattern"
@@ -58,7 +57,6 @@ ActiveRecord::Schema.define(:version => 20110920122701) do
   end
 
   create_table "reports", :force => true do |t|
-    t.string   "name"
     t.integer  "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -69,7 +67,6 @@ ActiveRecord::Schema.define(:version => 20110920122701) do
     t.integer  "report_id"
     t.integer  "metric_id"
     t.text     "log"
-    t.decimal  "score",      :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -2,7 +2,6 @@ rbp:
   name:                 'rails_best_practices'
   weight:               0.5
   command:              'rails_best_practices --without-color .'
-  score_pattern:        'Found (\d+) error'
   problem_pattern:      '^\S.+:\d+.+$'
   filename_pattern:     '^\.\/(.+):\d'
   line_number_pattern:  '^.+:(\d+)'
@@ -25,13 +24,3 @@ cleanup:
 #   filename_pattern:     'source:\s(.+)$'
 #   line_number_pattern:  '- (\d+)'
 #   description_pattern:  'subclass:\s(.+)call'
-
-# flog:
-#   name:                 'flog'
-#   weight:               1
-#   command:              'flog --continue app/controllers app/helpers app/models lib'
-#   score_pattern:        '([\d\.]+): flog\/method average'
-#   problem_pattern:      '([\d\.]+:.+:\d+)$'
-#   filename_pattern:     '\s+(\S+):\d+$'
-#   line_number_pattern:  '^.+:(\d+)$'
-#   description_pattern:  '^(\d+\.\d+:\s\S+)\s'
