@@ -2,6 +2,7 @@ class Project < ActiveRecord::Base
 
   has_many :metrics, :dependent => :destroy
   has_many :reports, :dependent => :destroy
+  has_many :problems, :through => :reports
   has_and_belongs_to_many :authors
 
   before_create :set_name
@@ -18,12 +19,12 @@ class Project < ActiveRecord::Base
     @git ||= Git.open(repo_path)
   end
 
-  def problem_count
-    reports.size > 0 ? reports.last.problems.count : 0
+  def current_problems
+    problems.where(:report_id => reports.latest)
   end
 
   def current_score
-    reports.first.try(:total_score) || 0
+    current_problems.total_score
   end
 
   def run(command)

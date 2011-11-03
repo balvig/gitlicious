@@ -2,14 +2,5 @@
   <td><%= simple_format problem.description%></td>
   <td><%= problem.filename%></td>
   <td><%= problem.line_number%></td>
-  <% if @project.supports_rcov? %>
-  <td>
-      <% if problem.covered? %>
-        <span class='label success'>OK</span>
-      <% else %>
-        <span class='label important'>No spec</span>
-      <% end %>
-  </td>
-  <% end %>
 </tr>
 

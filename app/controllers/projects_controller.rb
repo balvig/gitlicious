@@ -8,11 +8,8 @@ class ProjectsController < ApplicationController
 
   def show
     @project = Project.find(params[:id])
-    @reports = @project.reports.limit(100)
-    if @reports.size > 0
-      @problems = @author ? @author.current_problems_in(@project) : @reports.first.problems
-      @results = @problems.group_by(&:result)
-    end
+    @problems = @project.current_problems
+    @problems = @problems.where(:author_id => @author) if @author
   end
 
   def new

@@ -1,19 +1,19 @@
 class Problem < ActiveRecord::Base
 
   belongs_to :author
-  belongs_to :result
+  belongs_to :report
+  belongs_to :metric
+  delegate :project, :to => :report
   before_save :blame
 
   validates_presence_of :filename, :line_number
 
-  scope :prioritized, joins(:result => :metric).order('metrics.weight DESC')
-
-  def project
-    result.report.project #CLEANUP: What's the best way to get to the project?
+  def self.total_score
+    all.sum(&:score)
   end
 
-  def covered?
-    !result.report.results.joins(:metric).where(:metrics => {:name => 'rcov'}).first.problems.exists?(:filename => filename, :line_number => line_number)
+  def score
+    metric.weight
   end
 
   private

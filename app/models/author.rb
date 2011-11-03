@@ -7,7 +7,4 @@ class Author < ActiveRecord::Base
     find_or_create_by_name_and_email(:name => metadata.name, :email => metadata.email)
   end
 
-  def current_problems_in(project)
-    project.reports.size > 0 ? project.reports.first.problems.where(:author_id => self) : []
-  end
 end

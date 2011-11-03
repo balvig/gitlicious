@@ -1,20 +1,18 @@
 class Report < ActiveRecord::Base
   belongs_to :project
-  has_many :results, :dependent => :destroy
-  has_many :problems, :through => :results
+  has_many :problems, :dependent => :destroy
 
   validates_uniqueness_of :sha, :scope => :project_id
 
   before_validation :run_metrics, :set_sha
 
-  default_scope order('created_at DESC')
+  def self.latest
+    order('created_at ASC').last
+  end
+
 
   def timestamp
     created_at.to_i * 1000
-  end
-
-  def total_score
-    results.sum(&:score)
   end
 
   private
@@ -22,7 +20,7 @@ class Report < ActiveRecord::Base
   def run_metrics
     project.update_git_repository
     project.metrics.each do |metric|
-      results << metric.run
+      problems << metric.run
     end
   end
 

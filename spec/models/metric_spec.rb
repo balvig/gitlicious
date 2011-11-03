@@ -9,10 +9,9 @@ describe Metric do
       let(:metric)  { Factory(:rbp_metric, :project => project) }
 
       it "runs the command line tool and parses the output" do
-        result = metric.run
-        result.log.should == "./app/models/post.rb:6 - keep finders on their own model\n\nPlease go to http://rails-bestpractices.com to see more useful Rails Best Practices.\n\nFound 1 warnings."
-        result.problems.size.should == 1
-        problem = result.problems.first
+        problems = metric.run
+        problems.size.should == 1
+        problem = problems.first
         problem.filename.should == 'app/models/post.rb'
         problem.line_number.should == 6
         problem.description.should == 'keep finders on their own model'
@@ -23,16 +22,15 @@ describe Metric do
       let(:metric)  { Factory(:cleanup_metric, :project => project) }
 
       it "runs the command line tool and parses the output, looking at the line after where the tag is" do
-        result = metric.run
-        result.log.should == "app/models/post.rb:5  #CLEANUP: This could be rewritten using Rails 3 syntax\napp/models/top_10.rb:3  #CLEANUP: This method is empty!"
-        result.problems.size.should == 2
+        problems = metric.run
+        problems.size.should == 2
 
-        problem = result.problems.first
+        problem = problems.first
         problem.filename.should == 'app/models/post.rb'
         problem.line_number.should == 5
         problem.description.should == 'This could be rewritten using Rails 3 syntax'
 
-        problem = result.problems.last
+        problem = problems.last
         problem.filename.should == 'app/models/top_10.rb'
         problem.line_number.should == 3
         problem.description.should == 'This method is empty!'
