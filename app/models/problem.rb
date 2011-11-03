@@ -11,13 +11,13 @@ class Problem < ActiveRecord::Base
   def project
     result.report.project #CLEANUP: What's the best way to get to the project?
   end
-  
+
   def covered?
     !result.report.results.joins(:metric).where(:metrics => {:name => 'rcov'}).first.problems.exists?(:filename => filename, :line_number => line_number)
   end
-  
+
   private
-  
+
   def blame
     output = project.git.lib.send(:command,"blame #{filename} -L#{line_number},#{line_number} -p")
     name = output[/author\s(.+)$/,1]
