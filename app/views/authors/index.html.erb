@@ -5,8 +5,8 @@
 
 <ul class="authors">
   <% @authors.each do |author| %>
-    <li>
-      <%= link_to author do %>
+    <li class='author'>
+      <%= link_to [author, :projects] do %>
         <%= image_tag(avatar_url(author, 45), :alt => author.name, :size => '45x45') %>
         <div>
           <h4><%= author.name %></h4>

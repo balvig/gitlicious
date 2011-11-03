@@ -10,22 +10,15 @@
 
 <div class="row">
   <div class="span4 stats">
-    <h2>Project Score</h2>
+    <h2>Current Score</h2>
     <p>
-      <%= @project.current_score %>
-      <% if @project.current_score < 500 %>
-        <span class="label success">Great!</span>
-      <% elsif @project.current_score < 1000 %>
-        <span class="label warning">Warning</span>
-      <% else %>
-        <span class="label important">Critical</span>
-      <% end %>
+      <%= format_score @problems.score %>
     </p>
     <hr>
     <h3>Metrics <small><%= link_to "(Edit)", [@project,:metrics] %></small></h3>
     <ul>
       <% @project.metrics.each do |metric|%>
-        <li><%= metric.name%> <em><%= @project.current_problems.where(:metric_id => metric).total_score %></em></li>
+        <li><%= metric.name%> <em><%= @problems.where(:metric_id => metric).score %></em></li>
       <% end %>
     </ul>
     <h3>Authors</h3>
@@ -36,14 +29,14 @@
     </ul>
   </div>
   <div class="span16">
-    <div id="graph" style='height:350px' data-metrics='[<%= @project.reports.each.map {|r| "[#{r.timestamp},#{r.problems.total_score}]"}.join(',')%>]'></div>
+    <div id="graph" style='height:350px' data-metrics='[<%= @project.reports.each.map {|r| "[#{r.timestamp},#{r.problems.by(@author).score}]"}.join(',')%>]'></div>
   </div>
 </div>
 
 <% if @problems %>
   <br>
   <div class="page-header">
-    <h3><%= genitive(@author.name) + ' ' if @author %>Problems <small>(<%= @problems.count%>)</small></h3>
+    <h3>Problems <small>(<%= @problems.count%>)</small></h3>
   </div>
 
   <ul class='pills' data-pills="pills">

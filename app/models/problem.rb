@@ -8,8 +8,14 @@ class Problem < ActiveRecord::Base
 
   validates_presence_of :filename, :line_number
 
-  def self.total_score
+  def self.score
     all.sum(&:score)
+  end
+
+  def self.by(author = nil)
+    result = scoped
+    result = result.where(:author_id => author) if author
+    result
   end
 
   def score

@@ -1,7 +1,9 @@
 <%= link_to [@author, project] do %>
   <div class="span project">
-    <p class='count'><%= @author ? project.current_problems.where(:author_id => @author).count : project.current_problems.count %></p>
-    <h2><%= project.current_score%></h2>
+    <% if project.current_problems.by(@author).count > 0 %>
+      <p class='count'><%= project.current_problems.by(@author).count %></p>
+    <% end %>
+    <h2><%= project.current_problems.by(@author).score %></h2>
     <h5><%= project.name%></h5>
   </div>
 <% end %>

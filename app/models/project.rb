@@ -23,10 +23,6 @@ class Project < ActiveRecord::Base
     problems.where(:report_id => reports.latest)
   end
 
-  def current_score
-    current_problems.total_score
-  end
-
   def run(command)
     result = ''
     Open4::popen4("sh") do |pid, stdin, stdout, stderr|

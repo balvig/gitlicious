@@ -97,18 +97,16 @@ div.project:hover {
   margin-left:0px;
 }
 
-.authors li, .authors img, .authors div {
+.authors li, .author img, .author div {
   display:inline-block;
   vertical-align:top;
 }
 
-.authors li {
-  margin: 0 7px 7px 0;
+.author {
   border: 1px solid #DDD;
   background: #EEE;
   padding: 5px;
   border-radius: 3px;
-  width:280px;
 }
 
 .authors li:hover {
@@ -119,22 +117,30 @@ div.project:hover {
   text-decoration:none;
 }
 
-.authors img {
+.author img {
   margin-right:5px;
   background:#FFF;
   padding:1px;
 }
 
-.authors div {
+li.author {
+  margin: 0 7px 7px 0;
+  width:280px;
+}
+li.author div {
   width:220px;
 }
 
-.authors h4 {
+.author h4 {
   line-height:16px;
   margin:2px 0px 6px 0px;
 }
 
-.authors p {
+.author p {
   color:#888 !important;
   margin-bottom:0px;
+}
+
+#current_author {
+  margin:-20px -20px 11px -20px;
 }

@@ -18,13 +18,9 @@
     <div class="topbar-inner">
       <div class="container-fluid">
         <%= link_to "Gitlicious", root_path, :class => 'brand' %>
-        <!--ul class="nav">
-          <li><%= link_to "Authors", authors_path %></li>
-          <li class='active'><%= link_to "Projects", [@author,:projects] %></li>
-        </ul-->
-        <% if @author %>
-          <p class="pull-right">Logged in as <%= link_to "#{@author.name} <#{@author.email}>", @author %></p>
-        <% end %>
+        <ul class="nav">
+          <li><%= link_to "Projects", [@author,:projects] %></li>
+        </ul>
       </div>
     </div>
   </div>
@@ -35,6 +31,15 @@
         <div class="alert-message <%= key %>" data-alert='alert'>
           <a class="close" href="#">×</a>
           <p><%= value %></p>
+        </div>
+      <% end %>
+      <% if @author %>
+        <div id='current_author' class='author'>
+          <%= image_tag(avatar_url(@author, 50), :alt => @author.name, :size => '50x50') %>
+          <div>
+            <h4><%= @author.name %></h4>
+            <p>&lt;<%= @author.email %>&gt;</p>
+          </div>
         </div>
       <% end %>
       <%= yield %>

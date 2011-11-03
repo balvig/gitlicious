@@ -8,8 +8,7 @@ class ProjectsController < ApplicationController
 
   def show
     @project = Project.find(params[:id])
-    @problems = @project.current_problems
-    @problems = @problems.where(:author_id => @author) if @author
+    @problems = @project.current_problems.by(@author)
   end
 
   def new
