@@ -11,10 +11,7 @@ gem 'reek'
 
 group :test do
   gem 'capybara'
-  gem 'cucumber'
-  gem 'cucumber-rails', '~>0.3.2'
   gem 'database_cleaner'
-  gem 'pickle'
   gem 'factory_girl'
   gem 'factory_girl_rails'
   gem 'launchy'
