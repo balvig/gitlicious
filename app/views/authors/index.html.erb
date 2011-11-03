@@ -3,8 +3,16 @@
 </div>
 
 
-<ul class="media-grid">
+<ul class="authors">
   <% @authors.each do |author| %>
-    <li><%= link_to image_tag(avatar_url(author, 90), :alt => author.name, :title => "#{author.name} <#{author.email}>", :size => '90x90'), author %></li>
+    <li>
+      <%= link_to author do %> 
+        <%= image_tag(avatar_url(author, 45), :alt => author.name, :size => '45x45') %>
+        <div>
+          <h4><%= author.name %></h4>
+          <p>&lt;<%= author.email %>&gt;</p>
+        </div>
+      <% end %>
+    </li>
   <% end %>
 </ul>

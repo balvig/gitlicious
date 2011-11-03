@@ -92,3 +92,49 @@ div.project:hover {
   margin:-21px -20px 18px;
   display:none;
 }
+
+.authors {
+  margin-left:0px;
+}
+
+.authors li, .authors img, .authors div {
+  display:inline-block;
+  vertical-align:top;
+}
+
+.authors li {
+  margin: 0 7px 7px 0;
+  border: 1px solid #DDD;
+  background: #EEE;
+  padding: 5px;
+  border-radius: 3px;
+  width:280px;
+}
+
+.authors li:hover {
+  background:#DDD;
+}
+
+.authors a {
+  text-decoration:none;
+}
+
+.authors img {
+  margin-right:5px;
+  background:#FFF;
+  padding:1px;
+}
+
+.authors div {
+  width:220px;
+}
+
+.authors h4 {
+  line-height:16px;
+  margin:2px 0px 6px 0px;
+}
+
+.authors p {
+  color:#888 !important;
+  margin-bottom:0px;
+}
