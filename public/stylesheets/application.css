@@ -9,6 +9,8 @@ body {padding-top: 60px;}
   background-color: #F5F5F5;
   border-radius: 6px 6px 6px 6px;
   padding: 20px;
+  float:left;
+  width:17%;
 }
 
 .stats p {
@@ -25,10 +27,9 @@ body {padding-top: 60px;}
 
 .stats .label {vertical-align:middle;}
 
-.stats .media-grid {margin-left:-2px;}
-.stats .media-grid a {
-  margin:0px 0px 2px 2px;
-  padding:1px;
+#graph {
+  float:right;
+  width:76%;
 }
 
 footer p {
@@ -74,16 +75,16 @@ div.project:hover {
 
 .project .count {
   cursor:pointer;
-	background: #CC0000;
-	color: white;
-	border: 2px solid white;
-	font-size: 0.8em;
-	font-weight: bold;
-	position: absolute;
-	line-height: 100%;
-	padding: 0.5em 0.7em;
-	right: -1.2em;
-	top: -0.7em;
+  background: #CC0000;
+  color: white;
+  border: 2px solid white;
+  font-size: 0.8em;
+  font-weight: bold;
+  position: absolute;
+  line-height: 100%;
+  padding: 0.5em 0.7em;
+  right: -1.2em;
+  top: -0.7em;
   border-radius:1.2em;
   box-shadow:1px 1px 1px rgba(0, 0, 0, 0.5);
 }

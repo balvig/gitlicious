@@ -22,9 +22,7 @@
       <% end %>
     </ul>
   </div>
-  <div class="span18">
-    <div id="graph" style='height:243px;' data-metrics='[<%= @project.reports.each.map {|r| "[#{r.timestamp},#{r.problems.by(current_author).score}]"}.join(',')%>]'></div>
-  </div>
+  <div id="graph" style='height:243px;' data-metrics='[<%= @project.reports.each.map {|r| "[#{r.timestamp},#{r.problems.by(current_author).score}]"}.join(',')%>]'></div>
 </div>
 
 <% if @problems.size > 0 %>
