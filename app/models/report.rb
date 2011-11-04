@@ -11,7 +11,6 @@ class Report < ActiveRecord::Base
     order('created_at ASC').last
   end
 
-
   def timestamp
     created_at.to_i * 1000
   end
@@ -19,13 +18,12 @@ class Report < ActiveRecord::Base
   private
 
   def run_metrics
-    project.update_git_repository
     project.metrics.each do |metric|
       problems << metric.run
     end
   end
 
   def set_sha
-    self.sha ||= project.git.log(1).first.sha
+    self.sha ||= project.current_sha
   end
 end

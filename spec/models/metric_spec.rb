@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'spec_helper'
 
 describe Metric do
@@ -23,14 +24,19 @@ describe Metric do
 
       it "runs the command line tool and parses the output, looking at the line after where the tag is" do
         problems = metric.run
-        problems.size.should == 2
+        problems.size.should == 3
 
-        problem = problems.first
+        problem = problems[0]
+        problem.filename.should == 'app/controllers/posts_controller.rb'
+        problem.line_number.should == 5
+        problem.description.should == '日本語のコメントも使える'
+
+        problem = problems[1]
         problem.filename.should == 'app/models/post.rb'
         problem.line_number.should == 5
         problem.description.should == 'This could be rewritten using Rails 3 syntax'
 
-        problem = problems.last
+        problem = problems[2]
         problem.filename.should == 'app/models/top_10.rb'
         problem.line_number.should == 3
         problem.description.should == 'This method is empty!'

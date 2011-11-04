@@ -5,14 +5,14 @@ describe Report do
   describe ".run_metrics" do
     it "runs metrics for all metrics assigned to the project" do
       report = Report.create!(:project =>  Factory(:real_project))
-      report.problems.size.should == 3
+      report.problems.size.should == 4
     end
   end
 
   describe ".set_sha" do
     it "stores the current sha hash of the project" do
       report = Report.create!(:project => Factory(:real_project))
-      report.sha.should == '1e45a341424f6fa91e0c748fe1d9094376c52835'
+      report.sha.should == 'a09aa5501595c95d8aa191296e7d1c0489834aa8'
     end
   end
 

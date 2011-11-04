@@ -12,10 +12,6 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :metrics
   attr_accessible :repo_url, :metrics_attributes
 
-  def update_git_repository
-    run('git pull') if git.remotes.size > 0 #Not sure why gem git.pull says "up to date"
-  end
-
   def git
     @git ||= Git.open(repo_path)
   end
@@ -38,6 +34,11 @@ class Project < ActiveRecord::Base
     result
   end
 
+  def current_sha
+    update_git_repository
+    git.log(1).first.sha
+  end
+
   private
 
   def set_name
@@ -50,6 +51,10 @@ class Project < ActiveRecord::Base
 
   def clone_repository
     Git.clone(repo_url, repo_path) if repo_url?
+  end
+
+  def update_git_repository
+    run('git pull') if git.remotes.size > 0 #Not sure why gem git.pull says "up to date"
   end
 
   def remove_repository
