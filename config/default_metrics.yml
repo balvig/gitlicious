@@ -1,6 +1,6 @@
 rbp:
   name:                 'rails_best_practices'
-  weight:               0.5
+  weight:               1
   command:              'rails_best_practices --without-color .'
   problem_pattern:      '^\S.+:\d+.+$'
   filename_pattern:     '^\.\/(.+):\d'

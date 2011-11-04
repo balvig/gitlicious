@@ -21,7 +21,7 @@
         <%= image_tag(avatar_url(author, 45), :alt => author.name, :size => '45x45') %>
         <div>
           <h4><%= author.name %></h4>
-          <p><%= author.email %></p>
+          <p><%= truncate author.email, :length => 38 %></p>
         </div>
       <% end %>
     </li>
