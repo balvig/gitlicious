@@ -15,7 +15,7 @@
 
 
 <ul class="authors">
-  <% Author.all.each do |author| %>
+  <% Author.order('name ASC').each do |author| %>
     <li class='author'>
       <%= link_to login_path(:author_id => author) do %>
         <%= image_tag(avatar_url(author, 45), :alt => author.name, :size => '45x45') %>
