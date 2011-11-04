@@ -8,6 +8,7 @@ gem 'open4'
 gem 'flog'
 gem 'rails_best_practices'
 gem 'reek'
+gem 'haml'
 
 group :test do
   gem 'capybara'
