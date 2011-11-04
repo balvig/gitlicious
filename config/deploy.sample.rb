@@ -1,14 +1,14 @@
 require 'bundler/capistrano'
 
 set :application, "gitlicious"
-set :deploy_to, "/home/jens/#{application}"
+set :deploy_to, "/path/to/#{application}"
 set :scm, :git
 
 set :branch, ENV['BRANCH'] || :master
 set :ssh_options, { :forward_agent => true }
 
-set :user, 'jens'
-set :domain, 'app-gitlicious-01.ap-northeast-1.compute.internal'
+set :user, 'myuser'
+set :domain, 'www.mydomain.com'
 set :use_sudo, false
 
 role :web, domain
