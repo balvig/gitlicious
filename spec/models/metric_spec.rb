@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Metric do
 
   describe ".run" do
-    let(:project) { Factory(:empty_project) }
+    let(:project) { Factory(:project_with_no_metrics) }
 
     describe "rails_best_practices" do
       let(:metric)  { Factory(:rbp_metric, :project => project) }

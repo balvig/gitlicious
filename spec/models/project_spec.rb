@@ -4,7 +4,7 @@ describe Project do
 
   describe ".set_name" do
     let(:project) { Factory.build(:project) }
-    before(:each) { project.stub(:clone_repository) }
+
     context "given a url ending in .git" do
       it "strips of .git" do
         project.repo_url = 'git://github.com/balvig/gitlicious_dummy.git'
@@ -31,7 +31,7 @@ describe Project do
   describe ".repo_url" do
     context "given a url" do
       it "clones the project" do
-        project = Factory(:project, :repo_url => 'git://github.com/balvig/gitlicious_dummy.git')
+        project = Project.create!(:repo_url => 'git://github.com/balvig/gitlicious_dummy.git')
         File.exists?(Rails.root.join('spec','fixtures','repos','gitlicious_dummy')).should be_true
       end
     end
@@ -39,7 +39,7 @@ describe Project do
 
   describe ".destroy" do
     it "removes the repository when deleted" do
-      project = Factory(:project, :repo_url => 'git://github.com/balvig/gitlicious_dummy.git')
+      project = Project.create!(:repo_url => 'git://github.com/balvig/gitlicious_dummy.git')
       project.destroy
       File.exists?(Rails.root.join('spec','fixtures','repos','gitlicious_dummy')).should_not be_true
     end
@@ -62,6 +62,7 @@ describe Project do
       Factory(:problem, :report => report_2)
       Factory(:problem, :report => report_2)
     end
+
     it "returns problems associated it with the latest report" do
       project.current_problems.size.should == 2
     end

@@ -7,8 +7,8 @@ class Problem < ActiveRecord::Base
   before_save :blame
 
   validates_presence_of :filename, :line_number
-
   default_scope includes(:metric)
+
   def self.score
     all.sum(&:score)
   end

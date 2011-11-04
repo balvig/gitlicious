@@ -4,7 +4,8 @@ class Report < ActiveRecord::Base
 
   validates_uniqueness_of :sha, :scope => :project_id
 
-  before_validation :run_metrics, :set_sha, :on => :create
+  before_validation :set_sha, :on => :create
+  before_create :run_metrics
 
   def self.latest
     order('created_at ASC').last
