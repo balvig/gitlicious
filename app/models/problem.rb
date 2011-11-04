@@ -31,5 +31,7 @@ class Problem < ActiveRecord::Base
     email = output[/author-mail\s<(.+)>$/,1]
     self.author = Author.find_or_create_by_name_and_email(name,email)
     project.authors << author unless project.authors.exists?(author)
+    rescue Git::GitExecuteError => e
+      logger.error(e.message)
   end
 end
