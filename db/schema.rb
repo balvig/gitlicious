@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111103100032) do
+ActiveRecord::Schema.define(:version => 20111104080459) do
 
   create_table "authors", :force => true do |t|
     t.string   "name"
@@ -27,13 +27,13 @@ ActiveRecord::Schema.define(:version => 20111103100032) do
 
   create_table "metrics", :force => true do |t|
     t.string   "name"
-    t.string   "command"
+    t.text     "command",             :limit => 255
     t.string   "line_number_pattern"
     t.string   "filename_pattern"
     t.string   "description_pattern"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "weight",              :default => 1.0
+    t.decimal  "weight",                             :default => 1.0
     t.integer  "project_id"
     t.string   "problem_pattern"
   end
