@@ -36,9 +36,10 @@ namespace :deploy do
     task t, :roles => :app do ; end
   end
 
-  desc "Symlink shared config file on each release."
+  desc "Symlink shared config files and repos on each release."
   task :symlink_config do
     run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+    run "ln -nfs #{shared_path}/repos/ #{release_path}/repos"
   end
 
   namespace :web do
