@@ -2,8 +2,6 @@ class Report < ActiveRecord::Base
   belongs_to :project
   has_many :problems, :dependent => :destroy
 
-  validates_uniqueness_of :sha, :scope => :project_id
-
   before_validation :set_sha, :on => :create
   before_create :run_metrics
 

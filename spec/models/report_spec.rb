@@ -16,14 +16,6 @@ describe Report do
     end
   end
 
-  describe ".validates_uniqueness_of" do
-    let(:project) { Factory(:project) }
-    it "does not allow 2 of the same report" do
-      report = Factory(:report, :project => project, :sha => '1234')
-      project.reports.build(:sha => '1234').should_not be_valid
-    end
-  end
-
   describe "timestamp" do
     it "returns a timestamp formatted for flot" do
       Timecop.freeze('2007-03-05'.to_date)
