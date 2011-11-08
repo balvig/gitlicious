@@ -5,10 +5,10 @@ gem 'simple_form'
 gem 'yaml_db'
 gem 'git'
 gem 'open4'
-gem 'flog'
 gem 'rails_best_practices'
 gem 'reek'
 gem 'haml'
+gem 'airbrake'
 
 group :test do
   gem 'capybara'

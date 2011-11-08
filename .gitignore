@@ -9,3 +9,4 @@ rerun.txt
 repos
 config/deploy.rb
 coverage
+config/initializers/airbrake.rb
