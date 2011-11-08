@@ -1,7 +1,6 @@
 Gitlicious::Application.routes.draw do
 
   resources :projects do
-    resources :reports, :only => :create
     resources :metrics
   end
 

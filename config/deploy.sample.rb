@@ -15,14 +15,18 @@ role :web, domain
 role :app, domain
 role :db, domain, :primary => true
 
-
+# GIT
 set :repository, 'git://github.com/balvig/gitlicious.git'
 set :deploy_via, :remote_cache
 
-# RVM stuff
+# RVM
 $:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 require "rvm/capistrano"
 set :rvm_ruby_string, '1.9.2'
+
+# WHENEVER
+set :whenever_command, "bundle exec whenever"
+require "whenever/capistrano"
 
 # Custom tasks
 namespace :deploy do

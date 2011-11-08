@@ -9,6 +9,7 @@ gem 'rails_best_practices'
 gem 'reek'
 gem 'haml'
 gem 'airbrake'
+gem 'whenever', :require => false
 
 group :test do
   gem 'capybara'
