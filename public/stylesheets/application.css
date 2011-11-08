@@ -89,11 +89,6 @@ div.project:hover {
   box-shadow:1px 1px 1px rgba(0, 0, 0, 0.5);
 }
 
-.breadcrumb {
-  margin:-21px -20px 18px;
-  display:none;
-}
-
 .authors {
   margin-left:0px;
 }
