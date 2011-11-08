@@ -1,18 +1,6 @@
 <div class="page-header">
-  <h1>Projects</h1>
-  <%= link_to 'Import New', new_project_path, :class => 'btn primary'%>
-</div>
-
-<div class="row projects">
-  <%= render Project.all %>
-</div>
-
-<br><br>
-
-<div class="page-header">
   <h1>Sign In</h1>
 </div>
-
 
 <ul class="authors">
   <% Author.order('name ASC').each do |author| %>
@@ -27,3 +15,14 @@
     </li>
   <% end %>
 </ul>
+
+<br><br>
+
+<div class="page-header">
+  <h1>Projects</h1>
+  <%= link_to 'Import New', new_project_path, :class => 'btn primary'%>
+</div>
+
+<div class="row projects">
+  <%= render Project.all %>
+</div>
