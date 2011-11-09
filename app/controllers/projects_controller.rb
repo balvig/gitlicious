@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
 
   def index
-    @projects = Project.all
+    @projects = logged_in? ? current_author.projects : Project.all
   end
 
   def show
