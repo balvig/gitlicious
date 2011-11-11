@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(:version => 20111113071944) do
 
   create_table "metrics", :force => true do |t|
     t.string   "name"
-    t.text     "command",             :limit => 255
+    t.text     "command"
     t.string   "line_number_pattern"
     t.string   "filename_pattern"
     t.string   "description_pattern"
