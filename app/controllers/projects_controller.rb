@@ -3,7 +3,7 @@ class ProjectsController < ApplicationController
   before_filter :find_author
 
   def index
-    @projects = logged_in? ? current_author.projects : Project.all
+    @projects = current_author ? current_author.projects : Project.all
   end
 
   def show
