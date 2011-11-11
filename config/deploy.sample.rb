@@ -19,11 +19,6 @@ role :db, domain, :primary => true
 set :repository, 'git://github.com/balvig/gitlicious.git'
 set :deploy_via, :remote_cache
 
-# RVM
-$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
-require "rvm/capistrano"
-set :rvm_ruby_string, '1.9.2'
-
 # WHENEVER
 set :whenever_command, "bundle exec whenever"
 require "whenever/capistrano"
@@ -43,7 +38,7 @@ namespace :deploy do
   desc "Symlink shared config files and repos on each release."
   task :symlink_config do
     run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
-    run "ln -nfs #{shared_path}/config/airbrake.rb #{release_path}/config/initalizers/airbrake.rb"
+    run "ln -nfs #{shared_path}/config/airbrake.rb #{release_path}/config/initializers/airbrake.rb"
     run "ln -nfs #{shared_path}/repos/ #{release_path}/repos"
   end
 

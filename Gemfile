@@ -9,6 +9,7 @@ gem 'rails_best_practices'
 gem 'reek'
 gem 'haml'
 gem 'airbrake'
+gem 'yaml_db'
 gem 'whenever', :require => false
 
 group :test do
@@ -20,7 +21,6 @@ group :test do
   gem 'timecop'
   gem 'watchr'
 end
-
 
 group :development, :test do
   gem 'sqlite3-ruby', :require => 'sqlite3'
