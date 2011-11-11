@@ -28,6 +28,16 @@
   <div class="container-fluid">
     <div class="content">
 
+      <% if current_author %>
+        <div id='current_author' class='author'>
+          <%= link_to image_tag(avatar_url(current_author, 50), :alt => current_author.name, :size => '50x50'), [current_author, :projects] %>
+          <div>
+            <h4><%= current_author.name %></h4>
+            <p><%= current_author.email %></p>
+          </div>
+        </div>
+      <% end %>
+
       <% flash.each do |key, value|%>
         <div class="alert-message <%= key %>" data-alert='alert'>
           <a class="close" href="#">×</a>
@@ -39,16 +49,6 @@
       <footer>
         <p>&copy; COOKPAD Inc. 2011</p>
       </footer>
-      <% if logged_in? %>
-        <div id='current_author' class='author'>
-          <%= image_tag(avatar_url(current_author, 50), :alt => current_author.name, :size => '50x50') %>
-          <div>
-            <h4><%= current_author.name %></h4>
-            <p><%= current_author.email %></p>
-          </div>
-          <%= link_to 'Sign Out',logout_path, :class => 'logout' %>
-        </div>
-      <% end %>`
     </div>
   </div>
 </body>

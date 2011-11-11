@@ -1,11 +1,11 @@
 <div class="page-header">
-  <h1>Sign In</h1>
+  <h1>Authors</h1>
 </div>
 
 <ul class="authors">
-  <% Author.order('name ASC').each do |author| %>
+  <% @authors.each do |author| %>
     <li class='author'>
-      <%= link_to login_path(:author_id => author) do %>
+      <%= link_to [author,:projects] do %>
         <%= image_tag(avatar_url(author, 45), :alt => author.name, :size => '45x45') %>
         <div>
           <h4><%= author.name %></h4>

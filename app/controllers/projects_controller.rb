@@ -1,5 +1,7 @@
 class ProjectsController < ApplicationController
 
+  before_filter :find_author
+
   def index
     @projects = logged_in? ? current_author.projects : Project.all
   end
@@ -41,5 +43,11 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     @project.destroy
     redirect_to(projects_url)
+  end
+
+  private
+
+  def find_author
+    @author = Author.find(params[:author_id]) if params[:author_id]
   end
 end

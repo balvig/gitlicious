@@ -1,4 +1,4 @@
-<%= link_to project do %>
+<%= link_to [current_author, project] do %>
   <div class="span project">
     <% if project.current_problems.by(current_author).count > 0 %>
       <p class='count'><%= project.current_problems.by(current_author).count %></p>
