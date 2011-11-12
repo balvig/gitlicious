@@ -1,3 +1,15 @@
+GIT
+  remote: git://github.com/balvig/rails_best_practices.git
+  revision: e9a8957325a5fb269037efb600c75f10d68b982f
+  specs:
+    rails_best_practices (1.2.0)
+      activesupport
+      colored
+      erubis
+      i18n
+      progressbar
+      sexp_processor
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -80,7 +92,6 @@ GEM
     multi_json (1.0.3)
     mysql2 (0.2.13)
     nokogiri (1.4.4)
-    open4 (1.1.0)
     polyglot (0.3.2)
     progressbar (0.9.1)
     pry (0.9.3)
@@ -101,13 +112,6 @@ GEM
       activesupport (= 3.0.10)
       bundler (~> 1.0)
       railties (= 3.0.10)
-    rails_best_practices (1.2.0)
-      activesupport
-      colored
-      erubis
-      i18n
-      progressbar
-      sexp_processor
     railties (3.0.10)
       actionpack (= 3.0.10)
       activesupport (= 3.0.10)
@@ -184,10 +188,9 @@ DEPENDENCIES
   haml
   launchy
   mysql2 (< 0.3)
-  open4
   pry
   rails (~> 3.0.10)
-  rails_best_practices
+  rails_best_practices!
   reek
   rspec
   rspec-rails

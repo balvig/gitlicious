@@ -21,17 +21,9 @@ class Project < ActiveRecord::Base
   end
 
   def run(command)
-    result = ''
-    Open4::popen4("sh") do |pid, stdin, stdout, stderr|
-      stdin.puts "unset BUNDLE_GEMFILE"
-      stdin.puts "unset RUBYOPT"
-      stdin.puts "unset BUNDLE_BIN_PATH"
-      stdin.puts "cd #{repo_path}"
-      stdin.puts command
-      stdin.close
-      result = stdout.read.strip
+    Bundler.with_clean_env do
+      `cd #{repo_path} && #{command}`
     end
-    result
   end
 
   def current_sha

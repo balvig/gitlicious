@@ -31,7 +31,7 @@
          shadowSize: 0,
          color: '#049CDB'
        },
-       xaxis: {mode:"time", timeformat: "%y/%m/%d (%h:%M)", tickFormatter: options.tickFormatter},
+       xaxis: {mode:"time", timeformat: "%y/%m/%d", tickSize:[1,'day'], tickFormatter: options.tickFormatter},
        yaxis: {tickDecimals:0}
      };
      var graph = $.plot(this, [metrics], flotOptions);

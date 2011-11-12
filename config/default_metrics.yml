@@ -1,7 +1,7 @@
 rbp:
   name:                 'rails_best_practices'
   weight:               1
-  command:              'rails_best_practices --without-color .'
+  command:              'rails_best_practices --without-color --with-urls .'
   problem_pattern:      '^\S.+:\d+.+$'
   filename_pattern:     '^\.\/(.+):\d'
   line_number_pattern:  '^.+:(\d+)'
@@ -10,7 +10,7 @@ rbp:
 cleanup:
   name:                 'cleanup'
   weight:               5
-  command:              "grep -r -n '#CLEANUP:' app/controllers app/helpers app/models lib | awk '{n = substr($0, match($0, /[0-9]+:/), RLENGTH) + 1; sub(/[0-9]+:/, n); print }'" 
+  command:              "grep -r -n '#CLEANUP:' app/controllers app/helpers app/models lib | awk '{n = substr($0, match($0, /[0-9]+:/), RLENGTH) + 1; sub(/[0-9]+:/, n); print }'"
   problem_pattern:      '^\S.+:\d+.+$'
   filename_pattern:     '^(.+):\d'
   line_number_pattern:  '^.+:(\d+)'

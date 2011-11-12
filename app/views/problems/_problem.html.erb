@@ -1,5 +1,5 @@
 <tr>
-  <td><%= simple_format problem.description%></td>
+  <td><%= simple_format(auto_link(problem.description)) %></td>
   <td><%= problem.filename%></td>
   <td><%= problem.line_number%></td>
 </tr>

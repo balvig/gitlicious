@@ -15,7 +15,7 @@ describe Metric do
         problem = problems.first
         problem.filename.should == 'app/models/post.rb'
         problem.line_number.should == 6
-        problem.description.should == 'keep finders on their own model'
+        problem.description.should == 'keep finders on their own model (http://rails-bestpractices.com/posts/13-keep-finders-on-their-own-model)'
       end
     end
 
