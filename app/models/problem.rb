@@ -20,6 +20,10 @@ class Problem < ActiveRecord::Base
     result
   end
 
+  def link
+    "#{project.github_url}/blob/#{report.sha}/#{filename}#L#{line_number}" if project.github_url?
+  end
+
   def score
     metric.weight
   end

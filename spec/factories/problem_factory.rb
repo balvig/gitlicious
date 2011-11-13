@@ -1,5 +1,6 @@
 FactoryGirl.define do
   factory :problem do
+    description 'This should be fixed'
     filename 'model.rb'
     line_number
     metric

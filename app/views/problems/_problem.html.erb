@@ -1,7 +1,5 @@
 <tr>
-  <td class='avatar'><%= link_to image_tag(avatar_url(problem.author,35)), [problem.author, @project] %></td>
+  <td class='avatar'><%= link_to image_tag(avatar_url(problem.author,35)), [problem.author, problem.project] %></td>
   <td><%= simple_format(auto_link(problem.description)) %></td>
-  <td><%= problem.filename%></td>
-  <td><%= problem.line_number%></td>
+  <td><%= link_to_if problem.link, "#{problem.filename}:#{problem.line_number}", problem.link, :target => '_blank'%></td>
 </tr>
-

@@ -8,7 +8,7 @@ class Project < ActiveRecord::Base
   after_create :clone_repository
   after_destroy :remove_repository
 
-  attr_accessible :repo_url
+  attr_accessible :repo_url, :github_url
 
   def git
     @git ||= Git.open(repo_path)

@@ -13,7 +13,7 @@ class Metric < ActiveRecord::Base
 
   def parse_problems(output)
     output.scan(/#{problem_pattern}/).map do |line|
-      line = line.first if line.is_a?(Array) #CLEANUP: Huh? I get an array back from multiline ouput
+      line = line.first if line.is_a?(Array)
       problem = Problem.new
       problem.metric = self
       problem.line_number = line[/#{line_number_pattern}/,1].to_i
