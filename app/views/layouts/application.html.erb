@@ -30,7 +30,7 @@
 
       <% if current_author %>
         <div id='current_author' class='author'>
-          <%= link_to image_tag(avatar_url(current_author, 50), :alt => current_author.name, :size => '50x50'), [current_author, :projects] %>
+          <%= link_to image_tag(avatar_url(current_author, 40), :alt => current_author.name), [current_author, :projects] %>
           <div>
             <h4><%= current_author.name %></h4>
             <p><%= current_author.email %></p>

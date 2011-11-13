@@ -1,7 +1,6 @@
 Gitlicious::Application.routes.draw do
 
   resources :projects
-  resources :metrics, :only => [:index, :edit, :update]
 
   resources :authors, :only => [] do
     resources :projects, :only => [:index, :show]
