@@ -1,16 +1,14 @@
 class Project < ActiveRecord::Base
 
-  has_many :metrics, :dependent => :destroy
   has_many :reports, :dependent => :destroy
   has_many :problems, :through => :reports
   has_and_belongs_to_many :authors
 
   before_create :set_name
-  after_create :clone_repository, :create_default_metrics
+  after_create :clone_repository
   after_destroy :remove_repository
 
-  accepts_nested_attributes_for :metrics
-  attr_accessible :repo_url, :metrics_attributes
+  attr_accessible :repo_url
 
   def git
     @git ||= Git.open(repo_path)
@@ -51,12 +49,6 @@ class Project < ActiveRecord::Base
 
   def remove_repository
     FileUtils.rm_rf(repo_path)
-  end
-
-  def create_default_metrics
-    Rails.application.config.default_metrics.each do |key, attributes|
-      metrics.create!(attributes)
-    end
   end
 
 end

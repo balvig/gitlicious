@@ -4,13 +4,13 @@ require 'spec_helper'
 describe Metric do
 
   describe ".run" do
-    let(:project) { Factory(:project_with_no_metrics) }
+    let(:project) { Factory(:real_project) }
 
     describe "rails_best_practices" do
-      let(:metric)  { Factory(:rbp_metric, :project => project) }
+      let(:metric)  { Factory(:rbp_metric) }
 
       it "runs the command line tool and parses the output" do
-        problems = metric.run
+        problems = metric.run(project)
         problems.size.should == 1
         problem = problems.first
         problem.filename.should == 'app/models/post.rb'
@@ -20,10 +20,10 @@ describe Metric do
     end
 
     describe "cleanup" do
-      let(:metric)  { Factory(:cleanup_metric, :project => project) }
+      let(:metric)  { Factory(:cleanup_metric) }
 
       it "runs the command line tool and parses the output, looking at the line after where the tag is" do
-        problems = metric.run
+        problems = metric.run(project)
         problems.size.should == 3
 
         problem = problems[0]

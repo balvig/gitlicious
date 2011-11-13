@@ -8,15 +8,8 @@
     <p>
       <%= format_score @problems.score %>
     </p>
-    <hr>
-    <h3>Metrics <small><%= link_to "(Edit)", [@project,:metrics] %></small></h3>
-    <ul>
-      <% @project.metrics.each do |metric|%>
-        <li><%= metric.name%> <em><%= @problems.where(:metric_id => metric).score %></em></li>
-      <% end %>
-    </ul>
   </div>
-  <div id="graph" style='height:243px;' data-metrics='[<%= @project.reports.each.map {|r| "[#{r.timestamp},#{r.problems.by(current_author).score}]"}.join(',')%>]'></div>
+  <div id="graph" style='height:200px;' data-metrics='[<%= @project.reports.each.map {|r| "[#{r.timestamp},#{r.problems.by(current_author).score}]"}.join(',')%>]'></div>
 </div>
 
 <% if @problems.size > 0 %>

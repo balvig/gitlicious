@@ -1,10 +1,10 @@
 class Metric < ActiveRecord::Base
 
-  belongs_to :project
+  DEFAULTS = YAML.load(File.read(Rails.root.join('config','metrics.yml'))).symbolize_keys
 
   default_scope order('weight DESC')
 
-  def run
+  def run(project)
     output = project.run(command)
     parse_problems(output)
   end

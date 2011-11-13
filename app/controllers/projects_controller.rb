@@ -23,7 +23,7 @@ class ProjectsController < ApplicationController
     @project = Project.new(params[:project])
 
     if @project.save
-      redirect_to([@project, :metrics], :notice => '<strong>Project imported.</strong> Now configure the metrics for your project!'.html_safe)
+      redirect_to(@project, :notice => 'Project imported.')
     else
       render :action => "new"
     end

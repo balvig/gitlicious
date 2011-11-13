@@ -16,8 +16,8 @@ class Report < ActiveRecord::Base
   private
 
   def run_metrics
-    project.metrics.each do |metric|
-      problems << metric.run
+    Metric.all.each do |metric|
+      problems << metric.run(project)
     end
   end
 

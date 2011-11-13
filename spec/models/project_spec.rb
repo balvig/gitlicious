@@ -45,13 +45,6 @@ describe Project do
     end
   end
 
-  describe ".create_default_metrics" do
-    it "creates a set of default metrics" do
-      project = Factory(:project)
-      project.metrics.map(&:name).should == ["cleanup","rails_best_practices"]
-    end
-  end
-
   describe ".current_problems" do
     let(:project)  { Factory(:project) }
     let(:report_1) { Factory(:report, :project => project) }

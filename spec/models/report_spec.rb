@@ -3,7 +3,8 @@ require 'spec_helper'
 describe Report do
 
   describe ".run_metrics" do
-    it "runs metrics for all metrics assigned to the project" do
+    before { require Rails.root.join('db','seeds') }
+    it "runs all metrics on the project" do
       report = Report.create!(:project =>  Factory(:real_project))
       report.problems.size.should == 4
     end

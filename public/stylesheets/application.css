@@ -10,26 +10,25 @@ body {padding-top: 60px;}
   border-radius: 6px 6px 6px 6px;
   padding: 20px;
   float:left;
-  width:17%;
+  width:15%;
 }
 
 .stats p {
-  margin-top:4px;
-  font-size:1.6em;
+  color: #444;
+  font-size: 4.2em;
+  margin: 40px 0 41px;
+  text-align: center;
+  font-weight:bold;
 }
 
-.stats hr {margin-bottom:7px;}
-
-.stats small a {
-  color:#666;
-  font-size:0.8em;
+.stats .label {
+  font-weight:normal;
+  vertical-align:middle;
 }
-
-.stats .label {vertical-align:middle;}
 
 #graph {
   float:right;
-  width:76%;
+  width:78%;
 }
 
 footer p {
