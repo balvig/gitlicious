@@ -73,7 +73,8 @@ div.project:hover {
   margin-bottom:15px;
 }
 
-.project .count {
+.count {
+  z-index:2;
   cursor:pointer;
   background: #CC0000;
   color: white;
@@ -99,6 +100,7 @@ div.project:hover {
 }
 
 .author {
+  position:relative;
   border: 1px solid #DDD;
   background: #EEE;
   padding: 5px;

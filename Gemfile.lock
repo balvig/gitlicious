@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/balvig/rails_best_practices.git
-  revision: e9a8957325a5fb269037efb600c75f10d68b982f
+  revision: 45638bc6c701a147dfb18dac18bfaef13704c6f6
   specs:
     rails_best_practices (1.2.0)
       activesupport
