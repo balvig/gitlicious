@@ -14,7 +14,6 @@
     background:#FFF;
     padding:1px;
   }
-  div { width:220px; }
   h4 {
     line-height:16px;
     margin:3px 0px 4px;
@@ -31,6 +30,7 @@
     margin: 0 7px 7px 0;
     width:280px;
     &:hover { background:#DDD; }
+    div { width:220px; }
   }
   a { text-decoration:none; }
 }
