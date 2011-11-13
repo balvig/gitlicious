@@ -1,0 +1,42 @@
+.authors .author, .author img, .author div {
+  display:inline-block;
+  vertical-align:top;
+}
+.author {
+  position:relative;
+  border: 1px solid #DDD;
+  background: #EEE;
+  padding: 5px;
+  border-radius: 3px;
+
+  img {
+    margin-right:5px;
+    background:#FFF;
+    padding:1px;
+  }
+  div { width:220px; }
+  h4 {
+    line-height:16px;
+    margin:3px 0px 4px;
+  }
+  p {
+    color:#888 !important;
+    margin-bottom:0px;
+  }
+}
+
+.authors {
+  margin-left:0px;
+  .author {
+    margin: 0 7px 7px 0;
+    width:280px;
+    &:hover { background:#DDD; }
+  }
+  a { text-decoration:none; }
+}
+
+#current_author {
+  position:relative;
+  margin:-20px 0 10px;
+  box-shadow:0 -1px 2px rgba(0, 0, 0, 0.2);
+}

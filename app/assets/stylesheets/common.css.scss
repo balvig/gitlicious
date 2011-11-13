@@ -1,0 +1,22 @@
+body {padding-top: 60px;}
+.container-fluid > .content {margin-left:0px;}
+
+h1 a, h1 a:hover {
+  color:#404040;
+  text-decoration:none;
+}
+
+footer p {
+  text-align:right;
+  color:#666;
+  font-size:0.85em;
+}
+
+.page-header {
+  position:relative;
+  a.btn {
+    position:absolute;
+    right:0px;
+    top:5px;
+  }
+}
