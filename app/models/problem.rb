@@ -6,7 +6,7 @@ class Problem < ActiveRecord::Base
   delegate :project, :to => :report
   before_save :blame
 
-  validates_presence_of :filename, :line_number
+  validates_presence_of :filename, :line_number, :description
   validates_uniqueness_of :description, :scope => [:filename, :line_number, :report_id]
   default_scope includes(:metric)
 
