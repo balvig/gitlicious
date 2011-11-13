@@ -27,7 +27,7 @@
   <div class="pill-content">
     <% @problems.group_by(&:metric).each do |metric, problems| %>
       <div id='<%= dom_id(metric)%>'>
-      <table class='zebra-striped'>
+      <table class='bordered-table zebra-striped'>
         <thead>
           <tr>
             <th class='avatar'>&nbsp;</th>

@@ -66,24 +66,22 @@ footer p {
   margin-right:15px;
 }
 
-div.project {
+a.project {
   background-color: #F5F5F5;
   border-radius: 6px 6px 6px 6px;
   padding: 20px;
   text-align:center;
   position:relative;
   width:120px;
+  display:block;
 }
 
-div.project:hover {
+a.project:hover {
   background-color: #EEE;
-}
-
-.projects a:hover {
   text-decoration:none;
 }
 
-.project h2 {
+a.project h2 {
   font-size:2.6em;
   margin-bottom:15px;
 }

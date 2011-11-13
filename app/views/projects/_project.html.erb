@@ -1,9 +1,7 @@
-<%= link_to [current_author, project] do %>
-  <div class="span project">
-    <% if project.current_problems.by(current_author).count > 0 %>
-      <p class='count'><%= project.current_problems.by(current_author).count %></p>
-    <% end %>
-    <h2><%= project.current_problems.by(current_author).score %></h2>
-    <h5><%= project.name%></h5>
-  </div>
+<%= link_to [current_author, project], :class => 'span project' do %>
+  <% if project.current_problems.by(current_author).count > 0 %>
+    <p class='count'><%= project.current_problems.by(current_author).count %></p>
+  <% end %>
+  <h2><%= project.current_problems.by(current_author).score %></h2>
+  <h5><%= project.name%></h5>
 <% end %>
