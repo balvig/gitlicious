@@ -10,6 +10,8 @@ class Project < ActiveRecord::Base
 
   attr_accessible :repo_url, :github_url
 
+  validates :repo_url, :presence => true
+
   def git
     @git ||= Git.open(repo_path)
   end

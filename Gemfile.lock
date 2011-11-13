@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/balvig/rails_best_practices.git
-  revision: 45638bc6c701a147dfb18dac18bfaef13704c6f6
+  revision: ec32ff5b4b3c4ee9dbdc21674f1724ab5aa77cd4
   specs:
-    rails_best_practices (1.2.0)
+    rails_best_practices (1.3.0)
       activesupport
       colored
       erubis

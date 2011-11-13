@@ -15,7 +15,7 @@ h1 a, h1 a:hover {
   border-radius: 6px 6px 6px 6px;
   padding: 20px;
   float:left;
-  width:15%;
+  width:17%;
 }
 
 .stats p {
@@ -33,7 +33,7 @@ h1 a, h1 a:hover {
 
 #graph {
   float:right;
-  width:78%;
+  width:76%;
 }
 
 table td {
