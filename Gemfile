@@ -7,6 +7,7 @@ gem 'rails_best_practices', :git => 'git://github.com/balvig/rails_best_practice
 gem 'reek'
 gem 'haml'
 gem 'airbrake'
+gem 'yaml_db'
 gem 'whenever', :require => false
 
 group :test do
