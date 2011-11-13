@@ -47,4 +47,17 @@ describe Problem do
       project.authors.should == [problem.author]
     end
   end
+
+  describe ".validates_uniqueness_of" do
+    let(:report_1) { Factory(:report) }
+    let(:report_2) { Factory(:report) }
+    it "only adds the same problem for any report once" do
+      Factory(:problem, :description => 'This is bad', :filename => 'config.rb', :line_number => 5, :report => report_1)
+      Factory.build(:problem, :description => 'This is bad', :filename => 'config.rb', :line_number => 5, :report => report_1).should_not be_valid
+      Factory.build(:problem, :description => 'This is pretty bad', :filename => 'config.rb', :line_number => 5, :report => report_1).should be_valid
+      Factory.build(:problem, :description => 'This is bad', :filename => 'boot.rb', :line_number => 5, :report => report_1).should be_valid
+      Factory.build(:problem, :description => 'This is bad', :filename => 'config.rb', :line_number => 8, :report => report_1).should be_valid
+      Factory.build(:problem, :description => 'This is bad', :filename => 'config.rb', :line_number => 5, :report => report_2).should be_valid
+    end
+  end
 end
