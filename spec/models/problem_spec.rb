@@ -60,4 +60,13 @@ describe Problem do
       Factory.build(:problem, :description => 'This is bad', :filename => 'config.rb', :line_number => 5, :report => report_2).should be_valid
     end
   end
+
+  describe "Invalid blames should be ignored" do
+    context "Given an author with the name/email Not Committed Yet/not.committed.yet" do
+      it 'makes the record invalid' do
+        author = Author.new(:name => 'Not Committed Yet', :email => 'not.committed.yet')
+        problem = Factory.build(:problem, :author => author).should_not be_valid
+      end
+    end
+  end
 end

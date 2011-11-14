@@ -4,6 +4,7 @@ FactoryGirl.define do
     filename 'model.rb'
     line_number
     metric
+    author
     after_build { |report| report.stub(:blame) }
   end
 

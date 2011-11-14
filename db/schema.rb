@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(:version => 20111113071944) do
     t.string   "description_pattern"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "weight",                             :default => 1.0
+    t.decimal  "weight",              :default => 1.0
     t.string   "problem_pattern"
   end
 

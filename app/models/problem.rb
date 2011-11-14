@@ -4,9 +4,9 @@ class Problem < ActiveRecord::Base
   belongs_to :report
   belongs_to :metric
   delegate :project, :to => :report
-  before_save :blame
+  before_validation :blame
 
-  validates_presence_of :filename, :line_number, :description
+  validates_presence_of :filename, :line_number, :description, :author_id
   validates_uniqueness_of :description, :scope => [:filename, :line_number, :report_id]
   default_scope includes(:metric)
 
