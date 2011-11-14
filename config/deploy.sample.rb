@@ -1,4 +1,5 @@
 require 'bundler/capistrano'
+load 'deploy/assets'
 
 set :application, "gitlicious"
 set :deploy_to, "/path/to/#{application}"
@@ -56,5 +57,5 @@ namespace :deploy do
   end
 end
 
-after 'deploy:update_code', 'deploy:symlink_config'
+before 'deploy:assets:symlink', 'deploy:symlink_config'
 after 'deploy:restart', 'deploy:cleanup'
