@@ -1,7 +1,7 @@
 class Author < ActiveRecord::Base
 
   has_and_belongs_to_many :projects
-  has_many :problems
+  has_many :problems, :dependent => :delete_all
 
   validates :name, :exclusion => { :in => ['Not Committed Yet'] }
   validates :email, :exclusion => { :in => ['not.committed.yet'] }
