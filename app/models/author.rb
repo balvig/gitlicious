@@ -10,4 +10,10 @@ class Author < ActiveRecord::Base
     find_or_create_by_name_and_email(:name => metadata.name, :email => metadata.email)
   end
 
+  def score
+    projects.all.sum do |project|
+      project.current_problems.by(self).score
+    end
+  end
+
 end
