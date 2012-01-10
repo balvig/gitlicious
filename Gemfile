@@ -11,6 +11,7 @@ gem 'yaml_db'
 gem 'whenever', :require => false
 gem 'jquery-rails'
 gem 'rails_autolink'
+gem 'rake'
 
 group :assets do
   gem 'sass-rails', "  ~> 3.1.0"

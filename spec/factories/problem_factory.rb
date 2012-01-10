@@ -5,7 +5,8 @@ FactoryGirl.define do
     line_number
     metric
     author
-    after_build { |report| report.stub(:blame) }
+    report
+    after_build { |problem| problem.stub(:blame) }
   end
 
   sequence :line_number do |n|

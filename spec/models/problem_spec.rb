@@ -11,14 +11,14 @@ describe Problem do
     let(:report)  { Factory(:report) }
 
     it "sums up all the scores for a scope of problems" do
-      report.problems << Factory(:problem, :metric => Factory(:metric, :weight => 10))
-      report.problems << Factory(:problem, :metric => Factory(:metric, :weight => 5))
+      Factory(:problem, :metric => Factory(:metric, :weight => 10), :report => report)
+      Factory(:problem, :metric => Factory(:metric, :weight => 5), :report => report)
       report.problems.score.should == 15
     end
   end
 
   describe "#by" do
-    let(:author)       { Author.create! }
+    let(:author)      { Author.create! }
     let!(:problem_1)  { Factory(:problem, :author => author) }
     let!(:problem_2)  { Factory(:problem) }
 
@@ -58,6 +58,27 @@ describe Problem do
       Factory.build(:problem, :description => 'This is bad', :filename => 'boot.rb', :line_number => 5, :report => report_1).should be_valid
       Factory.build(:problem, :description => 'This is bad', :filename => 'config.rb', :line_number => 8, :report => report_1).should be_valid
       Factory.build(:problem, :description => 'This is bad', :filename => 'config.rb', :line_number => 5, :report => report_2).should be_valid
+    end
+  end
+
+  describe '.link' do
+    context 'when project has a github url' do
+      let(:project) { Factory(:project, :github_url => 'https://github.com/balvig/gitlicious') }
+      let(:report)  { Factory(:report, :sha => '1234', :project => project) }
+      let(:problem) { Factory(:problem, :filename => 'config.rb', :line_number => 34, :report => report) }
+
+      it 'returns a link to the source on github' do
+        problem.link.should == 'https://github.com/balvig/gitlicious/blob/1234/config.rb#L34'
+      end
+    end
+
+    context 'when project has no github url' do
+      let(:project) { Factory(:project, :github_url => nil) }
+      let(:report)  { Factory(:report, :project => project) }
+      let(:problem) { Factory(:problem, :report => report) }
+      it 'returns nil' do
+        problem.link.should be_nil
+      end
     end
   end
 

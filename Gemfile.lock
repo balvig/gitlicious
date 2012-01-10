@@ -225,6 +225,7 @@ DEPENDENCIES
   rails (= 3.1.0)
   rails_autolink
   rails_best_practices!
+  rake
   reek
   rspec
   rspec-rails
