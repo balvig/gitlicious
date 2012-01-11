@@ -8,7 +8,7 @@ class ProjectsController < ApplicationController
 
   def show
     @project = Project.find(params[:id])
-    @problems = @project.current_problems.by(current_author)
+    @problems = @project.current_problems.by(current_author).includes(:author).includes(:report => :project)
   end
 
   def new

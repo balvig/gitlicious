@@ -9,7 +9,7 @@
       <%= format_score @problems.score %>
     </p>
   </div>
-  <div id="graph" style='height:200px;' data-metrics='[<%= @project.reports.each.map {|r| "[#{r.timestamp},#{r.problems.by(current_author).score}]"}.join(',')%>]'></div>
+  <div id="graph" style='height:200px;' data-metrics='[<%= @project.reports.order('created_at DESC').limit(90).each.map {|r| "[#{r.timestamp},#{r.problems.by(current_author).score}]"}.join(',')%>]'></div>
 </div>
 
 <% if @problems.size > 0 %>
